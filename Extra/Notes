@@ -1,0 +1,33 @@
+Node
+Edge
+Broker
+    - Connects two nodes
+Groups / Clusters
+
+Algorithms
+    - Eigenvector
+
+
+IDEA
+    -
+
+NUM USERS:
+    - host tournament every month where reward bounty is 50% of revenue and so on
+    - people post data sets
+    - code must be open source
+    - leaderboard system
+    - achievements
+    - categories for clean vs unclean datasets
+    - if you post a dataset, you have to disclose from a series of options where it came from
+    - way to upload a dataset
+    - data bounties
+    - votes cost grow exponentioally, not logarithmically
+    - unverified accounts worth 0.1 of a verified vote, and even
+
+
+correlation matrix with CSV file
+``,1,
+1,x
+STEPS:
+CREATE DB WITH USER PROPERTIES
+ALLOW USER TO UPLOAD FILE STORED IN DIGITAL OCEAN DB IN THEIR NAME
