@@ -60,17 +60,41 @@ def check_table_existence(conn, table_name="USERS"):
 
 
 def create_user(conn, table_name="USERS", username="andre", password="11111111", email="abc@email.com"):
-    print("FUNCTION: Insert")
+    # print("FUNCTION: Insert")
+    if not check_email_exists(conn, email):
+        cursor = conn.cursor()
+        cursor.execute(f"""
+        
+        INSERT INTO {table_name}
+        (username, password, email)
+        values('{username}', '{password}', '{email}');
+        
+        """)
+        conn.commit()
+        print("REGISTERED USER")
+    else:
+        print("Email already exists")
+
+
+def check_email_exists(conn, email="foreandr@gmail.com"):
+    table_name = "USERS"
     cursor = conn.cursor()
     cursor.execute(f"""
-    
-    INSERT INTO {table_name}
-    (username, password, email)
-    values('{username}', '{password}', '{email}');
-    
+
+    SELECT *
+    FROM {table_name}
+    WHERE email = '{email}'
     """)
-    conn.commit()
-    print("FUNCTION: COMPLETED")
+
+    tables = cursor.fetchall()
+    # for i in tables:
+    #    print(i)
+
+    # print(len(tables))
+    if len(tables) > 0:
+        return True
+    else:
+        return False
 
 
 def delete_user(conn, table_name="USERS", user_id=0):
@@ -81,6 +105,15 @@ def delete_user(conn, table_name="USERS", user_id=0):
         FROM {table_name} 
         WHERE Id = {user_id};
         """)
+    conn.commit()
+    cursor.close()
+
+
+def delete_all(conn, table_name="USERS"):
+    cursor = conn.cursor()
+    cursor.execute(f"""
+    DELETE FROM {table_name};
+    """)
     conn.commit()
     cursor.close()
 
@@ -115,15 +148,18 @@ def select_users(conn):
         print(i)
     cursor.close()
 
+
 # TABLE RELATED
-#drop_table(connection)
-#create_users_table(connection)
+# drop_table(connection)
+# create_users_table(connection)
 # create_data_table(connection)
 
 # USER RELATED
-#create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
+# create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
 # create_user(connection)
 # delete_user()
+# delete_all(connection)
 
 # READ RELATED
 # select_users(connection)
+# check_email_exists(connection)

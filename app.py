@@ -23,22 +23,32 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])  # homepage
 def register():
     print('EXECUTING REGISTER FUNCTION')
-    print(request.form)
+    if request.method == 'GET':
+        sign_up_message = 'Please sign up'
+        return render_template('register.html', message=sign_up_message)
+
+    if request.method == 'POST':
+        dict = request.form.to_dict(flat=False)
+        try: # DO NOT EXECUTE UNTIL SUBMIT IS CLICKED
+            username = dict['username']
+            password = dict['password']
+            email = dict['email']
+
+            # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
+            database.create_user(conn=connection, username=username[0], password=password[0], email=email[0])
+        except:
+            print("Error on HTML POST Register")
+        return render_template('register.html', message="register.html page")
+
+@app.route('/upload', methods=['GET', 'POST'])  # homepage
+def upload_file():
+    print('EXECUTING REGISTER FUNCTION')
     dict = request.form.to_dict(flat=False)
-    try: # DO NOT EXECUTE UNTIL SUBMIT IS CLICKED
-        username = dict['username']
-        password = dict['password']
-        email = dict['email']
-
-        # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
-        database.create_user(conn=connection, username=username[0], password=password[0], email=email[0])
-        print("REGISTERED USER")
-    except:
-        print("Error on HTML POST Register")
+    # dict = request.files
+    print("UPLOAD FILES", dict)
 
 
-    return render_template('register.html', message="register.html page")
-
+    return render_template('upload.html', message="upload.html page")
 
 if __name__ == '__main__':
     my_port = 5006
