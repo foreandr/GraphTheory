@@ -161,5 +161,5 @@ def select_users(conn):
 # delete_all(connection)
 
 # READ RELATED
-# select_users(connection)
+#select_users(connection)
 # check_email_exists(connection)

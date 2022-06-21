@@ -24,6 +24,10 @@ NUM USERS:
     - votes cost grow exponentioally, not logarithmically
     - unverified accounts worth 0.1 of a verified vote, and even
 
+DB TABLES
+USERS
+POSTS
+FILES
 
 correlation matrix with CSV file
 ``,1,
@@ -36,3 +40,6 @@ ALLOW USER TO UPLOAD FILE STORED IN DIGITAL OCEAN DB IN THEIR NAME
 INSERT INTO xx_BLOB(ID,IMAGE) VALUES(1,LOAD_FILE('E:/Images/jack.jpg'));
 LOAD_FILE('/some/path/image.png')
 'img' LONGBLOB NOT NULL,
+
+
+https://www.youtube.com/watch?v=6WruncSoCdI&ab_channel=JulianNash

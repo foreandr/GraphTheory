@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, g
 import Python.database as database
 import Python.db_connection as connector
 from werkzeug.datastructures import ImmutableMultiDict
+import os
 
 connection = connector.test_connection()
 TEMPLATE_DIR = os.path.abspath('./templates')
@@ -12,7 +13,10 @@ STATIC_DIR = os.path.abspath('./static')
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 app.secret_key = 'demokey'
 
+
 # user = sql_functions.check_users() #list of user in DB
+
+app.config["CSV UPLOADS"] = "C:/Users/forea/PycharmProjects/GraphTheory/#UserData"
 
 @app.route('/', methods=['GET'])  # homepage
 def home():
@@ -29,7 +33,7 @@ def register():
 
     if request.method == 'POST':
         dict = request.form.to_dict(flat=False)
-        try: # DO NOT EXECUTE UNTIL SUBMIT IS CLICKED
+        try:  # DO NOT EXECUTE UNTIL SUBMIT IS CLICKED
             username = dict['username']
             password = dict['password']
             email = dict['email']
@@ -40,15 +44,17 @@ def register():
             print("Error on HTML POST Register")
         return render_template('register.html', message="register.html page")
 
+
 @app.route('/upload', methods=['GET', 'POST'])  # homepage
 def upload_file():
-    print('EXECUTING REGISTER FUNCTION')
-    dict = request.form.to_dict(flat=False)
-    # dict = request.files
-    print("UPLOAD FILES", dict)
-
-
+    if request.method == "POST":
+        if request.files:
+            csv_file = request.files['csv'] # because name in HTML FORM is csv
+            csv_file.save(os.path.join(app.config["CSV UPLOADS"], csv_file.filename))
+            print("Saved and completed")
     return render_template('upload.html', message="upload.html page")
+
+
 
 if __name__ == '__main__':
     my_port = 5006
