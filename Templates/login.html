@@ -1,0 +1,15 @@
+{% extends "structure.html" %} <!-- INHEREITING FROM STRUCTURE.HTML-->
+
+{%block main %}
+  <div>
+    {{ message }} <!-- message is a variable-->
+  </div>
+  <form method="POST">
+      <label id="email"><b>Email</b></label>
+      <input name=email type="email" placeholder="Enter Email" required>
+
+      <label id="password"><b>Password</b></label>
+      <input name=password type="password" placeholder="Enter Password" required>
+      <button name="submit_button" value="submit" type="submit">Submit</button>
+  </form>
+{% endblock main %}
