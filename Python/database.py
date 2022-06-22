@@ -34,6 +34,24 @@ def create_data_table(conn, table_name="DATA"):
     conn.commit()
     cursor.close()
 
+def create_Image_table(conn, table_name="IMAGES"):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+        CREATE TABLE {table_name} 
+        (
+            ImageID int PRIMARY KEY,
+            ImageName varchar(200),
+            ImageType varchar(200),      
+            Image varbinary(max),
+            UserId INT,
+            FOREIGN KEY (UserId) REFERENCES USERS(Id)
+        );
+        """)
+    conn.commit()
+    cursor.close()
+    pass
+
 def print_all_tables(conn):
     cursor = conn.cursor()
     cursor.execute(
@@ -46,6 +64,8 @@ def print_all_tables(conn):
         print(i)
     conn.commit()
     cursor.close()
+
+
 def check_table_existence(conn, table_name="USERS"):
     tables_exists = False
     cursor = conn.cursor()
@@ -86,6 +106,23 @@ def create_user(conn, table_name="USERS", username="andre", password="11111111",
     else:
         print("Email already exists")
 
+"""
+            ImageID int PRIMARY KEY,
+            ImageName varchar(200),
+            ImageType varchar(200),      
+            Image varbinary(max),
+            UserId INT,
+"""
+def insert_image(conn, ImageName, ImageType, Image_BINARY, UserId):
+    cursor = conn.cursor()
+    cursor.execute(f"""
+            INSERT INTO IMAGES
+            (ImageName, ImageType, Image_BINARY, UserId)
+            values('{ImageName}', '{ImageType}', '{Image_BINARY}', {UserId});
+
+            """)
+    conn.commit()
+    pass
 
 def check_email_exists(conn, email="foreandr@gmail.com"):
     table_name = "USERS"
@@ -191,7 +228,10 @@ print_all_tables(connection)
 # delete_user()
 # delete_all(connection)
 
-# CREATE TABLE POST
+# POST RELATED
+
+# IMAGE RELATED
+create_Image_table(connection)
 
 # READ RELATED
 # select_users(connection)

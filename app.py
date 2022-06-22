@@ -57,7 +57,10 @@ def upload_file():
 
 @app.route('/login', methods=['GET', 'POST'])  # homepage
 def login():
-    print('EXECUTING REGISTER FUNCTION')
+    print('EXECUTING LOGIN FUNCTION')
+    if "email" in session:
+        email = session["email"]  # getting user info from session variable
+        return render_template('home.html', message=email)
     if request.method == 'GET':
         login_message = 'Please LOGIN'
         if "email" in session:
@@ -79,6 +82,10 @@ def login():
         else:
             return render_template('login.html', message="wrong email or password, try again")
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop("email", None)  # remove data from session
+    return redirect(url_for("login"))
 
 @app.route('/email', methods=['GET'])  # user_session_home
 def email():
@@ -88,11 +95,12 @@ def email():
     else:  # if not in session, redirect to login
         return redirect(url_for("login"))
 
-
-@app.route('/logout', methods=['GET'])
-def logout():
-    session.pop("email", None)  # remove data from session
-    return redirect(url_for("login"))
+@app.route('/user_profile', methods=['GET'])  # user_session_home
+def user_profile():
+    if "email" not in session:
+        return render_template('login.html')
+    else:
+        return render_template('user_profile.html')
 
 
 if __name__ == '__main__':
