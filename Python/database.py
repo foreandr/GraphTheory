@@ -34,7 +34,18 @@ def create_data_table(conn, table_name="DATA"):
     conn.commit()
     cursor.close()
 
-
+def print_all_tables(conn):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+            SELECT *
+            FROM information_schema.TABLES
+            """)
+    tables = cursor.fetchall()
+    for i in tables:
+        print(i)
+    conn.commit()
+    cursor.close()
 def check_table_existence(conn, table_name="USERS"):
     tables_exists = False
     cursor = conn.cursor()
@@ -146,6 +157,8 @@ def select_users(conn):
     for i in tables:
         print(i)
     cursor.close()
+
+
 def validate_user_from_session(conn, email, password):
     print(f"VALIDATE {email} | {password}")
     cursor = conn.cursor()
@@ -165,16 +178,20 @@ def validate_user_from_session(conn, email, password):
         print("NOT SIGNING IN")
         return False
 
-# TABLE RELATED
+
+# TABLE RELATEDAndre
 # drop_table(connection)
 # create_users_table(connection)
 # create_data_table(connection)
+print_all_tables(connection)
 
 # USER RELATED
-# create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
+# create_user(conn=connection, username="foreandr", password="password", email="foreandr@gmail.com")
 # create_user(connection)
 # delete_user()
 # delete_all(connection)
+
+# CREATE TABLE POST
 
 # READ RELATED
 # select_users(connection)

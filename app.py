@@ -67,18 +67,17 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
 
-        signed_in = database.validate_user_from_session(connection,email, password)
+        signed_in = database.validate_user_from_session(connection, email, password)
 
         if signed_in:
             session["email"] = email
-            session["passowrd"] = password
+            session["password"] = password
             print(session)
             print(email)
             print(password)
             return redirect(url_for("email"))
         else:
-            return redirect(url_for("login"))
-
+            return render_template('login.html', message="wrong email or password, try again")
 
 
 @app.route('/email', methods=['GET'])  # user_session_home
