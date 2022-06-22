@@ -56,20 +56,29 @@ def upload_file():
         email = session["email"]
         user = session["user"]
         print("USERNAME:", user)
-        print("PASSWORD:",password)
-        print("EMAIL   :",email)
+        print("PASSWORD:", password)
+        print("EMAIL   :", email)
         print("-------")
         if request.files:
-            file = request.files['csv']  # because name in HTML FORM is csv
-            print(file)
-            print(app.config["FILE UPLOADS"])
-            print(file.filename)
+            file = request.files['file']  # because name in HTML FORM is csv
+            #print(file)
+            #print(app.config["FILE UPLOADS"])
+            #print(file.filename)
             my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
             my_path = f"{app.config['FILE UPLOADS']}/{user}"
-
             helpers.check_and_save_dir(my_path)
             file.save(my_path_with_file)
 
+            print(my_path)
+            print(my_path_with_file)
+            database.insert_image(
+                connection,
+                file.filename,
+                helpers.get_filetype(file.filename),
+                my_path_with_file,
+                10
+            )
+            print("-------")
             print("Saved and completed")
     return render_template('upload.html', message="upload.html page")
 
@@ -102,10 +111,12 @@ def login():
         else:
             return render_template('login.html', message="wrong email or password, try again")
 
+
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop("email", None)  # remove data from session
     return redirect(url_for("login"))
+
 
 @app.route('/email', methods=['GET'])  # user_session_home
 def email():
@@ -114,6 +125,7 @@ def email():
         return render_template('home.html', message=email)
     else:  # if not in session, redirect to login
         return redirect(url_for("login"))
+
 
 @app.route('/user_profile', methods=['GET'])  # user_session_home
 def user_profile():

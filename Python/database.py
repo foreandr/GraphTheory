@@ -1,5 +1,8 @@
+from Python import CONSTANTS
 from Python.db_connection import connection
 from Python.helpers import turn_pic_to_hex
+
+
 # import CONSTANTS
 
 
@@ -111,18 +114,18 @@ def create_user(conn, table_name="USERS", username="andre", password="11111111",
         print("Email already exists")
 
 
-def insert_image(conn, ImageName, ImageType, Image_HEX, UserId):
+def insert_image(conn, ImageName, ImageType, Image_PATH, UserId):
     cursor = conn.cursor()
     cursor.execute(f"""
-        INSERT INTO IMAGES (ImageName, ImageType, Image_HEX, UserId)
-        VALUES('{ImageName}', '{ImageType}', '{Image_HEX}', {UserId});
+        INSERT INTO IMAGES (ImageName, ImageType, Image_PATH, UserId)
+        VALUES('{ImageName}', '{ImageType}', '{Image_PATH}', {UserId});
         """)
-    conn.commit()
     conn.commit()
     cursor.close()
 
 
 def image_select_all(conn):
+    print('\nSHOWING IMAGES')
     cursor = conn.cursor()
     cursor.execute(f"""
     SELECT * 
@@ -246,11 +249,10 @@ select_users(connection)
 # POST RELATED
 
 
-
 # IMAGE RELATED
-# create_Image_table(connection)
+#create_Image_table(connection)
 # drop_table(connection, "IMAGES")
 # my_string = str(turn_pic_to_hex())
 # print(type(my_string), len(my_string), my_string)
-# insert_image(connection, ImageName="UserName2", ImageType="jpg", Image_PATH=CONSTANTS.user_image_path, UserId=10)
-# image_select_all(conn=connection)
+#insert_image(connection, ImageName="UserName2", ImageType="jpg", Image_PATH=CONSTANTS.user_image_path, UserId=10)
+image_select_all(conn=connection)

@@ -34,3 +34,7 @@ def turn_hex_to_pic_save(hex_string, username="DEMO-USERNAME"):
         file.write(hex_string)
 
 
+def get_filetype(string):
+    txt = string[::-1]
+    my_text =  txt.split(".")[0]
+    return my_text[::-1]
