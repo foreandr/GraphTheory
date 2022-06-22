@@ -1,4 +1,6 @@
 from Python.db_connection import connection
+from Python.helpers import turn_pic_to_hex
+# import CONSTANTS
 
 
 def create_users_table(conn, table_name="USERS"):
@@ -34,23 +36,25 @@ def create_data_table(conn, table_name="DATA"):
     conn.commit()
     cursor.close()
 
+
 def create_Image_table(conn, table_name="IMAGES"):
     cursor = conn.cursor()
     cursor.execute(
         f"""
         CREATE TABLE {table_name} 
         (
-            ImageID int PRIMARY KEY,
+            Id INT IDENTITY(1, 1),
             ImageName varchar(200),
             ImageType varchar(200),      
-            Image varbinary(max),
+            Image_PATH varchar(200),
             UserId INT,
             FOREIGN KEY (UserId) REFERENCES USERS(Id)
         );
         """)
     conn.commit()
     cursor.close()
-    pass
+    print(F"CREATED TABLE {table_name}")
+
 
 def print_all_tables(conn):
     cursor = conn.cursor()
@@ -106,23 +110,30 @@ def create_user(conn, table_name="USERS", username="andre", password="11111111",
     else:
         print("Email already exists")
 
-"""
-            ImageID int PRIMARY KEY,
-            ImageName varchar(200),
-            ImageType varchar(200),      
-            Image varbinary(max),
-            UserId INT,
-"""
-def insert_image(conn, ImageName, ImageType, Image_BINARY, UserId):
+
+def insert_image(conn, ImageName, ImageType, Image_HEX, UserId):
     cursor = conn.cursor()
     cursor.execute(f"""
-            INSERT INTO IMAGES
-            (ImageName, ImageType, Image_BINARY, UserId)
-            values('{ImageName}', '{ImageType}', '{Image_BINARY}', {UserId});
-
-            """)
+        INSERT INTO IMAGES (ImageName, ImageType, Image_HEX, UserId)
+        VALUES('{ImageName}', '{ImageType}', '{Image_HEX}', {UserId});
+        """)
     conn.commit()
-    pass
+    conn.commit()
+    cursor.close()
+
+
+def image_select_all(conn):
+    cursor = conn.cursor()
+    cursor.execute(f"""
+    SELECT * 
+    FROM IMAGES
+    """)
+
+    tables = cursor.fetchall()
+    for i in tables:
+        print(i)
+    cursor.close()
+
 
 def check_email_exists(conn, email="foreandr@gmail.com"):
     table_name = "USERS"
@@ -206,21 +217,25 @@ def validate_user_from_session(conn, email, password):
     AND password = '{password}'
     """)
     tables = cursor.fetchall()
+    user = ""
     for i in tables:
         print(i)
+        user = i[1]
     if len(tables) > 0:
         print("SIGNING IN")
-        return True
+        return [True, user, email, password]
     else:
         print("NOT SIGNING IN")
-        return False
+        return [False]
 
 
 # TABLE RELATEDAndre
-# drop_table(connection)
+
 # create_users_table(connection)
 # create_data_table(connection)
 print_all_tables(connection)
+select_users(connection)
+# check_email_exists(connection)
 
 # USER RELATED
 # create_user(conn=connection, username="foreandr", password="password", email="foreandr@gmail.com")
@@ -230,9 +245,12 @@ print_all_tables(connection)
 
 # POST RELATED
 
-# IMAGE RELATED
-create_Image_table(connection)
 
-# READ RELATED
-# select_users(connection)
-# check_email_exists(connection)
+
+# IMAGE RELATED
+# create_Image_table(connection)
+# drop_table(connection, "IMAGES")
+# my_string = str(turn_pic_to_hex())
+# print(type(my_string), len(my_string), my_string)
+# insert_image(connection, ImageName="UserName2", ImageType="jpg", Image_PATH=CONSTANTS.user_image_path, UserId=10)
+# image_select_all(conn=connection)

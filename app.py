@@ -5,6 +5,8 @@ import Python.db_connection as connector
 from werkzeug.datastructures import ImmutableMultiDict
 import os
 
+from Python import helpers
+
 connection = connector.test_connection()
 TEMPLATE_DIR = os.path.abspath('./templates')
 STATIC_DIR = os.path.abspath('./static')
@@ -15,7 +17,7 @@ app.secret_key = 'demokey'
 
 # user = sql_functions.check_users() #list of user in DB
 
-app.config["CSV UPLOADS"] = "C:/Users/forea/PycharmProjects/GraphTheory/#UserData"
+app.config["FILE UPLOADS"] = "#UserData"
 
 
 @app.route('/', methods=['GET'])  # homepage
@@ -47,10 +49,27 @@ def register():
 
 @app.route('/upload', methods=['GET', 'POST'])  # homepage
 def upload_file():
+    if "email" not in session:
+        return render_template('login.html')
     if request.method == "POST":
+        password = session["password"]
+        email = session["email"]
+        user = session["user"]
+        print("USERNAME:", user)
+        print("PASSWORD:",password)
+        print("EMAIL   :",email)
+        print("-------")
         if request.files:
-            csv_file = request.files['csv']  # because name in HTML FORM is csv
-            csv_file.save(os.path.join(app.config["CSV UPLOADS"], csv_file.filename))
+            file = request.files['csv']  # because name in HTML FORM is csv
+            print(file)
+            print(app.config["FILE UPLOADS"])
+            print(file.filename)
+            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
+            my_path = f"{app.config['FILE UPLOADS']}/{user}"
+
+            helpers.check_and_save_dir(my_path)
+            file.save(my_path_with_file)
+
             print("Saved and completed")
     return render_template('upload.html', message="upload.html page")
 
@@ -72,7 +91,8 @@ def login():
 
         signed_in = database.validate_user_from_session(connection, email, password)
 
-        if signed_in:
+        if signed_in[0]:
+            session["user"] = signed_in[1]
             session["email"] = email
             session["password"] = password
             print(session)
