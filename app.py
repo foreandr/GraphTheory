@@ -65,13 +65,20 @@ def login():
         return render_template('login.html', message=login_message)
     if request.method == "POST":
         email = request.form["email"]
-        # password = request.form["password"]
-        session["email"] = email
+        password = request.form["password"]
 
-        print(session)
-        print(email)
-        # exit()
-        return redirect(url_for("email"))
+        signed_in = database.validate_user_from_session(connection,email, password)
+
+        if signed_in:
+            session["email"] = email
+            session["passowrd"] = password
+            print(session)
+            print(email)
+            print(password)
+            return redirect(url_for("email"))
+        else:
+            return redirect(url_for("login"))
+
 
 
 @app.route('/email', methods=['GET'])  # user_session_home

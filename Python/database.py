@@ -140,14 +140,30 @@ def select_users(conn):
     cursor.execute(f"""
     SELECT * 
     FROM USERS
-
     """)
 
     tables = cursor.fetchall()
     for i in tables:
         print(i)
     cursor.close()
-
+def validate_user_from_session(conn, email, password):
+    print(f"VALIDATE {email} | {password}")
+    cursor = conn.cursor()
+    cursor.execute(f"""
+    SELECT * 
+    FROM USERS
+    WHERE email = '{email}'
+    AND password = '{password}'
+    """)
+    tables = cursor.fetchall()
+    for i in tables:
+        print(i)
+    if len(tables) > 0:
+        print("SIGNING IN")
+        return True
+    else:
+        print("NOT SIGNING IN")
+        return False
 
 # TABLE RELATED
 # drop_table(connection)
@@ -161,5 +177,5 @@ def select_users(conn):
 # delete_all(connection)
 
 # READ RELATED
-#select_users(connection)
+# select_users(connection)
 # check_email_exists(connection)
