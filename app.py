@@ -132,7 +132,7 @@ def user_profile():
     if "email" not in session:
         return render_template('login.html')
     else:
-        return render_template('user_profile.html')
+        return render_template('user_profile.html', message='PROFILE PAGE')
 
 
 if __name__ == '__main__':
