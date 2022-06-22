@@ -11,7 +11,7 @@ def save_to_file(filename="demofile"):
     completeName = os.path.join(save_path, filename + ".csv")
 
 import binascii
-filename = 'C:/Users/forea/PycharmProjects/GraphTheory/#DemoData/userpic.jpg'
+filename = '/#UserData/userpic.jpg'
 with open(filename, 'rb') as f:
     content = f.read()
 
