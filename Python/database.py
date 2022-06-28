@@ -246,9 +246,6 @@ select_users(connection)
 # delete_user()
 # delete_all(connection)
 
-# POST RELATED
-
-
 # IMAGE RELATED
 #create_Image_table(connection)
 # drop_table(connection, "IMAGES")
