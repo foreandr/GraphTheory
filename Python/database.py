@@ -1,5 +1,5 @@
 from Python import CONSTANTS
-from Python.db_connection import connection
+# from Python.db_connection import connection
 from Python.helpers import turn_pic_to_hex
 
 
@@ -236,8 +236,8 @@ def validate_user_from_session(conn, email, password):
 
 # create_users_table(connection)
 # create_data_table(connection)
-print_all_tables(connection)
-select_users(connection)
+#print_all_tables(connection)
+# select_users(connection)
 # check_email_exists(connection)
 
 # USER RELATED
@@ -252,4 +252,4 @@ select_users(connection)
 # my_string = str(turn_pic_to_hex())
 # print(type(my_string), len(my_string), my_string)
 #insert_image(connection, ImageName="UserName2", ImageType="jpg", Image_PATH=CONSTANTS.user_image_path, UserId=10)
-image_select_all(conn=connection)
+# image_select_all(conn=connection)

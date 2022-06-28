@@ -13,4 +13,4 @@ def test_connection():
         print(f"Error: '{err}'")
     return conn
 
-connection = test_connection()
+# connection = test_connection()

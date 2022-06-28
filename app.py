@@ -7,7 +7,7 @@ import os
 
 from Python import helpers
 
-connection = connector.test_connection()
+# connection = connector.test_connection()
 TEMPLATE_DIR = os.path.abspath('./templates')
 STATIC_DIR = os.path.abspath('./static')
 # import sql_functions
@@ -41,7 +41,7 @@ def register():
             email = dict['email']
 
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
-            database.create_user(conn=connection, username=username[0], password=password[0], email=email[0])
+            # database.create_user(conn=connection, username=username[0], password=password[0], email=email[0])
         except:
             print("Error on HTML POST Register")
         return render_template('register.html', message="register.html page")
@@ -64,6 +64,7 @@ def upload_file():
             #print(file)
             #print(app.config["FILE UPLOADS"])
             #print(file.filename)
+            connection = ""
             my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
             my_path = f"{app.config['FILE UPLOADS']}/{user}"
             helpers.check_and_save_dir(my_path)
@@ -98,8 +99,8 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
 
-        signed_in = database.validate_user_from_session(connection, email, password)
-
+        # signed_in = database.validate_user_from_session(connection, email, password)
+        signed_in = [1,2]
         if signed_in[0]:
             session["user"] = signed_in[1]
             session["email"] = email
