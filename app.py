@@ -85,7 +85,7 @@ def logout():
 @app.route('/user_profile', methods=['GET', 'POST'])  # user_session_home
 def user_profile():
     print('USING USER PROFILE')
-    print(request.method)
+    print(request)
     if "email" not in session:
         return redirect(url_for('login.html'))
 
