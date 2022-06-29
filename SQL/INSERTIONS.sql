@@ -10,16 +10,22 @@ VALUES
 ('dnutty', 'helloworld', 'dnutty@gmail.com'),
 ('bigfrog', 'helloworld', 'bigfrog@gmail.com');
 
-INSERT INTO dbo.IMAGES
-(Image_Type, Image_PATH, UserId) --C:\Users\forea\PycharmProjects\GraphTheory\#DemoData
-VALUES
-('profile', 'GraphTheory\#DemoData', 1),
-('profile', 'GraphTheory\#DemoData', 2),
-('profile', 'GraphTheory\#DemoData', 3),
-('profile', 'GraphTheory\#DemoData', 4),
-('profile', 'GraphTheory\#DemoData', 5);
+-- IMAGES
+INSERT INTO dbo.IMAGES(Image_Type, Image_PATH, UserId)
+VALUES ('profile', 'GraphTheory\#DemoData', (SELECT User_Id from USERS WHERE User_Id = 17));
+
+-- POSTS
+INSERT INTO dbo.POSTS(Title,  UserId)
+VALUES ('DemoTitle', (SELECT User_Id from USERS WHERE User_Id = 17));
+
+-- LIKES 
+INSERT INTO dbo.lLIKES(User_Id,  Post_Id, Comment_Id)
+VALUES (dbo.SELECT_ID(10), dbo.SELECT_POST_ID(10), dbo.SELECT_COMMENT_ID(10));
 
 
+-- COMMENTS
 
 SELECT * FROM dbo.USERS;
+SELECT * FROM dbo.IMAGES;
+SELECT* FROM dbo.POSTS;
 DELETE FROM dbo.USERS;

@@ -1,4 +1,6 @@
 import pyodbc
+
+
 def test_connection():
     global conn
     try:
@@ -12,5 +14,6 @@ def test_connection():
     except pyodbc.Error as err:
         print(f"Error: '{err}'")
     return conn
+
 
 connection = test_connection()

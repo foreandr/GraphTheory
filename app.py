@@ -26,7 +26,7 @@ def home():
     return render_template('index.html', message="index.html page")
 
 
-@app.route('/register', methods=['GET', 'POST'])  # homepage
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     print('EXECUTING REGISTER FUNCTION')
     if request.method == 'GET':
@@ -41,58 +41,22 @@ def register():
             email = dict['email']
 
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
-            database.create_user(conn=connection, username=username[0], password=password[0], email=email[0])
+            database.USER_INSERT(conn=connection, username=username[0], password=password[0], email=email[0])
         except:
             print("Error on HTML POST Register")
         return render_template('register.html', message="register.html page")
 
 
-@app.route('/upload', methods=['GET', 'POST'])  # homepage
-def upload_file():
-    if "email" not in session:
-        return render_template('login.html')
-    if request.method == "POST":
-        password = session["password"]
-        email = session["email"]
-        user = session["user"]
-        print("USERNAME:", user)
-        print("PASSWORD:", password)
-        print("EMAIL   :", email)
-        print("-------")
-        if request.files:
-            file = request.files['file']  # because name in HTML FORM is csv
-            #print(file)
-            #print(app.config["FILE UPLOADS"])
-            #print(file.filename)
-            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
-            my_path = f"{app.config['FILE UPLOADS']}/{user}"
-            helpers.check_and_save_dir(my_path)
-            file.save(my_path_with_file)
-
-            print(my_path)
-            print(my_path_with_file)
-            database.insert_image(
-                connection,
-                file.filename,
-                helpers.get_filetype(file.filename),
-                my_path_with_file,
-                10
-            )
-            print("-------")
-            print("Saved and completed")
-    return render_template('upload.html', message="upload.html page")
-
-
-@app.route('/login', methods=['GET', 'POST'])  # homepage
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     print('EXECUTING LOGIN FUNCTION')
     if "email" in session:
         email = session["email"]  # getting user info from session variable
-        return render_template('home.html', message=email)
+        return render_template('index.html', message=email)
     if request.method == 'GET':
         login_message = 'Please LOGIN'
         if "email" in session:
-            return redirect(url_for("email"))
+            return redirect(url_for("index"))
         return render_template('login.html', message=login_message)
     if request.method == "POST":
         email = request.form["email"]
@@ -104,10 +68,10 @@ def login():
             session["user"] = signed_in[1]
             session["email"] = email
             session["password"] = password
-            print(session)
-            print(email)
-            print(password)
-            return redirect(url_for("email"))
+            print('SESSION: ', session)
+            print('SESSION: ', email)
+            print('SESSION: ', password)
+            return redirect(url_for("home"))
         else:
             return render_template('login.html', message="wrong email or password, try again")
 
@@ -118,21 +82,46 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route('/email', methods=['GET'])  # user_session_home
-def email():
-    if "email" in session:
-        email = session["email"]  # getting user info from session variable
-        return render_template('home.html', message=email)
-    else:  # if not in session, redirect to login
-        return redirect(url_for("login"))
-
-
-@app.route('/user_profile', methods=['GET'])  # user_session_home
+@app.route('/user_profile', methods=['GET', 'POST'])  # user_session_home
 def user_profile():
+    print('USING USER PROFILE')
     if "email" not in session:
         return render_template('login.html')
     else:
-        return render_template('user_profile.html', message='PROFILE PAGE')
+        if request.method == "GET":
+            print('USING USER PROFILE - GET')
+            return render_template('user_profile.html', message='PROFILE PAGE', message2=session["email"])
+        elif request.method == "POST":
+            print(request.method)
+            password = session["password"]
+            email = session["email"]
+            user = session["user"]
+
+            print("USERNAME:", user)
+            print("PASSWORD:", password)
+            print("EMAIL   :", email)
+            print("-------")
+            if request.files:
+                file = request.files['file']  # because name in HTML FORM is csv
+                # print(file)
+                # print(app.config["FILE UPLOADS"])
+                # print(file.filename)
+                my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
+                my_path = f"{app.config['FILE UPLOADS']}/{user}"
+                helpers.check_and_save_dir(my_path)
+                file.save(my_path_with_file)
+
+                print(my_path)
+                print(my_path_with_file)
+                database.IMAGE_INSERT(
+                    connection,
+                    helpers.get_filetype(file.filename),
+                    my_path_with_file,
+                    10
+                )
+                print("-------")
+                print("Saved and completed")
+        return render_template('user_profile.html', message='PROFILE PAGE', message2=session["email"])
 
 
 if __name__ == '__main__':
