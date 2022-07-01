@@ -65,7 +65,8 @@ def login():
         signed_in = database.validate_user_from_session(connection, email, password)
 
         if signed_in[0]:
-            session["user"] = signed_in[1]
+            session["id"] = signed_in[1]
+            session["user"] = signed_in[2]
             session["email"] = email
             session["password"] = password
             print('SESSION: ', session)
@@ -85,7 +86,7 @@ def logout():
 @app.route('/user_profile', methods=['GET', 'POST'])  # user_session_home
 def user_profile():
     print('USING USER PROFILE')
-    print(request)
+    # print(request)
     if "email" not in session:
         return redirect(url_for('login'))
 
@@ -98,7 +99,9 @@ def user_profile():
         password = session["password"]
         email = session["email"]
         user = session["user"]
+        id = session["id"]
 
+        print("USERNAME:", id)
         print("USERNAME:", user)
         print("PASSWORD:", password)
         print("EMAIL   :", email)
@@ -108,21 +111,23 @@ def user_profile():
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
-            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
             my_path = f"{app.config['FILE UPLOADS']}/{user}"
+            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
+
             helpers.check_and_save_dir(my_path)
             file.save(my_path_with_file)
 
-            print(my_path)
-            print(my_path_with_file)
+            print("MY PATH:",  my_path)
+            print("MY PATH W/F:", my_path_with_file)
             database.IMAGE_INSERT(
                 connection,
                 helpers.get_filetype(file.filename),
                 my_path_with_file,
-                10
+                id
             )
             print("-------")
             print("Saved and completed")
+        # return redirect(url_for("user_profile", message="hi")) # THIS APPEARS IN THE ADDRESS BAR AS A QUERY
         return redirect(url_for("user_profile"))
 
 

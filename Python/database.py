@@ -17,12 +17,14 @@ def validate_user_from_session(conn, email, password):
     """)
     tables = cursor.fetchall()
     user = ""
+    user_id = ""
     for i in tables:
         print(i)
         user = i[1]
+        user = i[0]
     if len(tables) > 0:
         print("SIGNING IN")
-        return [True, user, email, password]
+        return [True, user_id, user, email, password]
     else:
         print("NOT SIGNING IN")
         return [False]
@@ -128,7 +130,8 @@ def IMAGE_CREATE_TABLE(conn):
 
 
 def IMAGE_INSERT(conn, image_type, image_path, user_id):
-    print(conn, image_type, image_path, user_id)
+    # print(conn, image_type, image_path, user_id)
+    pass
 
 
 '''
