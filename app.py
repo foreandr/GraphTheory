@@ -17,7 +17,7 @@ app.secret_key = 'demokey'
 
 # user = sql_functions.check_users() #list of user in DB
 
-app.config["FILE UPLOADS"] = "#UserData"
+app.config["FILE UPLOADS"] = "static/#UserData"
 
 
 @app.route('/', methods=['GET'])  # homepage
@@ -42,9 +42,9 @@ def register():
 
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
             database.USER_INSERT(conn=connection, username=username[0], password=password[0], email=email[0])
-            helpers.check_and_save_dir(f"#UserData/{username}/profile")
-            helpers.check_and_save_dir(f"#UserData/{username}/csv_files")
-            helpers.check_and_save_dir(f"#UserData/{username}/photos")
+            helpers.check_and_save_dir(f"static/#UserData/{username}/profile")
+            helpers.check_and_save_dir(f"static/#UserData/{username}/csv_files")
+            helpers.check_and_save_dir(f"static/#UserData/{username}/photos")
         except:
             print("Error on HTML POST Register")
         return render_template('register.html', message="register.html page")
@@ -90,7 +90,6 @@ def user_profile():
     # print(request)
     if "email" not in session:
         return redirect(url_for('login'))
-
     elif request.method == "GET":
         print('USING USER PROFILE - GET')
         # return redirect(url_for("user_profile"))
