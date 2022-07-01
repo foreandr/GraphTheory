@@ -5,7 +5,7 @@ import Python.db_connection as connector
 from werkzeug.datastructures import ImmutableMultiDict
 import os
 
-from Python import helpers
+import Python.helpers as helpers
 
 connection = connector.test_connection()
 TEMPLATE_DIR = os.path.abspath('./templates')
@@ -72,9 +72,7 @@ def login():
             session["user"] = signed_in[2]
             session["email"] = email
             session["password"] = password
-            print('SESSION: ', session)
-            print('SESSION: ', email)
-            print('SESSION: ', password)
+            print('SESSION INFO: ', session)
             return redirect(url_for("home"))
         else:
             return render_template('login.html', message="wrong email or password, try again")

@@ -1,7 +1,6 @@
 from Python import CONSTANTS
 from Python.db_connection import connection
-from Python.helpers import turn_pic_to_hex
-from helpers import print_green, print_title, print_error
+from Python.helpers import print_green, print_title, print_error,  turn_pic_to_hex
 
 # import CONSTANTS
 
@@ -155,7 +154,7 @@ def IMAGE_INSERT(conn):
 '''
 
 # USERS
-USER_FULL_RESET(connection)
+# USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)
