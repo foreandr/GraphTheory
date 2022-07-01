@@ -1,9 +1,16 @@
 {% extends "structure.html" %} <!-- INHEREITING FROM STRUCTURE.HTML-->
 
 {%block main %}
-<div src="{{ session.id }}"></div> <!-- SESSION VARIABLES-->
-<img src="{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}" />
 
+<!-- SESSION VARIABLES-->
+
+<div id="profile picture">
+    <h1>Profile Picture</h1>
+    <img src="{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}"  width="200" height="200" />
+</div>
+<div id="session_info">
+
+</div>
 
 <form action="user_profile" method="POST" enctype="multipart/form-data">
     <div class="custom-file">
@@ -12,4 +19,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit Button</button>
 </form>
+
+<script src="{{ url_for('static', filename='js/user_profile.js') }}"></script>
 {% endblock main %}
