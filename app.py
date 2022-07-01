@@ -42,6 +42,9 @@ def register():
 
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
             database.USER_INSERT(conn=connection, username=username[0], password=password[0], email=email[0])
+            helpers.check_and_save_dir(f"#UserData/{username}/profile")
+            helpers.check_and_save_dir(f"#UserData/{username}/csv_files")
+            helpers.check_and_save_dir(f"#UserData/{username}/photos")
         except:
             print("Error on HTML POST Register")
         return render_template('register.html', message="register.html page")
@@ -111,8 +114,8 @@ def user_profile():
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
-            my_path = f"{app.config['FILE UPLOADS']}/{user}"
-            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/{file.filename}"
+            my_path = f"{app.config['FILE UPLOADS']}/{user}/profile"
+            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg" # PREVIOUSLY USED file.filename, should use with other types
 
             helpers.check_and_save_dir(my_path)
             file.save(my_path_with_file)

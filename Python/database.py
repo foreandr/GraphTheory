@@ -1,7 +1,7 @@
 from Python import CONSTANTS
 from Python.db_connection import connection
 from Python.helpers import turn_pic_to_hex
-
+from helpers import print_green, print_title, print_error
 
 # import CONSTANTS
 
@@ -63,7 +63,7 @@ def USER_CREATE_TABLE(conn):
         """)
     conn.commit()
     cursor.close()
-    print("USER CREATE COMPLETED")
+    print_green("USER CREATE COMPLETED")
 
 
 def USER_INSERT(conn, username="Andre", password="password", email="foreandr@gmail.com"):
@@ -77,7 +77,7 @@ def USER_INSERT(conn, username="Andre", password="password", email="foreandr@gma
         """)
     conn.commit()
     cursor.close()
-    print("USER INSERT COMPLETED")
+    print_green("USER INSERT COMPLETED")
 
 
 def USER_INSERT_MULTIPLE(conn):
@@ -95,39 +95,43 @@ def USER_INSERT_MULTIPLE(conn):
         """)
     conn.commit()
     cursor.close()
-    print("USER MULTI INSERT COMPLETED")
+    print_green("USER MULTI INSERT COMPLETED")
 
 
 def USER_FULL_RESET(conn):
+    print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
-    cursor.execute(
-        f"""
-            DROP TABLE dbo.USERS;
-        """)
+
+    cursor.execute(f"DROP TABLE dbo.FILES;")
     conn.commit()
-    USER_CREATE_TABLE(connection)
-    USER_INSERT_MULTIPLE(connection)
+
+    cursor.execute(f"DROP TABLE dbo.USERS;")
+    conn.commit()
+
+    USER_CREATE_TABLE(conn)
+    USER_INSERT_MULTIPLE(conn)
+    FILES_CREATE_TABLE(conn)
     cursor.close()
-    print("USER FULL_RESET COMPLETED")
+    print_green("USER FULL_RESET COMPLETED")
 
 
-def IMAGE_CREATE_TABLE(conn):
+def FILES_CREATE_TABLE(conn):
     cursor = conn.cursor()
     cursor.execute(
         f"""
-        CREATE TABLE IMAGES
+        CREATE TABLE FILES
         (
-        Image_Id INT IDENTITY(1, 1),
-        Image_Type varchar(200),      
-        Image_PATH varchar(200),
+        File_id INT IDENTITY(1, 1),
+        File_Type varchar(200),      
+        File_PATH varchar(200),
         UserId INT NOT NULL,
         FOREIGN KEY (UserId) REFERENCES USERS(User_Id),
-        PRIMARY KEY (Image_Id)
+        PRIMARY KEY (File_id)
         );
         """)
     conn.commit()
     cursor.close()
-    print("IMAGES CREATE COMPLETED")
+    print_green("IMAGES CREATE COMPLETED")
 
 
 def IMAGE_INSERT(conn, image_type, image_path, user_id):
@@ -151,10 +155,10 @@ def IMAGE_INSERT(conn):
 '''
 
 # USERS
-# USER_FULL_RESET(connection)
+USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)
 
-# IMAGES
-# IMAGE_CREATE_TABLE(connection)
+# FILES
+# FILES_CREATE_TABLE(connection)
