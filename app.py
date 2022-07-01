@@ -101,13 +101,13 @@ def user_profile():
         user = session["user"]
         id = session["id"]
 
-        print("USERNAME:", id)
+        print("ID:", id)
         print("USERNAME:", user)
         print("PASSWORD:", password)
         print("EMAIL   :", email)
         print("-------")
         if request.files:
-            file = request.files['file']  # because name in HTML FORM is csv
+            file = request.files['file']  # because name in HTML FORM is file
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
@@ -121,9 +121,9 @@ def user_profile():
             print("MY PATH W/F:", my_path_with_file)
             database.IMAGE_INSERT(
                 connection,
-                helpers.get_filetype(file.filename),
-                my_path_with_file,
-                id
+                image_type = helpers.get_filetype(file.filename),
+                image_path = my_path_with_file,
+                user_id=id
             )
             print("-------")
             print("Saved and completed")

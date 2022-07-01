@@ -19,9 +19,10 @@ def validate_user_from_session(conn, email, password):
     user = ""
     user_id = ""
     for i in tables:
-        print(i)
+        # print(i)
+        user_id = i[0]
         user = i[1]
-        user = i[0]
+
     if len(tables) > 0:
         print("SIGNING IN")
         return [True, user_id, user, email, password]
