@@ -22,7 +22,7 @@ app.config["FILE UPLOADS"] = "#UserData"
 
 @app.route('/', methods=['GET'])  # homepage
 def home():
-    print('EXECUTING HOME FUNCTION')
+    print('EXECUTING INDEX FUNCTION')
     return render_template('index.html', message="index.html page")
 
 
@@ -87,15 +87,14 @@ def user_profile():
     print('USING USER PROFILE')
     print(request)
     if "email" not in session:
-        return redirect(url_for('login.html'))
+        return redirect(url_for('login'))
 
     elif request.method == "GET":
         print('USING USER PROFILE - GET')
         # return redirect(url_for("user_profile"))
         return render_template('user_profile.html')
     elif request.method == "POST":
-        print("got here")
-        print(request.method)
+
         password = session["password"]
         email = session["email"]
         user = session["user"]
@@ -125,8 +124,7 @@ def user_profile():
             print("-------")
             print("Saved and completed")
         return redirect(url_for("user_profile"))
-    else:
-        print("WHAT THE FUCK")
+
 
 if __name__ == '__main__':
     my_port = 5006

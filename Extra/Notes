@@ -41,10 +41,10 @@ INSERT INTO xx_BLOB(ID,IMAGE) VALUES(1,LOAD_FILE('E:/Images/jack.jpg'));
 LOAD_FILE('/some/path/image.png')
 'img' LONGBLOB NOT NULL,
 
-
+SITES:
 https://www.youtube.com/watch?v=6WruncSoCdI&ab_channel=JulianNash
 https://www.youtube.com/watch?v=iIhAfX4iek0&ab_channel=TechWithTim
-
+https://www.kaggle.com/datasets
 
 SAVE AS HEX BYTES, USE CONVERTER FUNCTION TO TURN IT INTO AN IMAGE
 
@@ -60,3 +60,6 @@ CHANGE PASSOWRDS TO HASHES OF PASSWORDS
 PROBLEM NOTES:
 - WILL NOT BE ABLE TO CHANGE USERNAME
 - NOT NULL ON VARIOUS TABLES
+- put some of my own money in the pool to start, maybe 1000$
+- create fake account
+- vc firm just to add capital for the raffle
