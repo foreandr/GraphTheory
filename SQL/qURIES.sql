@@ -1,5 +1,20 @@
 -- TABLES
-select * from dbo.USERS;
+select * from USERS;
+
+select conn.*, us1.username as 'USERNAME1', us2.username as 'USERNAME2'
+from dbo.CONNECTIONS conn
+inner join users us1
+on conn.User_Id1 = us1.User_Id
+inner join users us2
+on conn.User_Id2 = us2.User_Id
+
+SELECT * 
+FROM USERS
+WHERE email = 'foreandr@gmail.com'
+AND password = 'cooldood'
+
+SELECT *
+FROM information_schema.TABLES
 
 CREATE TABLE dbo.USERS
 (
@@ -8,6 +23,17 @@ CREATE TABLE dbo.USERS
 	password varchar(200),
 	email varchar(200),
 	PRIMARY KEY (User_Id)
+);
+
+CREATE TABLE dbo.CONNECTIONS
+(
+	Friendship_Id INT IDENTITY(1, 1),
+	User_Id1 INT,
+	User_Id2 INT,
+	
+	FOREIGN KEY (User_Id1) REFERENCES USERS(User_Id),
+	FOREIGN KEY (User_Id2) REFERENCES USERS(User_Id),
+	PRIMARY KEY (Friendship_Id, User_Id1, User_Id2)
 );
 
 CREATE TABLE dbo.IMAGES (
@@ -53,11 +79,6 @@ ALTER TABLE dbo.LIKES
 	CHECK (
 		 (User_Id IS NOT NULL OR Post_Id IS  NOT NULL)
 );
-
-
-
-
-
 
 
 

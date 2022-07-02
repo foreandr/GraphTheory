@@ -10,6 +10,8 @@ VALUES
 ('dnutty', 'helloworld', 'dnutty@gmail.com'),
 ('bigfrog', 'helloworld', 'bigfrog@gmail.com');
 
+-- CONNECTIONS
+
 -- IMAGES
 INSERT INTO dbo.IMAGES(Image_Type, Image_PATH, UserId)
 VALUES ('profile', 'GraphTheory\#DemoData', (SELECT User_Id from USERS WHERE User_Id = 17));
@@ -21,6 +23,7 @@ VALUES ('DemoTitle', (SELECT User_Id from USERS WHERE User_Id = 17));
 -- LIKES 
 INSERT INTO dbo.lLIKES(User_Id,  Post_Id, Comment_Id)
 VALUES (dbo.SELECT_ID(10), dbo.SELECT_POST_ID(10), dbo.SELECT_COMMENT_ID(10));
+
 
 
 -- COMMENTS

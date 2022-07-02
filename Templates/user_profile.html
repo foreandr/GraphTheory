@@ -4,21 +4,32 @@
 
 <!-- SESSION VARIABLES-->
 
+
+
 <div id="profile picture">
     <h1>Profile Picture</h1>
     <img src="{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}"  width="200" height="200" />
+    <form action="user_profile" method="POST" enctype="multipart/form-data">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" name="file" id="file">
+            <label class="custom-file-label" for="file">PROFILE PICTURE</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Button</button>
+    </form>
 </div>
+
+<br>
 <div id="session_info">
 
 </div>
 
-<form action="user_profile" method="POST" enctype="multipart/form-data">
-    <div class="custom-file">
-        <input type="file" class="custom-file-input" name="file" id="file">
-        <label class="custom-file-label" for="file">PROFILE PICTURE</label>
+<br>
+<div id="friends_list">
+    <div id="friends_display">
+
     </div>
-    <button type="submit" class="btn btn-primary">Submit Button</button>
-</form>
+    <button onclick="demo_friends()">SHOW FOLLOWING</button>
+</div>
 
 <script src="{{ url_for('static', filename='js/user_profile.js') }}"></script>
 {% endblock main %}
