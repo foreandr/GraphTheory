@@ -63,4 +63,6 @@ PROBLEM NOTES:
 - put some of my own money in the pool to start, maybe 1000$
 - create fake account
 - vc firm just to add capital for the raffle
-- session storage reset passwords
+- session storage reset passwords, and encrypt them
+- make friendships unique
+- figure out how to accept a pull request into my repo [essential]
