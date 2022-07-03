@@ -41,4 +41,26 @@ ON conn.User_Id2 = users2.User_id
 where users.username = @username
 GO
 
-EXECUTE GET_FRIENDS 'foreandr' ;
+GO
+ALTER PROCEDURE dbo.CUSTOM_INSERTION
+--parameters
+@host_Id INT,
+@other_Id INT
+AS
+INSERT INTO dbo.CONNECTIONS
+(User_Id1, User_Id2)
+VALUES
+(@host_Id, @other_Id);
+
+INSERT INTO dbo.CONNECTIONS
+(User_Id1, User_Id2)
+VALUES
+(@other_Id, @host_Id);
+GO
+
+
+
+EXECUTE  dbo.CUSTOM_INSERTION 1, 2 ;
+EXECUTE  dbo.CUSTOM_INSERTION 1, 3 ;
+EXECUTE  dbo.CUSTOM_INSERTION 1, 4 ;
+EXECUTE  dbo.CUSTOM_INSERTION 1, 5 ;

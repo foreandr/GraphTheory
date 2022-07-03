@@ -55,7 +55,7 @@ def USER_CREATE_TABLE(conn):
         CREATE TABLE USERS 
         (
             User_Id INT IDENTITY(1, 1) UNIQUE,
-            username varchar(200),
+            username varchar(200) UNIQUE,
             password varchar(200),
             email varchar(200) UNIQUE,
             PRIMARY KEY (User_Id)
@@ -98,19 +98,77 @@ def USER_INSERT_MULTIPLE(conn):
     print_green("USER MULTI INSERT COMPLETED")
 
 
+def CONNECTION_CREATE_TABLE(conn):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+            CREATE TABLE dbo.CONNECTIONS
+            (
+                Friendship_Id INT IDENTITY(1, 1),
+                User_Id1 INT,
+                User_Id2 INT,
+                
+                FOREIGN KEY (User_Id1) REFERENCES USERS(User_Id),
+                FOREIGN KEY (User_Id2) REFERENCES USERS(User_Id),
+                PRIMARY KEY (Friendship_Id, User_Id1, User_Id2)
+            );
+        """)
+    conn.commit()
+    cursor.close()
+    print_green("CONNECTION CREATE COMPLETED")
+
+
+def CONNECTION_INSERT(conn, user_id1, user_id2):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+        EXECUTE  dbo.CUSTOM_INSERTION {user_id1}, {user_id2} ;
+        """)
+    conn.commit()
+    cursor.close()
+    print_green('CONNECTION INSERT COMPLETED')
+
+
+def CONNECTION_INSERT_MULTIPLE(conn):
+    CONNECTION_INSERT(conn, 1, 2)
+    CONNECTION_INSERT(conn, 1, 3)
+    CONNECTION_INSERT(conn, 1, 4)
+    CONNECTION_INSERT(conn, 1, 5)
+
+    CONNECTION_INSERT(conn, 2, 3)
+    CONNECTION_INSERT(conn, 2, 4)
+    CONNECTION_INSERT(conn, 2, 5)
+
+    CONNECTION_INSERT(conn, 3, 4)
+    CONNECTION_INSERT(conn, 3, 5)
+
+    print_green("USER MULTI INSERT COMPLETED")
+
+
 def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
 
-    cursor.execute(f"DROP TABLE dbo.FILES;")
+    #cursor.execute(f"DROP TABLE dbo.FILES;")
+    # conn.commit()
+
+    cursor.execute(f"DROP TABLE dbo.CONNECTIONS;")
     conn.commit()
 
     cursor.execute(f"DROP TABLE dbo.USERS;")
     conn.commit()
 
+    # CREATE NEW USERS
     USER_CREATE_TABLE(conn)
     USER_INSERT_MULTIPLE(conn)
-    FILES_CREATE_TABLE(conn)
+
+    # FILE TABLE CREATIONS
+    # FILES_CREATE_TABLE(conn)
+
+    # CONNECTION TABLE
+    CONNECTION_CREATE_TABLE(conn)
+    CONNECTION_INSERT_MULTIPLE(conn)
+
     cursor.close()
     print_green("USER FULL_RESET COMPLETED")
 

@@ -1,5 +1,6 @@
 -- TABLES
 select * from USERS;
+SELECT * FROM dbo.CONNECTIONS;
 
 select conn.*, us1.username as 'USERNAME1', us2.username as 'USERNAME2'
 from dbo.CONNECTIONS conn
@@ -7,6 +8,8 @@ inner join users us1
 on conn.User_Id1 = us1.User_Id
 inner join users us2
 on conn.User_Id2 = us2.User_Id
+
+
 
 SELECT * 
 FROM USERS
@@ -19,7 +22,7 @@ FROM information_schema.TABLES
 CREATE TABLE dbo.USERS
 (
 	User_Id INT IDENTITY(1, 1),
-	username varchar(200),
+	username varchar(200) UNIQUE,
 	password varchar(200),
 	email varchar(200),
 	PRIMARY KEY (User_Id)
