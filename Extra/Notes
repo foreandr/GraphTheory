@@ -55,9 +55,10 @@ DATA
 POSTS
 
 
-CHANGE PASSOWRDS TO HASHES OF PASSWORDS
+
 
 PROBLEM NOTES:
+- CHANGE PASSOWRDS TO HASHES OF PASSWORDS
 - WILL NOT BE ABLE TO CHANGE USERNAME
 - NOT NULL ON VARIOUS TABLES
 - put some of my own money in the pool to start, maybe 1000$
@@ -66,3 +67,4 @@ PROBLEM NOTES:
 - session storage reset passwords, and encrypt them
 - make friendships unique
 - figure out how to accept a pull request into my repo [essential]
+- UNIT TESTING

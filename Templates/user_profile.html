@@ -1,7 +1,7 @@
 {% extends "structure.html" %} <!-- INHEREITING FROM STRUCTURE.HTML-->
 
 {%block main %}
-
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/user_profile.css') }}">
 <!-- SESSION VARIABLES-->
 
 
@@ -24,12 +24,15 @@
 </div>
 
 <br>
-<div id="friends_list">
-    <div id="friends_display">
-
-    </div>
-    <button onclick="demo_friends()">SHOW FOLLOWING</button>
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
 </div>
+
 
 <script src="{{ url_for('static', filename='js/user_profile.js') }}"></script>
 {% endblock main %}

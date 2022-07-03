@@ -1,5 +1,22 @@
-function demo_friends(){
-    document.getElementById('friends_display').innerHTML += "daskjh"
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").innerHTML += '<a href="#">Link 1</a>' // FUNCTION TO GET ALL FRINEDS
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
 }
 function show_session_items(){
     console.log("FUNCTION: show_session_items()");
@@ -15,4 +32,6 @@ function show_session_items(){
     SESSION STORAGE: ${password}
     `;
 }
+
+
 show_session_items()

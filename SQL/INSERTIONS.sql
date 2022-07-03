@@ -11,6 +11,16 @@ VALUES
 ('bigfrog', 'helloworld', 'bigfrog@gmail.com');
 
 -- CONNECTIONS
+DELETE FROM dbo.CONNECTIONS;
+INSERT INTO dbo.CONNECTIONS
+(User_Id1, User_Id2)
+VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5);
+
 
 -- IMAGES
 INSERT INTO dbo.IMAGES(Image_Type, Image_PATH, UserId)
