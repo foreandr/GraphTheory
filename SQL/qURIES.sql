@@ -88,6 +88,7 @@ drop table dbo.LIKES;
 drop table dbo.COMMENTS;
 drop table dbo.POSTS;
 drop table dbo.USERS;
+drop table dbo.CONNECTIONS;
 -- VISUALIZING TABLES
 	-- Right-click the table or the view in the Object Explorer panel
 	-- From the context menu choose Script Table as.../CREATE to.../< SomeDestination 

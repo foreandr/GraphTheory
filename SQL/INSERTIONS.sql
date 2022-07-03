@@ -15,11 +15,14 @@ DELETE FROM dbo.CONNECTIONS;
 INSERT INTO dbo.CONNECTIONS
 (User_Id1, User_Id2)
 VALUES
-(1, 1),
 (1, 2),
 (1, 3),
 (1, 4),
-(1, 5);
+(1, 5),
+(2, 3),
+(2, 4),
+(2, 5),
+(3, 4);
 
 
 -- IMAGES

@@ -1,8 +1,14 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").innerHTML += '<a href="#">Link 1</a>' // FUNCTION TO GET ALL FRINEDS
-  document.getElementById("myDropdown").classList.toggle("show");
+function myFunction(my_array) {
+    // console.log("\nFRIEND FUNCTION");
+    console.log(globalVariable.friends);
+    for (let i = 0; i < globalVariable.friends.length; i++){
+        document.getElementById("myDropdown").innerHTML += `<a href=/${globalVariable.friends[i]}>${globalVariable.friends[i]}</a>`
+    }
+    document.getElementById("myDropdown").classList.toggle("show");
+    // document.getElementById("myDropdown").innerHTML += '<a href="#">Link 1</a>' // FUNCTION TO GET ALL FRINEDS
+    // document.getElementById("myDropdown").innerHTML += '<a href="#">Link 1</a>'
 }
 
 // Close the dropdown menu if the user clicks outside of it

@@ -1,6 +1,7 @@
 from Python import CONSTANTS
 from Python.db_connection import connection
-from Python.helpers import print_green, print_title, print_error,  turn_pic_to_hex
+from Python.helpers import print_green, print_title, print_error, turn_pic_to_hex
+
 
 # import CONSTANTS
 
@@ -136,6 +137,17 @@ def FILES_CREATE_TABLE(conn):
 def IMAGE_INSERT(conn, image_type, image_path, user_id):
     # print(conn, image_type, image_path, user_id)
     pass
+
+
+def GET_FRIENDS(conn, username):
+    cursor = conn.cursor()
+    cursor.execute(f"EXECUTE GET_FRIENDS {username} ;")
+    user_friends = []
+    friends = cursor.fetchall()
+    for friend in friends:
+        # print(friend)
+        user_friends.append(friend[8])  # friend index is 8
+    return user_friends
 
 
 '''

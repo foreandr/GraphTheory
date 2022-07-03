@@ -92,8 +92,12 @@ def user_profile():
         return redirect(url_for('login'))
     elif request.method == "GET":
         print('USING USER PROFILE - GET')
+        print(session)
         # return redirect(url_for("user_profile"))
-        return render_template('user_profile.html')
+        return redirect(url_for('user_profile_name', username=session['user']))
+
+        # return render_template(f"user_profiles/{session['user']}.html", friends=my_friends,account_name=session['user'])
+
     elif request.method == "POST":
 
         password = session["password"]
@@ -112,23 +116,30 @@ def user_profile():
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
             my_path = f"{app.config['FILE UPLOADS']}/{user}/profile"
-            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg" # PREVIOUSLY USED file.filename, should use with other types
+            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
             helpers.check_and_save_dir(my_path)
             file.save(my_path_with_file)
 
-            print("MY PATH:",  my_path)
+            print("MY PATH:", my_path)
             print("MY PATH W/F:", my_path_with_file)
             database.IMAGE_INSERT(
                 connection,
-                image_type = helpers.get_filetype(file.filename),
-                image_path = my_path_with_file,
+                image_type=helpers.get_filetype(file.filename),
+                image_path=my_path_with_file,
                 user_id=id
             )
             print("-------")
             print("Saved and completed")
         # return redirect(url_for("user_profile", message="hi")) # THIS APPEARS IN THE ADDRESS BAR AS A QUERY
         return redirect(url_for("user_profile"))
+
+
+@app.route('/<username>', methods=['GET', 'POST'])
+def user_profile_name(username):
+    # return f"welcome to profile page {username}"
+    my_friends = database.GET_FRIENDS(connection, username)
+    return render_template(f"user_profile.html", friends=my_friends, account_name=username)
 
 
 if __name__ == '__main__':

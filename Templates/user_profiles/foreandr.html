@@ -1,6 +1,6 @@
-{% extends "structure.html" %} <!-- INHEREITING FROM STRUCTURE.HTML-->
-
+{% extends "user_profile.html" %}
 {%block main %}
+<div>{{ account_name }}</div>
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/user_profile.css') }}">
 
 <!-- SESSION VARIABLES-->
