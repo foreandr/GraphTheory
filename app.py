@@ -41,7 +41,7 @@ def register():
             email = dict['email']
 
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
-            helpers.full_register(connection=connection, username=username[0], password=password[0], email=email[0])
+            database.full_register(connection=connection, username=username[0], password=password[0], email=email[0])
 
             my_path = f"{app.config['FILE UPLOADS']}/{username[0]}/profile"
             my_path_with_file = f"{app.config['FILE UPLOADS']}/{username[0]}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
@@ -120,6 +120,11 @@ def user_profile():
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
+
+            print("FILE", file.content_type, type(file.content_type))
+            if file.content_type == "text/csv": # if it's a csv file, store it at the user location
+                # TODO: SAVE CSV FILES TO SPECIFIC LOCATION
+                pass
             my_path = f"{app.config['FILE UPLOADS']}/{user}/profile"
             my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 

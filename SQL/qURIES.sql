@@ -2,6 +2,10 @@
 select * from USERS;
 SELECT * FROM dbo.CONNECTIONS;
 
+SELECT * FROM information_schema.TABLES
+
+
+
 select conn.*, us1.username as 'USERNAME1', us2.username as 'USERNAME2'
 from dbo.CONNECTIONS conn
 inner join users us1
@@ -16,8 +20,6 @@ FROM USERS
 WHERE email = 'foreandr@gmail.com'
 AND password = 'cooldood'
 
-SELECT *
-FROM information_schema.TABLES
 
 CREATE TABLE dbo.USERS
 (

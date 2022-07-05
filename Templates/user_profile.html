@@ -22,22 +22,36 @@
     <br>
 </div>
 
-
 <div id="session_info">
 
 </div>
-
 
 <div class="dropdown">
     <br>
     <button onclick="myFunction()" class="dropbtn">Friends</button>
     <div id="myDropdown" class="dropdown-content">
-
     </div>
-
 </div>
 
-<div id="dataset_upload"></div>
+<br><br>
+
+<form action="user_profile" method="POST" enctype="multipart/form-data">
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" name="file" accept=".csv" id="dataset__file">
+        <label class="custom-file-label" for="file">dataset_upload</label>
+    </div>
+    <button type="submit" class="btn btn-primary">dataset_upload</button>
+</form>
+
+<br>
+
+<form action="user_profile" method="POST" enctype="multipart/form-data">
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" name="file" id="model_file">
+        <label class="custom-file-label" for="file">model_pic_video_upload</label>
+    </div>
+    <button type="submit" class="btn btn-primary">model_pic_video_upload</button>
+</form>
 
 
 

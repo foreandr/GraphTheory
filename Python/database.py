@@ -1,6 +1,7 @@
-from Python.CONSTANTS import *
+from PIL import Image
+
 from Python.db_connection import connection
-from Python.helpers import full_register, print_green, print_title, print_error, turn_pic_to_hex
+from Python.helpers import print_green, print_title, print_error, turn_pic_to_hex, check_and_save_dir
 
 
 # import CONSTANTS
@@ -81,11 +82,11 @@ def USER_INSERT(conn, username="Andre", password="password", email="foreandr@gma
 
 
 def USER_INSERT_MULTIPLE(conn):
-    full_register(conn,'foreandr', 'cooldood', 'foreandr@gmail.com')
-    full_register(conn,'andrfore', 'cooldood', 'andrfore@gmail.com')
-    full_register(conn,'cheatsie', 'cooldood', 'cheatsieog@gmail.com')
-    full_register(conn,'dnutty', 'cooldood', 'dnutty@gmail.com')
-    full_register(conn,'bigfrog', 'cooldood', 'bigfrog@gmail.com')
+    full_register(conn, 'foreandr', 'cooldood', 'foreandr@gmail.com')
+    full_register(conn, 'andrfore', 'cooldood', 'andrfore@gmail.com')
+    full_register(conn, 'cheatsie', 'cooldood', 'cheatsieog@gmail.com')
+    full_register(conn, 'dnutty', 'cooldood', 'dnutty@gmail.com')
+    full_register(conn, 'bigfrog', 'cooldood', 'bigfrog@gmail.com')
     print_green("USER MULTI INSERT COMPLETED")
 
 
@@ -200,6 +201,25 @@ def GET_FRIENDS(conn, username):
     return user_friends
 
 
+def register_user_files(username):
+    check_and_save_dir(f"../static/#UserData/{username}/profile")
+    check_and_save_dir(f"../static/#UserData/{username}/csv_files")
+    check_and_save_dir(f"../static/#UserData/{username}/photos")
+
+    my_path = f"../static/#UserData/{username}/profile"
+    my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+
+    jpgfile = Image.open("../static/#DemoData/DEFAULT_PROFILE.png")
+    check_and_save_dir(my_path)
+    jpgfile.save(my_path_with_file)
+
+
+def full_register(connection, username, password, email):
+    # print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
+    USER_INSERT(connection, username, password, email)
+    register_user_files(username)
+
+
 '''
 def IMAGE_INSERT(conn):
     cursor = conn.cursor()
@@ -216,7 +236,7 @@ def IMAGE_INSERT(conn):
 '''
 
 # USERS
-USER_FULL_RESET(connection)
+# USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)
