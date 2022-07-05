@@ -4,7 +4,7 @@ import Python.database as database
 import Python.db_connection as connector
 from werkzeug.datastructures import ImmutableMultiDict
 import os
-
+from PIL import Image
 import Python.helpers as helpers
 
 connection = connector.test_connection()
@@ -43,9 +43,17 @@ def register():
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
 
             database.USER_INSERT(conn=connection, username=username[0], password=password[0], email=email[0])
-            helpers.check_and_save_dir(f"static/#UserData/{username}/profile")
-            helpers.check_and_save_dir(f"static/#UserData/{username}/csv_files")
-            helpers.check_and_save_dir(f"static/#UserData/{username}/photos")
+            helpers.check_and_save_dir(f"static/#UserData/{username[0]}/profile")
+            helpers.check_and_save_dir(f"static/#UserData/{username[0]}/csv_files")
+            helpers.check_and_save_dir(f"static/#UserData/{username[0]}/photos")
+
+            my_path = f"{app.config['FILE UPLOADS']}/{username[0]}/profile"
+            my_path_with_file = f"{app.config['FILE UPLOADS']}/{username[0]}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+
+            jpgfile = Image.open("static/#DemoData\DEFAULT_PROFILE.png")
+            helpers.check_and_save_dir(my_path)
+            jpgfile.save(my_path_with_file)
+
         except:
             print("Error on HTML POST Register")
         return render_template('register.html', message="register.html page")
