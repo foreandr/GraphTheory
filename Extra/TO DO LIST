@@ -10,3 +10,6 @@ DATABASE:
     6. CREATE FEED ON PROFILE
     7. USE SAME METHOD TO CREATE COMPLETE CHRONOLOGICAL FEED ON HOME
     8. CREATE WAY TO FILTER BY FILETYPE
+
+9. CITIZEN OF THE NETWORK STATE, AND GOERGE HOTZ LINKED IN COMPANY
+// var new_string = `<img src={{url_for('static' ,filename='#UserData/${name}/profile/profile_pic.jpg')}}' width='200' height='200'/>`

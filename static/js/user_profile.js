@@ -34,11 +34,11 @@ window.onclick = function(event) {
   }
 }
 function show_session_items(){
-    console.log("FUNCTION: show_session_items()");
+    // console.log("FUNCTION: show_session_items()");
     email = localStorage.getItem("email");
     password = localStorage.getItem("password");
 
-    //console.log(email)
+    // console.log(email)
     // console.log(password)
 
     document.getElementById('session_info').innerHTML = `
@@ -48,5 +48,15 @@ function show_session_items(){
     `;
 }
 
+// PRINT GLOBAL VARS
+//console.log(globalVariable.friends)
+//console.log(globalVariable.name)
 
+// FAILING TO GET USER PICTURE
+//var my_profile_pic_stirng = "<img src=\"{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}\"  width='200' height='200' />";
+//console.log(my_profile_pic_stirng);
+//const noSpecialCharacters = my_profile_pic_stirng.replace(/[^a-zA-Z0-9 ]/g, '');
+//console.log(noSpecialCharacters)
+//document.getElementById('my_picture').innerHTML = my_profile_pic_stirng;
+//console.log("ajsdals");
 show_session_items()

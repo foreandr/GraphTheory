@@ -54,6 +54,14 @@ FRIENDS
 DATA
 POSTS
 
+    var image_home = document.getElementById('my_picture');
+    var value = document.getElementById('my_picture').innerHTML
+    console.log(value);
+
+    let image = document.createElement("img");
+    image.src = "/#UserData/foreandr/profile/profile_pic.jpg"
+    console.log(image);
+    image_home.appendChild(image);
 
 
 
@@ -69,3 +77,7 @@ PROBLEM NOTES:
 - figure out how to accept a pull request into my repo [essential]
 - UNIT TESTING
 - HAVE TO MAKE USERNAMES EXCLUSIVE
+-FRIENDS MODEL VS FOLLWING MODEL?
+- SECTION FOR THEM TO INPUT DESIRED FEATURES
+-BONUS POINTS FOR SHOWING CODE
+- have 1 add, people bid for it, bid goes into the pot

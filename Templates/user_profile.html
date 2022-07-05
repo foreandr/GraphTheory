@@ -7,13 +7,17 @@
 <div>{{account_name}}</div>
 <div id="profile picture">
     <h1>Profile Picture</h1>
-    <img src="{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}"  width="200" height="200" />
+    <img src="{{url_for('static', filename='#UserData/' + account_name + '/profile/profile_pic.jpg')}}\"  width='200' height='200' />
+
+    <div>
+        <img/>
+    </div>
     <form action="user_profile" method="POST" enctype="multipart/form-data">
         <div class="custom-file">
             <input type="file" class="custom-file-input" name="file" id="file">
             <label class="custom-file-label" for="file">PROFILE PICTURE</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit Button</button>
+        <button type="submit" class="btn btn-primary">Add New Picture</button>
     </form>
     <br>
 </div>
@@ -25,18 +29,21 @@
 
 
 <div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-  <div id="myDropdown" class="dropdown-content">
+    <br>
+    <button onclick="myFunction()" class="dropbtn">Friends</button>
+    <div id="myDropdown" class="dropdown-content">
 
-  </div>
+    </div>
 
 </div>
+
+<div id="dataset_upload"></div>
 
 
 
 <script>
     function get_wanted_string(string){
-        console.log(string, string.length);
+        // console.log(string, string.length);
         if (string.length == 0 || string.length == 2){
             return "NO FRIENDS";
         }
@@ -62,10 +69,14 @@
         // console.log(i + ":  " + my_friend_Array[i]);
         name_array.push(get_wanted_string(my_friend_Array[i]));
     }
-    console.log("INSIDE HTML:" + name_array);
+    // console.log("INSIDE HTML:" + name_array);
+
     var globalVariable= {
-        friends: name_array
+        friends: name_array,
+        name:'{{account_name}}'
     };
+
+
 </script>
 <script src="{{ url_for('static', filename='js/user_profile.js') }}"></script>
 {% endblock main %}

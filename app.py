@@ -41,6 +41,7 @@ def register():
             email = dict['email']
 
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
+
             database.USER_INSERT(conn=connection, username=username[0], password=password[0], email=email[0])
             helpers.check_and_save_dir(f"static/#UserData/{username}/profile")
             helpers.check_and_save_dir(f"static/#UserData/{username}/csv_files")
@@ -139,6 +140,7 @@ def user_profile():
 def user_profile_name(username):
     # return f"welcome to profile page {username}"
     my_friends = database.GET_FRIENDS(connection, username)
+    # print(send_string)
     return render_template(f"user_profile.html", friends=my_friends, account_name=username)
 
 

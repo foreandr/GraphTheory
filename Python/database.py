@@ -149,7 +149,7 @@ def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
 
-    #cursor.execute(f"DROP TABLE dbo.FILES;")
+    # cursor.execute(f"DROP TABLE dbo.FILES;")
     # conn.commit()
 
     cursor.execute(f"DROP TABLE dbo.CONNECTIONS;")
@@ -198,6 +198,7 @@ def IMAGE_INSERT(conn, image_type, image_path, user_id):
 
 
 def GET_FRIENDS(conn, username):
+    print('GET FRIENDS: ', username)
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE GET_FRIENDS {username} ;")
     user_friends = []
