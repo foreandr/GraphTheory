@@ -1,5 +1,5 @@
 import os.path
-
+import Python.database as database
 
 class bcolors:
     HEADER = '\033[95m'
@@ -29,11 +29,21 @@ def save_to_file(filename="demofile"):
     save_path = 'GraphTheory'
     completeName = os.path.join(save_path, filename + ".csv")
 
+def register_user_files(username):
+    check_and_save_dir(f"static/#UserData/{username[0]}/profile")
+    check_and_save_dir(f"static/#UserData/{username[0]}/csv_files")
+    check_and_save_dir(f"static/#UserData/{username[0]}/photos")
+
+def full_register(connection, username, password, email):
+    print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
+    database.USER_INSERT(connection, username, password, email)
+    register_user_files(username)
 
 def turn_pic_to_hex(filepath="../#UserData/userpic.jpg"):
     with open(filepath, 'rb') as f:
         content = f.read()
     return content
+
 
 
 def check_and_save_dir(path):

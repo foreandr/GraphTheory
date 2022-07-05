@@ -1,6 +1,6 @@
-from Python import CONSTANTS
+from Python.CONSTANTS import *
 from Python.db_connection import connection
-from Python.helpers import print_green, print_title, print_error, turn_pic_to_hex
+from Python.helpers import full_register, print_green, print_title, print_error, turn_pic_to_hex
 
 
 # import CONSTANTS
@@ -81,20 +81,11 @@ def USER_INSERT(conn, username="Andre", password="password", email="foreandr@gma
 
 
 def USER_INSERT_MULTIPLE(conn):
-    cursor = conn.cursor()
-    cursor.execute(
-        f"""
-            INSERT INTO dbo.USERS
-            (username, password, email)
-            VALUES
-            ('foreandr', 'cooldood', 'foreandr@gmail.com'),
-            ('andrfore', '77734381', 'andrfore@gmail.com'),
-            ('cheatsie', 'doodmanman', 'cheatsieog@gmail.com'),
-            ('dnutty', 'helloworld', 'dnutty@gmail.com'),
-            ('bigfrog', 'helloworld', 'bigfrog@gmail.com');
-        """)
-    conn.commit()
-    cursor.close()
+    full_register(conn,'foreandr', 'cooldood', 'foreandr@gmail.com')
+    full_register(conn,'andrfore', 'cooldood', 'andrfore@gmail.com')
+    full_register(conn,'cheatsie', 'cooldood', 'cheatsieog@gmail.com')
+    full_register(conn,'dnutty', 'cooldood', 'dnutty@gmail.com')
+    full_register(conn,'bigfrog', 'cooldood', 'bigfrog@gmail.com')
     print_green("USER MULTI INSERT COMPLETED")
 
 
@@ -225,7 +216,7 @@ def IMAGE_INSERT(conn):
 '''
 
 # USERS
-# USER_FULL_RESET(connection)
+USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)
