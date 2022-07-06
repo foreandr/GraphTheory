@@ -38,16 +38,15 @@
 <form action="user_profile" method="POST" enctype="multipart/form-data">
     <div class="custom-file">
         <input type="file" class="custom-file-input" name="file" accept=".csv" id="dataset__file">
-        <label class="custom-file-label" for="file">dataset_upload</label>
-    </div>
-    <div id="my_description">
-        <div>
-            <label><b>CSV Description</b></label>
-        </div>
-        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+        <label class="custom-file-label" for="file">choose csv file</label>
     </div>
 
-    <button type="submit" class="btn btn-primary">dataset_upload</button>
+    <div id="my_description">
+        <label><b>CSV Description</b></label>
+        <input type="text" id="description" name="description">
+    </div>
+
+    <button type="submit" class="btn btn-primary">dataset upload</button>
 </form>
 
 <br>

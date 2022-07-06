@@ -118,8 +118,8 @@ def user_profile():
         print("-------")
         if request.files:
             file = request.files['file']  # because name in HTML FORM is file
-            print(request.headers)
-            my_description = "test"
+            # print(request.headers)
+            my_description = request.form["description"]
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)

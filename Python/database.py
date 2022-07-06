@@ -1,3 +1,5 @@
+import shutil
+
 from PIL import Image
 
 from Python.db_connection import connection
@@ -235,6 +237,7 @@ def register_user_files(username):
 def full_register(connection, username, password, email):
     # print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
     # TODO: DELETE ALL FILES ASSOCIATED WITH USER
+    DELETE_USER_FILES(username)
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
 
@@ -245,11 +248,24 @@ def GET_FILES(conn, username):
     cursor.execute(f"EXECUTE GET_FILES {username} ;")
     user_friends = []
     friends = cursor.fetchall()
+    # TODO: DO THIS PART
     # for friend in friends:
     #     # print(friend)
     #    user_friends.append(friend[8])  # friend index is 8
     return user_friends
 
+def DELETE_USER_FILES(user):
+    file_location = f"../static/#UserData/{user}/profile"
+    file_location2 = f"../static/#UserData/{user}/csv_files"
+    file_location3 = f"../static/#UserData/{user}/photos"
+
+    user_folders = [file_location, file_location2, file_location3]
+    ## Try to remove tree; if failed show an error using try...except on screen
+    for i in user_folders:
+        try:
+            shutil.rmtree(i)
+        except OSError as e:
+            print("Error: %s - %s." % (e.filename, e.strerror))
 
 '''
 def IMAGE_INSERT(conn):
