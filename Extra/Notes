@@ -86,3 +86,4 @@ PROBLEM NOTES:
 - max file upload size
 - take away abilities to upload when not on your own page
 - add upload dates to files
+-using full path in DB, can do so, but will need ot be changed for remote
