@@ -59,9 +59,7 @@
 <div>
     Location for putting files
     <div id="files">
-        {{ filenames }}
-        {{ descriptions }}
-        {{ dates }}
+
     </div>
 </div>
 
@@ -116,9 +114,12 @@
     console.log(descriptions_list);
     console.log(dates_list);
 
+    for (let i = 0; i < filenames_list.length; i++){
+        if (filenames_list[i] != ""){
+             document.getElementById("files").innerHTML += `<div>${filenames_list[i]} | ${descriptions_list[i]} | ${dates_list[i]}</div>`
+        }
 
-
-
+    }
 
 
 </script>
