@@ -1,6 +1,7 @@
 import shutil
 
 from PIL import Image
+import datetime
 
 from Python.db_connection import connection
 from Python.helpers import print_green, print_title, print_error, turn_pic_to_hex, check_and_save_dir, print_warning
@@ -236,23 +237,38 @@ def register_user_files(username):
 
 def full_register(connection, username, password, email):
     # print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
-    # TODO: DELETE ALL FILES ASSOCIATED WITH USER
     DELETE_USER_FILES(username)
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
 
 
 def GET_FILES(conn, username):
-    print('GET FRIENDS: ', username)
+    print('GET FILES: ', username)
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE GET_FILES {username} ;")
-    user_friends = []
-    friends = cursor.fetchall()
-    # TODO: DO THIS PART
-    # for friend in friends:
-    #     # print(friend)
-    #    user_friends.append(friend[8])  # friend index is 8
-    return user_friends
+    user_files = []
+    files = cursor.fetchall()
+    for file in files:
+        # print(friend)
+        user_files.append([file[1], file[2], file[4]])  # friend index is 8
+    print(user_files)
+
+    file_names = ""
+    descriptions = ""
+    dates = ""
+    for i in user_files:
+        filename = i[0].split('/')[-1] # split the string by / and get the last for filename\
+        file_names += filename + "//"
+
+        description = i[1]
+        descriptions += description + "//"
+
+        t = str(i[2])
+        dates += t + "//"
+    print(file_names)
+    print(descriptions)
+    print(dates)
+    return file_names, descriptions, dates
 
 def DELETE_USER_FILES(user):
     file_location = f"../static/#UserData/{user}/profile"
@@ -291,3 +307,4 @@ def IMAGE_INSERT(conn):
 # FILES
 # FILES_CREATE_TABLE(connection)
 # FILES_CREATE_TABLE(connection)
+# GET_FILES(connection, 'foreandr')

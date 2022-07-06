@@ -152,9 +152,14 @@ def user_profile():
 def user_profile_name(username):
     # return f"welcome to profile page {username}"
     my_friends = database.GET_FRIENDS(connection, username)
-    my_files = database.GET_FILES(connection, username)
+    filenames, descriptions, dates = database.GET_FILES(connection, username)
     # print(send_string)
-    return render_template(f"user_profile.html", friends=my_friends, account_name=username)
+    return render_template(f"user_profile.html",
+                           friends=my_friends,
+                           account_name=username,
+                           filenames=filenames,
+                           descriptions= descriptions,
+                           dates=dates)
 
 
 if __name__ == '__main__':
