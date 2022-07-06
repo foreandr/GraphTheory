@@ -118,6 +118,8 @@ def user_profile():
         print("-------")
         if request.files:
             file = request.files['file']  # because name in HTML FORM is file
+            print(request.headers)
+            my_description = "test"
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
@@ -136,7 +138,9 @@ def user_profile():
             database.FILE_INSERT(
                 connection,
                 image_path=my_path_with_file,
+                description=my_description,
                 user_id=id
+
             )
             print("OUT OF CHECKING FILETYPE-------")
             print("Saved and completed")

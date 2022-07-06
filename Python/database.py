@@ -1,7 +1,7 @@
 from PIL import Image
 
 from Python.db_connection import connection
-from Python.helpers import print_green, print_title, print_error, turn_pic_to_hex, check_and_save_dir
+from Python.helpers import print_green, print_title, print_error, turn_pic_to_hex, check_and_save_dir, print_warning
 
 
 # import CONSTANTS
@@ -140,15 +140,23 @@ def CONNECTION_INSERT_MULTIPLE(conn):
 def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
+    try:
+        cursor.execute(f"DROP TABLE dbo.FILES;")
+        conn.commit()
+    except:
+        print_warning("NO dbo.FILES")
 
-    cursor.execute(f"DROP TABLE dbo.FILES;")
-    conn.commit()
+    try:
+        cursor.execute(f"DROP TABLE dbo.CONNECTIONS;")
+        conn.commit()
+    except:
+        print_warning("NO dbo.dbo.CONNECTIONS")
 
-    cursor.execute(f"DROP TABLE dbo.CONNECTIONS;")
-    conn.commit()
-
-    cursor.execute(f"DROP TABLE dbo.USERS;")
-    conn.commit()
+    try:
+        cursor.execute(f"DROP TABLE dbo.USERS;")
+        conn.commit()
+    except:
+        print_warning("NO dbo.dbo.USERS")
 
     # CREATE NEW USERS
     USER_CREATE_TABLE(conn)
@@ -173,8 +181,9 @@ def FILES_CREATE_TABLE(conn):
         (
         File_id INT IDENTITY(1, 1),   
         File_PATH varchar(200),
-        UserId INT NOT NULL,
-        Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
+        Description varchar(400),
+        UserId INT NOT NULL,        
+        Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,      
         FOREIGN KEY (UserId) REFERENCES USERS(User_Id),
         PRIMARY KEY (File_id)
         );
@@ -184,14 +193,14 @@ def FILES_CREATE_TABLE(conn):
     print_green("FILES CREATE COMPLETED")
 
 
-def FILE_INSERT(conn, image_path="NO PATH", user_id=1):
+def FILE_INSERT(conn, image_path="NO PATH", description="default description", user_id=1):
     cursor = conn.cursor()
     cursor.execute(
         f"""
         INSERT INTO dbo.FILES
-        (File_PATH, UserId)
+        (File_PATH, Description, UserId)
         VALUES
-        ('{image_path}', '{user_id}');
+        ('{image_path}','{description}','{user_id}');
         """)
     conn.commit()
     cursor.close()
@@ -218,7 +227,7 @@ def register_user_files(username):
     my_path = f"../static/#UserData/{username}/profile"
     my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
-    jpgfile = Image.open("./#DemoData/DEFAULT_PROFILE.png")
+    jpgfile = Image.open("C:/Users/forea/PycharmProjects/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)
     jpgfile.save(my_path_with_file)
 
@@ -229,16 +238,18 @@ def full_register(connection, username, password, email):
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
 
+
 def GET_FILES(conn, username):
     print('GET FRIENDS: ', username)
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE GET_FILES {username} ;")
     user_friends = []
     friends = cursor.fetchall()
-    #for friend in friends:
+    # for friend in friends:
     #     # print(friend)
     #    user_friends.append(friend[8])  # friend index is 8
     return user_friends
+
 
 '''
 def IMAGE_INSERT(conn):

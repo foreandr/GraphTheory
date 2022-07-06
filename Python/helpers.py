@@ -23,6 +23,9 @@ def print_title(string):
 def print_error(string):
     print(bcolors.FAIL + str(string) + bcolors.ENDC)
 
+def print_warning(string):
+    print(bcolors.WARNING + str(string) + bcolors.ENDC)
+
 
 def save_to_file(filename="demofile"):
     save_path = 'GraphTheory'
