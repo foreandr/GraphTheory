@@ -141,8 +141,8 @@ def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
 
-    # cursor.execute(f"DROP TABLE dbo.FILES;")
-    # conn.commit()
+    cursor.execute(f"DROP TABLE dbo.FILES;")
+    conn.commit()
 
     cursor.execute(f"DROP TABLE dbo.CONNECTIONS;")
     conn.commit()
@@ -155,7 +155,7 @@ def USER_FULL_RESET(conn):
     USER_INSERT_MULTIPLE(conn)
 
     # FILE TABLE CREATIONS
-    # FILES_CREATE_TABLE(conn)
+    FILES_CREATE_TABLE(conn)
 
     # CONNECTION TABLE
     CONNECTION_CREATE_TABLE(conn)
@@ -171,22 +171,31 @@ def FILES_CREATE_TABLE(conn):
         f"""
         CREATE TABLE FILES
         (
-        File_id INT IDENTITY(1, 1),
-        File_Type varchar(200),      
+        File_id INT IDENTITY(1, 1),   
         File_PATH varchar(200),
         UserId INT NOT NULL,
+        Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (UserId) REFERENCES USERS(User_Id),
         PRIMARY KEY (File_id)
         );
         """)
     conn.commit()
     cursor.close()
-    print_green("IMAGES CREATE COMPLETED")
+    print_green("FILES CREATE COMPLETED")
 
 
-def IMAGE_INSERT(conn, image_type, image_path, user_id):
-    # print(conn, image_type, image_path, user_id)
-    pass
+def FILE_INSERT(conn, image_path="NO PATH", user_id=1):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+        INSERT INTO dbo.FILES
+        (File_PATH, UserId)
+        VALUES
+        ('{image_path}', '{user_id}');
+        """)
+    conn.commit()
+    cursor.close()
+    print_green("FILE INSERT COMPLETED")
 
 
 def GET_FRIENDS(conn, username):
@@ -209,16 +218,27 @@ def register_user_files(username):
     my_path = f"../static/#UserData/{username}/profile"
     my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
-    jpgfile = Image.open("../static/#DemoData/DEFAULT_PROFILE.png")
+    jpgfile = Image.open("./#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)
     jpgfile.save(my_path_with_file)
 
 
 def full_register(connection, username, password, email):
     # print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
+    # TODO: DELETE ALL FILES ASSOCIATED WITH USER
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
 
+def GET_FILES(conn, username):
+    print('GET FRIENDS: ', username)
+    cursor = conn.cursor()
+    cursor.execute(f"EXECUTE GET_FILES {username} ;")
+    user_friends = []
+    friends = cursor.fetchall()
+    #for friend in friends:
+    #     # print(friend)
+    #    user_friends.append(friend[8])  # friend index is 8
+    return user_friends
 
 '''
 def IMAGE_INSERT(conn):
@@ -242,4 +262,5 @@ def IMAGE_INSERT(conn):
 # USER_INSERT_MULTIPLE(connection)
 
 # FILES
+# FILES_CREATE_TABLE(connection)
 # FILES_CREATE_TABLE(connection)

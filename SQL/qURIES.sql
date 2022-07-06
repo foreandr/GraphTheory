@@ -85,6 +85,20 @@ ALTER TABLE dbo.LIKES
 		 (User_Id IS NOT NULL OR Post_Id IS  NOT NULL)
 );
 
+DROP TABLE FILES;
+CREATE TABLE FILES
+(
+File_id INT IDENTITY(1, 1),   
+File_PATH varchar(200),
+UserId INT NOT NULL,
+Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (UserId) REFERENCES USERS(User_Id),
+PRIMARY KEY (File_id)
+)
+INSERT INTO dbo.FILES
+        (File_PATH, UserId)
+        VALUES
+        ('{image_path}', '{user_id}')
 
 
 -- DROP ORDER

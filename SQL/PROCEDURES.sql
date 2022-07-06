@@ -42,6 +42,21 @@ where users.username = @username
 GO
 
 GO
+ALTER PROCEDURE dbo.GET_FILES
+@username VARCHAR(200)
+AS
+SELECT files.*, users.*
+FROM dbo.FILES files
+
+INNER JOIN dbo.USERS users
+ON files.UserId = users.User_Id
+
+where users.username = @username
+GO
+
+EXECUTE dbo.GET_FILES foreandr;
+
+GO
 ALTER PROCEDURE dbo.CUSTOM_INSERTION
 --parameters
 @host_Id INT,

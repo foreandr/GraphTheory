@@ -46,7 +46,7 @@ def register():
             my_path = f"{app.config['FILE UPLOADS']}/{username[0]}/profile"
             my_path_with_file = f"{app.config['FILE UPLOADS']}/{username[0]}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
-            jpgfile = Image.open("static/#DemoData/DEFAULT_PROFILE.png")
+            jpgfile = Image.open("#DemoData/DEFAULT_PROFILE.png")
             helpers.check_and_save_dir(my_path)
             jpgfile.save(my_path_with_file)
 
@@ -99,6 +99,7 @@ def user_profile():
         print('USING USER PROFILE - GET')
         print(session)
         # return redirect(url_for("user_profile"))
+
         return redirect(url_for('user_profile_name', username=session['user']))
 
         # return render_template(f"user_profiles/{session['user']}.html", friends=my_friends,account_name=session['user'])
@@ -120,26 +121,24 @@ def user_profile():
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
-
+            my_path_with_file = ""
             print("FILE", file.content_type, type(file.content_type))
             if file.content_type == "text/csv": # if it's a csv file, store it at the user location
-                # TODO: SAVE CSV FILES TO SPECIFIC LOCATION
-                pass
-            my_path = f"{app.config['FILE UPLOADS']}/{user}/profile"
-            my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+                my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/csv_files/{file.filename}"
+                file.save(my_path_with_file)
 
-            helpers.check_and_save_dir(my_path)
-            file.save(my_path_with_file)
+            elif file.content_type == "image/jpeg" or file.content_type == "image/png":
+                my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg" # overriding file type
+                file.save(my_path_with_file)
 
-            print("MY PATH:", my_path)
+            # print("MY PATH:", my_path)
             print("MY PATH W/F:", my_path_with_file)
-            database.IMAGE_INSERT(
+            database.FILE_INSERT(
                 connection,
-                image_type=helpers.get_filetype(file.filename),
                 image_path=my_path_with_file,
                 user_id=id
             )
-            print("-------")
+            print("OUT OF CHECKING FILETYPE-------")
             print("Saved and completed")
         # return redirect(url_for("user_profile", message="hi")) # THIS APPEARS IN THE ADDRESS BAR AS A QUERY
         return redirect(url_for("user_profile"))
@@ -149,6 +148,7 @@ def user_profile():
 def user_profile_name(username):
     # return f"welcome to profile page {username}"
     my_friends = database.GET_FRIENDS(connection, username)
+    my_files = database.GET_FILES(connection, username)
     # print(send_string)
     return render_template(f"user_profile.html", friends=my_friends, account_name=username)
 
