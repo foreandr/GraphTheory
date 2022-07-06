@@ -24,27 +24,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\static\#DemoData\CSV1.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\static\#DemoData\CSV3.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\static\#DemoData\CSV5.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\static\#UserData\foreandr\csv_files\CSV2.csv">
           <value>
             <Attribute>

@@ -100,6 +100,26 @@
         name:'{{account_name}}'
     };
 
+    var filenames = '{{filenames}}'
+    var descriptions = '{{descriptions}}'
+    var dates = '{{ dates }}'
+
+    console.log(filenames)
+    console.log(descriptions)
+    console.log(dates)
+
+    filenames_list = filenames.split('//');
+    descriptions_list = descriptions.split('//');
+    dates_list = dates.split('//');
+
+    console.log(filenames_list);
+    console.log(descriptions_list);
+    console.log(dates_list);
+
+
+
+
+
 
 </script>
 <script src="{{ url_for('static', filename='js/user_profile.js') }}"></script>

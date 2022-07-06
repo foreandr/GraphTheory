@@ -1,7 +1,7 @@
 -- TABLES
 select * from USERS;
 SELECT * FROM dbo.CONNECTIONS;
-
+SELECT * FROM dbo.FILES;
 SELECT * FROM information_schema.TABLES
 
 
@@ -95,10 +95,11 @@ Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (UserId) REFERENCES USERS(User_Id),
 PRIMARY KEY (File_id)
 )
+
 INSERT INTO dbo.FILES
-        (File_PATH, UserId)
-        VALUES
-        ('{image_path}', '{user_id}')
+(File_PATH, UserId)
+VALUES
+('no string', 1)
 
 
 -- DROP ORDER

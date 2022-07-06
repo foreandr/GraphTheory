@@ -125,12 +125,12 @@ def user_profile():
             # print(file.filename)
             my_path_with_file = ""
             print("FILE", file.content_type, type(file.content_type))
-            if file.content_type == "text/csv": # if it's a csv file, store it at the user location
+            if file.content_type == "text/csv":  # if it's a csv file, store it at the user location
                 my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/csv_files/{file.filename}"
                 file.save(my_path_with_file)
 
             elif file.content_type == "image/jpeg" or file.content_type == "image/png":
-                my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg" # overriding file type
+                my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg"  # overriding file type
                 file.save(my_path_with_file)
 
             # print("MY PATH:", my_path)
@@ -158,8 +158,9 @@ def user_profile_name(username):
                            friends=my_friends,
                            account_name=username,
                            filenames=filenames,
-                           descriptions= descriptions,
-                           dates=dates)
+                           descriptions=descriptions,
+                           dates=dates
+                           )
 
 
 if __name__ == '__main__':
