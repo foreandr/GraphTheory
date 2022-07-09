@@ -163,10 +163,13 @@ def user_profile_name(username):
                            )
 
 
-@app.route("/get_csv", methods=['GET', 'POST'])
-def get_csv():
+@app.route("/get_csv/<account_name>/<folder>/<filename>", methods=['GET', 'POST'])
+def get_csv(account_name,folder, filename):
+    # with open("outputs/Adjacency.csv") as fp:
+    #     csv = fp.read()
     csv = '1,2,3\n4,5,6\n'
-    print()
+    print('Filename:', account_name, folder,filename)
+
     return Response(
         csv,
         mimetype="text/csv",

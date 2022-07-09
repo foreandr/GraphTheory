@@ -117,7 +117,7 @@
     for (let i = 0; i < filenames_list.length; i++){
         if (filenames_list[i] != ""){
              document.getElementById("files").innerHTML += `<div>
-             <a href="/get_csv">
+             <a href="/get_csv/{{account_name}}/csv_files/${filenames_list[i]}">
                  ${filenames_list[i]}
              </a>
              | ${descriptions_list[i]}
