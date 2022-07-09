@@ -88,3 +88,4 @@ PROBLEM NOTES:
 - add upload dates to files
 - using full path in DB, can do so, but will need ot be changed for remote
 - DIRECT DONATIONS ONLY 10% GOES TO ME OR SOMETHING INSANE
+- filesize in FILE databse addition

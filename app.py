@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, session, redirect, url_for, g
+from flask import Flask, render_template, request, session, redirect, url_for, g, send_from_directory, Response
 import Python.database as database
 import Python.db_connection as connector
 from werkzeug.datastructures import ImmutableMultiDict
@@ -17,7 +17,7 @@ app.secret_key = 'demokey'
 
 # user = sql_functions.check_users() #list of user in DB
 
-app.config["FILE UPLOADS"] = "static/#UserData"
+app.config["FILE UPLOADS"] = "static\#UserData"
 
 
 @app.route('/', methods=['GET'])  # homepage
@@ -153,7 +153,7 @@ def user_profile_name(username):
     # return f"welcome to profile page {username}"
     my_friends = database.GET_FRIENDS(connection, username)
     filenames, descriptions, dates = database.GET_FILES(connection, username)
-    # print(send_string)
+    print("FILENAMES: ", filenames)
     return render_template(f"user_profile.html",
                            friends=my_friends,
                            account_name=username,
@@ -161,6 +161,17 @@ def user_profile_name(username):
                            descriptions=descriptions,
                            dates=dates
                            )
+
+
+@app.route("/get_csv", methods=['GET', 'POST'])
+def get_csv():
+    csv = '1,2,3\n4,5,6\n'
+    print()
+    return Response(
+        csv,
+        mimetype="text/csv",
+        headers={"Content-disposition":
+                     "attachment; filename=myplot.csv"})
 
 
 if __name__ == '__main__':

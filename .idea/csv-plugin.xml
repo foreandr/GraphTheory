@@ -31,6 +31,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\static\#UserData\foreandr\csv_files\CSV6.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

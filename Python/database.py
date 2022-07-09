@@ -251,7 +251,7 @@ def GET_FILES(conn, username):
     for file in files:
         # print(friend)
         user_files.append([file[1], file[2], file[4]])  # friend index is 8
-    print(user_files)
+    # print(user_files)
 
     file_names = ""
     descriptions = ""
@@ -265,9 +265,9 @@ def GET_FILES(conn, username):
 
         t = str(i[2])
         dates += t + "//"
-    print(file_names)
-    print(descriptions)
-    print(dates)
+    # print(file_names)
+    # print(descriptions)
+    # print(dates)
     return file_names, descriptions, dates
 
 def DELETE_USER_FILES(user):
