@@ -142,6 +142,30 @@ def CONNECTION_INSERT_MULTIPLE(conn):
     print_green("USER MULTI INSERT COMPLETED")
 
 
+def USER_INSERT_MULTPLE_FILES(conn):
+    FILE_INSERT(conn,
+                image_path=f'static/#UserData/foreandr/csv_files/CSV1.csv',
+                description=f"description 1",
+                user_id=1)
+    FILE_INSERT(conn,
+                image_path=f'static/#UserData/andrfore/csv_files/CSV5.csv',
+                description=f"description 5",
+                user_id=2)
+    FILE_INSERT(conn,
+                image_path=f'static/#UserData/cheatsie/csv_files/CSV3.csv',
+                description=f"description 3",
+                user_id=3)
+    FILE_INSERT(conn,
+                image_path=f'static/#UserData/bigfrog/csv_files/CSV2.csv',
+                description=f"description 2",
+                user_id=5)
+    FILE_INSERT(conn,
+                image_path=f'static/#UserData/dnutty/csv_files/CSV4.csv',
+                description=f"description 4",
+                user_id=4)
+    print_green("USER INSERT MULTPLE FILES COMPLETED")
+
+
 def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
@@ -169,6 +193,7 @@ def USER_FULL_RESET(conn):
 
     # FILE TABLE CREATIONS
     FILES_CREATE_TABLE(conn)
+    USER_INSERT_MULTPLE_FILES(conn)
 
     # CONNECTION TABLE
     CONNECTION_CREATE_TABLE(conn)
@@ -199,6 +224,7 @@ def FILES_CREATE_TABLE(conn):
 
 
 def FILE_INSERT(conn, image_path="NO PATH", description="default description", user_id=1):
+    print("MY_PATHl :", image_path)
     cursor = conn.cursor()
     cursor.execute(
         f"""
@@ -256,7 +282,6 @@ def register_user_files(username):
     elif username == 'dnutty':
         default_csv = r'../#DemoData/CSV4.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV4.csv'
-
     elif username == 'andrfore':
         default_csv = r'../#DemoData/CSV5.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV5.csv'
@@ -315,22 +340,6 @@ def DELETE_USER_FILES(user):
         except OSError as e:
             print("Error: %s - %s." % (e.filename, e.strerror))
 
-
-'''
-def IMAGE_INSERT(conn):
-    cursor = conn.cursor()
-    cursor.execute(
-        f"""
-            INSERT INTO dbo.IMAGES(Image_Type, Image_PATH, UserId)
-            VALUES ('profile', 'GraphTheory\#DemoData', (SELECT User_Id from USERS WHERE User_Id = 17));
-        );
-        """)
-    conn.commit()
-    cursor.close()
-    print("IMAGES INSERT COMPLETED")
-    
-'''
-
 # USERS
 # USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
@@ -341,5 +350,3 @@ def IMAGE_INSERT(conn):
 # FILES_CREATE_TABLE(connection)
 # FILES_CREATE_TABLE(connection)
 # GET_FILES(connection, 'foreandr')
-
-
