@@ -1,4 +1,6 @@
+import os
 import shutil
+from pathlib import Path
 
 from PIL import Image
 import datetime
@@ -210,6 +212,10 @@ def FILE_INSERT(conn, image_path="NO PATH", description="default description", u
     print_green("FILE INSERT COMPLETED")
 
 
+def FILE_MULTIPLE_INSERT():
+    pass
+
+
 def GET_FRIENDS(conn, username):
     print('GET FRIENDS: ', username)
     cursor = conn.cursor()
@@ -230,9 +236,33 @@ def register_user_files(username):
     my_path = f"../static/#UserData/{username}/profile"
     my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
-    jpgfile = Image.open("C:/Users/forea/PycharmProjects/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
+    jpgfile = Image.open("D:/!/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)
     jpgfile.save(my_path_with_file)
+
+    # SETTING UP DEFAULT FILES
+    default_csv = ""
+    target = ""
+
+    if username == 'foreandr':
+        default_csv = r'../#DemoData/CSV1.csv'
+        target = rf'../static/#UserData/{username}/csv_files/CSV1.csv'
+    elif username == 'bigfrog':
+        default_csv = r'../#DemoData/CSV2.csv'
+        target = rf'../static/#UserData/{username}/csv_files/CSV2.csv'
+    elif username == 'cheatsie':
+        default_csv = r'../#DemoData/CSV3.csv'
+        target = rf'../static/#UserData/{username}/csv_files/CSV3.csv'
+    elif username == 'dnutty':
+        default_csv = r'../#DemoData/CSV4.csv'
+        target = rf'../static/#UserData/{username}/csv_files/CSV4.csv'
+
+    elif username == 'andrfore':
+        default_csv = r'../#DemoData/CSV5.csv'
+        target = rf'../static/#UserData/{username}/csv_files/CSV5.csv'
+
+    # check_and_save_dir(target)
+    shutil.copyfile(default_csv, target)
 
 
 def full_register(connection, username, password, email):
@@ -240,6 +270,7 @@ def full_register(connection, username, password, email):
     DELETE_USER_FILES(username)
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
+    # FILE_INSERT(connection
 
 
 def GET_FILES(conn, username):
@@ -257,7 +288,7 @@ def GET_FILES(conn, username):
     descriptions = ""
     dates = ""
     for i in user_files:
-        filename = i[0].split('/')[-1] # split the string by / and get the last for filename\
+        filename = i[0].split('/')[-1]  # split the string by / and get the last for filename\
         file_names += filename + "//"
 
         description = i[1]
@@ -269,6 +300,7 @@ def GET_FILES(conn, username):
     # print(descriptions)
     # print(dates)
     return file_names, descriptions, dates
+
 
 def DELETE_USER_FILES(user):
     file_location = f"../static/#UserData/{user}/profile"
@@ -282,6 +314,7 @@ def DELETE_USER_FILES(user):
             shutil.rmtree(i)
         except OSError as e:
             print("Error: %s - %s." % (e.filename, e.strerror))
+
 
 '''
 def IMAGE_INSERT(conn):
@@ -308,3 +341,5 @@ def IMAGE_INSERT(conn):
 # FILES_CREATE_TABLE(connection)
 # FILES_CREATE_TABLE(connection)
 # GET_FILES(connection, 'foreandr')
+
+

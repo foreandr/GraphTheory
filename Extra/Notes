@@ -89,8 +89,10 @@ PROBLEM NOTES:
 - using full path in DB, can do so, but will need ot be changed for remote
 - DIRECT DONATIONS ONLY 10% GOES TO ME OR SOMETHING INSANE
 - filesize in FILE databse addition
+- public block list
 
 
 ----
+D:\!\GraphTheory
  <a href="{{account_name}}/csv_files/${filenames_list[i]}">
  <a href="/get_csv/${filenames_list[i]}">

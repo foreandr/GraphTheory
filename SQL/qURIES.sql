@@ -111,4 +111,8 @@ drop table dbo.USERS;
 drop table dbo.CONNECTIONS;
 -- VISUALIZING TABLES
 	-- Right-click the table or the view in the Object Explorer panel
-	-- From the context menu choose Script Table as.../CREATE to.../< SomeDestination 
+	-- From the context menu choose Script Table as.../CREATE to.../< SomeDestination
+GO
+SELECT users.username 
+FROM dbo.USERS users;
+GO
