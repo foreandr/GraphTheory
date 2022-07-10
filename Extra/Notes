@@ -93,6 +93,7 @@ PROBLEM NOTES:
 - public block list
 - personal block list
 - friends list kind of broken
+- infinite scrolling, don't just place, allow for requery when hit bottm
 
 
 ----

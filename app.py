@@ -17,13 +17,20 @@ app.secret_key = 'demokey'
 
 # user = sql_functions.check_users() #list of user in DB
 
-app.config["FILE UPLOADS"] = "static\#UserData"
+app.config["FILE UPLOADS"] = "static/#UserData"
 
 
 @app.route('/', methods=['GET'])  # homepage
 def home():
     print('EXECUTING INDEX FUNCTION')
-    return render_template('index.html', message="index.html page")
+    usernames, paths, descriptions, dates = database.GET_ALL_DATASETS_BY_DATE(connection)
+    return render_template('index.html',
+                           message="index.html page",
+                           usernames=usernames,
+                           paths=paths,
+                           descriptions=descriptions,
+                           dates=dates
+                           )
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -106,8 +113,8 @@ def user_profile():
 
     elif request.method == "POST":
 
-        password = session["password"]
-        email = session["email"]
+        password = session["password"] # DON'T NEED?
+        email = session["email"] # DON'T NEED?
         user = session["user"]
         id = session["id"]
 
@@ -134,7 +141,7 @@ def user_profile():
                 file.save(my_path_with_file)
 
             # print("MY PATH:", my_path)
-            # print("MY PATH W/F:", my_path_with_file)
+            print("MY PATH W/F:", my_path_with_file)
             database.FILE_INSERT(
                 connection,
                 image_path=my_path_with_file,

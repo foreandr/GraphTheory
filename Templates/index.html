@@ -1,7 +1,53 @@
 {% extends "structure.html" %} <!-- INHEREITING FROM STRUCTURE.HTML-->
 
 {%block main %}
-  <div>
+<div>
     {{ message }} <!-- message is a variable-->
-  </div>
+</div>
+</br>
+<div id="files">
+
+</div>
+<script>
+    var usernames = '{{ usernames}}'
+    var paths = '{{paths}}'
+    var descriptions = '{{descriptions}}'
+    var dates = '{{ dates }}'
+
+    //console.log(usernames);
+    //console.log(paths);
+    //console.log(descriptions);
+    //console.log(dates);
+
+    username_list = usernames.split("//");
+    paths_list = paths.split("//");
+    descriptions_list = descriptions.split("//");
+    dates_list = dates.split("//");
+
+    console.log(username_list);
+    console.log(paths_list);
+    console.log(descriptions_list);
+    console.log(dates_list);
+
+
+    for (let i = 0; i < username_list.length; i++){
+        if (username_list[i] != ""){
+            single_path = paths_list[i].split("/");
+            account_name = single_path[2]
+            file_name = single_path[4]
+
+            document.getElementById("files").innerHTML += `<div>
+            ${username_list[i]} |
+            <a href="/get_csv/${account_name}/csv_files/${file_name}">
+                ${file_name}
+            </a>
+            | ${descriptions_list[i]}
+            | ${dates_list[i]}
+            </div>`
+        }
+
+    }
+
+
+</script>
 {% endblock main %}
