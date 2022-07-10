@@ -1,4 +1,5 @@
-/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+/* When the user clicks on the button, toggle between hiding and showing the dropdown content
+*/
 function dropdown_function(my_array) {
     console.log("USERPROFILE.JS FRIENDS: " + globalVariable.friends, globalVariable.friends.length);
     if (globalVariable.friends != "NO FRIENDS"){
@@ -13,7 +14,8 @@ function dropdown_function(my_array) {
     }
 }
 
-// Close the dropdown menu if the user clicks outside of it
+/* Close the dropdown menu if the user clicks outside of it
+*/
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -41,9 +43,12 @@ function show_session_items(){
     `;
 }
 
-show_session_items()
-
+/*
+*/
 function show_datasets(){
     console.log("asljd");
     show_datasets()
 }
+show_session_items()
+
+

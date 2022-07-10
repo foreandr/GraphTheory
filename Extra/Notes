@@ -45,6 +45,7 @@ SITES:
 https://www.youtube.com/watch?v=6WruncSoCdI&ab_channel=JulianNash
 https://www.youtube.com/watch?v=iIhAfX4iek0&ab_channel=TechWithTim
 https://www.kaggle.com/datasets
+https://www.reddit.com/r/flask/comments/evjcc5/question_on_how_to_generate_a_rss_feed/
 
 SAVE AS HEX BYTES, USE CONVERTER FUNCTION TO TURN IT INTO AN IMAGE
 
@@ -90,6 +91,8 @@ PROBLEM NOTES:
 - DIRECT DONATIONS ONLY 10% GOES TO ME OR SOMETHING INSANE
 - filesize in FILE databse addition
 - public block list
+- personal block list
+- friends list kind of broken
 
 
 ----

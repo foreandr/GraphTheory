@@ -111,11 +111,11 @@ def user_profile():
         user = session["user"]
         id = session["id"]
 
-        print("ID:", id)
-        print("USERNAME:", user)
-        print("PASSWORD:", password)
-        print("EMAIL   :", email)
-        print("-------")
+        # print("ID:", id)
+        #print("USERNAME:", user)
+        #print("PASSWORD:", password)
+        #print("EMAIL   :", email)
+        #print("-------")
         if request.files:
             file = request.files['file']  # because name in HTML FORM is file
             # print(request.headers)
@@ -124,7 +124,7 @@ def user_profile():
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
             my_path_with_file = ""
-            print("FILE", file.content_type, type(file.content_type))
+            # print("FILE", file.content_type, type(file.content_type))
             if file.content_type == "text/csv":  # if it's a csv file, store it at the user location
                 my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/csv_files/{file.filename}"
                 file.save(my_path_with_file)
@@ -134,7 +134,7 @@ def user_profile():
                 file.save(my_path_with_file)
 
             # print("MY PATH:", my_path)
-            print("MY PATH W/F:", my_path_with_file)
+            # print("MY PATH W/F:", my_path_with_file)
             database.FILE_INSERT(
                 connection,
                 image_path=my_path_with_file,
@@ -153,7 +153,7 @@ def user_profile_name(username):
     # return f"welcome to profile page {username}"
     my_friends = database.GET_FRIENDS(connection, username)
     filenames, descriptions, dates = database.GET_FILES(connection, username)
-    print("FILENAMES: ", filenames)
+    # print("FILENAMES: ", filenames)
     return render_template(f"user_profile.html",
                            friends=my_friends,
                            account_name=username,
@@ -176,6 +176,17 @@ def get_csv(account_name, folder, filename):
         mimetype="text/csv",
         headers={"Content-disposition":
                      "attachment; filename=myplot.csv"})
+
+
+@app.route("/add_user/<username>", methods=['POST'])
+def add_user(username):
+    # print('do something')
+    user_id_first = database.GET_USER_ID(connection, username=session['user'])
+    user_id_second = database.GET_USER_ID(connection, username=username)
+    #print("USERNAME 1: ", session['user'], " | ID 1: ", user_id_first)
+    # print("USERNAME 2: ", username, " | ID 2: ", user_id_second)
+    database.CONNECTION_INSERT(connection, user_id_first, user_id_second)
+    return redirect(url_for('user_profile_name', username=session['user']))
 
 
 if __name__ == '__main__':

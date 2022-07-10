@@ -37,6 +37,22 @@ def validate_user_from_session(conn, email, password):
         return [False]
 
 
+def GET_USER_ID(conn, username):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+        EXECUTE  dbo.GET_USER_ID {username};
+        """)
+    tables = cursor.fetchall()
+    user_id = 0
+    for i in tables:
+        print(i)
+        user_id = i[0]
+    cursor.close()
+    print_green('GET_USER_ID')
+    return user_id
+
+
 def EXISTS_EMAIL(conn, email="foreandr@gmail.com"):
     table_name = "USERS"
     cursor = conn.cursor()
