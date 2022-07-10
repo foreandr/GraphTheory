@@ -266,6 +266,30 @@ def GET_FRIENDS(conn, username):
     return user_friends
 
 
+def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
+    print('GET ALL DATASETS')
+    cursor = conn.cursor()
+    cursor.execute(f"EXECUTE dbo.GET_ALL_DATASETS_BY_DATE {maximum};")
+    user_info = []
+    files = cursor.fetchall()
+    for details in files:
+        user_info.append([details[0], details[1], details[2], details[3]])
+
+    names = ""
+    files = ""
+    descriptions = ""
+    dates = ""
+    for i in user_info:
+        # print(i)
+        names += i[0] + "//"
+
+        filename = i[1].split('//')[-1]
+        files += filename + "//"
+
+        descriptions += i[2] + "//"
+
+        dates += str(i[3]) + "//"
+    return names, files, descriptions, dates
 def register_user_files(username):
     check_and_save_dir(f"./static/#UserData/{username}/profile")
     check_and_save_dir(f"./static/#UserData/{username}/csv_files")
@@ -356,6 +380,7 @@ def DELETE_USER_FILES(user):
         except OSError as e:
             print("Error: %s - %s." % (e.filename, e.strerror))
 
+
 # USERS
 # USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
@@ -366,3 +391,5 @@ def DELETE_USER_FILES(user):
 # FILES_CREATE_TABLE(connection)
 # FILES_CREATE_TABLE(connection)
 # GET_FILES(connection, 'foreandr')
+# GET_ALL_DATASETS_BY_DATE(connection)
+#
