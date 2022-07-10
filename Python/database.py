@@ -290,6 +290,8 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
 
         dates += str(i[3]) + "//"
     return names, files, descriptions, dates
+
+
 def register_user_files(username):
     check_and_save_dir(f"./static/#UserData/{username}/profile")
     check_and_save_dir(f"./static/#UserData/{username}/csv_files")
@@ -380,7 +382,6 @@ def DELETE_USER_FILES(user):
         except OSError as e:
             print("Error: %s - %s." % (e.filename, e.strerror))
 
-
 # USERS
 # USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
@@ -392,4 +393,3 @@ def DELETE_USER_FILES(user):
 # FILES_CREATE_TABLE(connection)
 # GET_FILES(connection, 'foreandr')
 # GET_ALL_DATASETS_BY_DATE(connection)
-#
