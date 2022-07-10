@@ -267,12 +267,12 @@ def GET_FRIENDS(conn, username):
 
 
 def register_user_files(username):
-    check_and_save_dir(f"../static/#UserData/{username}/profile")
-    check_and_save_dir(f"../static/#UserData/{username}/csv_files")
-    check_and_save_dir(f"../static/#UserData/{username}/photos")
+    check_and_save_dir(f"./static/#UserData/{username}/profile")
+    check_and_save_dir(f"./static/#UserData/{username}/csv_files")
+    check_and_save_dir(f"./static/#UserData/{username}/photos")
 
-    my_path = f"../static/#UserData/{username}/profile"
-    my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+    my_path = f"./static/#UserData/{username}/profile"
+    my_path_with_file = f"./static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
     jpgfile = Image.open("D:/!/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)
@@ -304,7 +304,11 @@ def register_user_files(username):
 
 def full_register(connection, username, password, email):
     # print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
-    DELETE_USER_FILES(username)
+    try:
+        DELETE_USER_FILES(username)
+    except:
+        print_warning("User doesn't exist")
+    print("get here")
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
     # FILE_INSERT(connection
