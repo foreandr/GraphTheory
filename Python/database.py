@@ -254,10 +254,6 @@ def FILE_INSERT(conn, image_path="NO PATH", description="default description", u
     print_green("FILE INSERT COMPLETED")
 
 
-def FILE_MULTIPLE_INSERT():
-    pass
-
-
 def GET_FRIENDS(conn, username):
     print('GET FRIENDS: ', username)
     cursor = conn.cursor()
