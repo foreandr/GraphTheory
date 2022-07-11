@@ -158,16 +158,19 @@ def user_profile():
 @app.route('/<username>', methods=['GET', 'POST'])
 def user_profile_name(username):
     # return f"welcome to profile page {username}"
-    my_friends = database.GET_FRIENDS(connection, username)
-    filenames, descriptions, dates = database.GET_FILES(connection, username)
-    # print("FILENAMES: ", filenames)
-    return render_template(f"user_profile.html",
-                           friends=my_friends,
-                           account_name=username,
-                           filenames=filenames,
-                           descriptions=descriptions,
-                           dates=dates
-                           )
+    if "email" not in session:
+        return redirect(url_for('login'))
+    else:
+        my_friends = database.GET_FRIENDS(connection, username)
+        filenames, descriptions, dates = database.GET_FILES(connection, username)
+        # print("FILENAMES: ", filenames)
+        return render_template(f"user_profile.html",
+                               friends=my_friends,
+                               account_name=username,
+                               filenames=filenames,
+                               descriptions=descriptions,
+                               dates=dates
+                               )
 
 
 @app.route("/get_csv/<account_name>/<folder>/<filename>", methods=['GET', 'POST'])

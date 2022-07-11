@@ -103,6 +103,7 @@ def USER_INSERT(conn, username="Andre", password="password", email="foreandr@gma
 
 
 def USER_INSERT_MULTIPLE(conn):
+    shutil.rmtree('../static/#UserData/')
     full_register(conn, 'foreandr', 'cooldood', 'foreandr@gmail.com')
     full_register(conn, 'andrfore', 'cooldood', 'andrfore@gmail.com')
     full_register(conn, 'cheatsie', 'cooldood', 'cheatsieog@gmail.com')
@@ -293,12 +294,12 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
 
 
 def register_user_files(username):
-    check_and_save_dir(f"./static/#UserData/{username}/profile")
-    check_and_save_dir(f"./static/#UserData/{username}/csv_files")
-    check_and_save_dir(f"./static/#UserData/{username}/photos")
+    check_and_save_dir(f"../static/#UserData/{username}/profile")
+    check_and_save_dir(f"../static/#UserData/{username}/csv_files")
+    check_and_save_dir(f"../static/#UserData/{username}/photos")
 
-    my_path = f"./static/#UserData/{username}/profile"
-    my_path_with_file = f"./static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+    my_path = f"../static/#UserData/{username}/profile"
+    my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
     jpgfile = Image.open("D:/!/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)
@@ -307,7 +308,7 @@ def register_user_files(username):
     # SETTING UP DEFAULT FILES
     default_csv = ""
     target = ""
-
+     #print('PRINTING WORKING DIRECTORY', os.getcwd())
     if username == 'foreandr':
         default_csv = r'../#DemoData/CSV1.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV1.csv'
@@ -330,11 +331,11 @@ def register_user_files(username):
 
 def full_register(connection, username, password, email):
     # print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
-    try:
-        DELETE_USER_FILES(username)
-    except:
-        print_warning("User doesn't exist")
-    print("get here")
+    # DELETING A PARTCIULAR USER
+    #try:
+    #    DELETE_USER_FILES(username)
+    #except:
+    #    print_warning("User doesn't exist")
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
     # FILE_INSERT(connection

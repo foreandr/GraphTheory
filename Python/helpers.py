@@ -60,3 +60,5 @@ def get_filetype(string):
     txt = string[::-1]
     my_text = txt.split(".")[0]
     return my_text[::-1]
+
+# print(len("02153Yourlast       Yourfirst 63222234244321000333"))
