@@ -258,7 +258,7 @@ def FILE_INSERT(conn, image_path="NO PATH", description="default description", u
 def GET_FRIENDS(conn, username):
     print('GET FRIENDS: ', username)
     cursor = conn.cursor()
-    cursor.execute(f"EXECUTE GET_FRIENDS {username} ;")
+    cursor.execute(f"EXECUTE GET_FRIENDS {username};")
     user_friends = []
     friends = cursor.fetchall()
     for friend in friends:
@@ -268,7 +268,7 @@ def GET_FRIENDS(conn, username):
 
 
 def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
-    print('GET ALL DATASETS')
+    print(f'GET ALL DATASETS | MIN:{minimum} MAX:{maximum}')
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE dbo.GET_ALL_DATASETS_BY_DATE {maximum};")
     user_info = []
@@ -290,16 +290,17 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
         descriptions += i[2] + "//"
 
         dates += str(i[3]) + "//"
+     #print("Worked", names, files, descriptions, dates)
     return names, files, descriptions, dates
 
 
 def register_user_files(username):
-    check_and_save_dir(f"../static/#UserData/{username}/profile")
-    check_and_save_dir(f"../static/#UserData/{username}/csv_files")
-    check_and_save_dir(f"../static/#UserData/{username}/photos")
+    check_and_save_dir(f"./static/#UserData/{username}/profile")
+    check_and_save_dir(f"./static/#UserData/{username}/csv_files")
+    check_and_save_dir(f"./static/#UserData/{username}/photos")
 
     my_path = f"../static/#UserData/{username}/profile"
-    my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+    my_path_with_file = f"./static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
     jpgfile = Image.open("D:/!/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)

@@ -161,16 +161,18 @@ def user_profile_name(username):
     if "email" not in session:
         return redirect(url_for('login'))
     else:
-        my_friends = database.GET_FRIENDS(connection, username)
-        filenames, descriptions, dates = database.GET_FILES(connection, username)
-        # print("FILENAMES: ", filenames)
-        return render_template(f"user_profile.html",
-                               friends=my_friends,
-                               account_name=username,
-                               filenames=filenames,
-                               descriptions=descriptions,
-                               dates=dates
-                               )
+        if username != "favicon.ico":
+            my_friends = database.GET_FRIENDS(connection, username)
+            filenames, descriptions, dates = database.GET_FILES(connection, username)
+            # print("FILENAMES: ", filenames)
+            return render_template(f"user_profile.html",
+                                   friends=my_friends,
+                                   account_name=username,
+                                   filenames=filenames,
+                                   descriptions=descriptions,
+                                   dates=dates
+                                   )
+    return redirect(url_for('home'))
 
 
 @app.route("/get_csv/<account_name>/<folder>/<filename>", methods=['GET', 'POST'])
