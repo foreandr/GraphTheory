@@ -1,4 +1,4 @@
-0. Show user they cannot change their username
+DONE. Show user they cannot change their username
 1. Implement password recovery process
 2. Create fake accounts
 3. Make it impossible to friend yourself.
@@ -13,3 +13,4 @@
 12. Orgganize first page by votes
 13. Check user profiles without session? Maybe not
 14. Tell when user has registered successfully or not and why
+14. Add other properties to dataset [UPVOTES, COMMENTS,]

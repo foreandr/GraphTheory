@@ -200,7 +200,14 @@ def add_user(username):
     database.CONNECTION_INSERT(connection, user_id_first, user_id_second)
     return redirect(url_for('user_profile_name', username=session['user']))
 
-
+@app.route("/password_recovery", methods=['GET', 'POST'])
+def password_recovery():
+    print("LOADING PASSWORD RECOVERY")
+    my_email = request.form["email"]
+    print(my_email)
+    if request.method  == "POST":
+        print(request)
+    return render_template(f"recovery.html")
 if __name__ == '__main__':
     my_port = 5006
     app.run(host='localhost', port=my_port, debug=True)  # host is to get off localhost
