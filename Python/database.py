@@ -383,7 +383,8 @@ def DELETE_USER_FILES(user):
             shutil.rmtree(i)
         except OSError as e:
             print("Error: %s - %s." % (e.filename, e.strerror))
-
+def CHANGE_PASSWORD(email, password):
+    return None
 # USERS
 # USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)

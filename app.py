@@ -6,6 +6,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 import os
 from PIL import Image
 import Python.helpers as helpers
+from Python import my_email
 
 connection = connector.test_connection()
 TEMPLATE_DIR = os.path.abspath('./templates')
@@ -203,11 +204,36 @@ def add_user(username):
 @app.route("/password_recovery", methods=['GET', 'POST'])
 def password_recovery():
     print("LOADING PASSWORD RECOVERY")
-    my_email = request.form["email"]
-    print(my_email)
+
     if request.method  == "POST":
-        print(request)
-    return render_template(f"recovery.html")
+        recovery_email = request.form["email"]
+        print(recovery_email)
+        my_email.send_email(recovery_email)
+    return render_template(f"password_recovery.html")
+
+@app.route("/password_reset", methods=['GET', 'POST'])
+def password_reset():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+        recov_test_password = request.form["repeat_password"]
+        # print(email)
+        # print(password)
+        # print(recov_test_password)
+        if password == recov_test_password:
+            #TODO: change password function complete
+            database.CHANGE_PASSWORD(email, password)
+            print(email, " Password changed")
+            return redirect(url_for("login"))
+        else:
+            return render_template(f"password_reset.html", message="Passwords are not the same!")
+    else:
+        return render_template(f"password_reset.html")
+
+
+
+
+
 if __name__ == '__main__':
     my_port = 5006
     app.run(host='localhost', port=my_port, debug=True)  # host is to get off localhost
