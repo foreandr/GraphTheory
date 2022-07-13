@@ -114,20 +114,21 @@ def user_profile():
 
     elif request.method == "POST":
 
-        password = session["password"] # DON'T NEED?
-        email = session["email"] # DON'T NEED?
+        password = session["password"]  # DON'T NEED?
+        email = session["email"]  # DON'T NEED?
         user = session["user"]
         id = session["id"]
 
         # print("ID:", id)
-        #print("USERNAME:", user)
-        #print("PASSWORD:", password)
-        #print("EMAIL   :", email)
-        #print("-------")
+        # print("USERNAME:", user)
+        # print("PASSWORD:", password)
+        # print("EMAIL   :", email)
+        # print("-------")
         if request.files:
             file = request.files['file']  # because name in HTML FORM is file
+            my_description = "" # only here because needs to be global
             # print(request.headers)
-            my_description = request.form["description"]
+
             # print(file)
             # print(app.config["FILE UPLOADS"])
             # print(file.filename)
@@ -136,6 +137,7 @@ def user_profile():
             if file.content_type == "text/csv":  # if it's a csv file, store it at the user location
                 my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/csv_files/{file.filename}"
                 file.save(my_path_with_file)
+                my_description = request.form["description"]
 
             elif file.content_type == "image/jpeg" or file.content_type == "image/png":
                 my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg"  # overriding file type
@@ -162,7 +164,7 @@ def user_profile_name(username):
     if "email" not in session:
         return redirect(url_for('login'))
     else:
-        if username != "favicon.ico":
+        if username != "favicon.ico":  # DEFAULT CHECK FOR NULL PROFILE I THINK?
             my_friends = database.GET_FRIENDS(connection, username)
             filenames, descriptions, dates = database.GET_FILES(connection, username)
             # print("FILENAMES: ", filenames)
@@ -196,20 +198,22 @@ def add_user(username):
     # print('do something')
     user_id_first = database.GET_USER_ID(connection, username=session['user'])
     user_id_second = database.GET_USER_ID(connection, username=username)
-    #print("USERNAME 1: ", session['user'], " | ID 1: ", user_id_first)
+    # print("USERNAME 1: ", session['user'], " | ID 1: ", user_id_first)
     # print("USERNAME 2: ", username, " | ID 2: ", user_id_second)
     database.CONNECTION_INSERT(connection, user_id_first, user_id_second)
     return redirect(url_for('user_profile_name', username=session['user']))
+
 
 @app.route("/password_recovery", methods=['GET', 'POST'])
 def password_recovery():
     print("LOADING PASSWORD RECOVERY")
 
-    if request.method  == "POST":
+    if request.method == "POST":
         recovery_email = request.form["email"]
         print(recovery_email)
         my_email.send_email(recovery_email)
     return render_template(f"password_recovery.html")
+
 
 @app.route("/password_reset", methods=['GET', 'POST'])
 def password_reset():
@@ -222,16 +226,13 @@ def password_reset():
         # print(recov_test_password)
         if password == recov_test_password:
 
-            database.CHANGE_PASSWORD(connection,email, password)
+            database.CHANGE_PASSWORD(connection, email, password)
             print(email, " Password changed")
             return redirect(url_for("login"))
         else:
             return render_template(f"password_reset.html", message="Passwords are not the same!")
     else:
         return render_template(f"password_reset.html")
-
-
-
 
 
 if __name__ == '__main__':

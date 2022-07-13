@@ -1,6 +1,6 @@
 DONE. Show user they cannot change their username
-1. Implement password recovery process
-2. Create fake accounts
+DONE. Implement password recovery process
+DONE. Create fake accounts
 3. Make it impossible to friend yourself.
 4. Make it impossible to friend someone more than once
 5. Make it possible to unfriend somebody.
