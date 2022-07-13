@@ -295,14 +295,14 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
 
 
 def register_user_files(username):
-    check_and_save_dir(f"./static/#UserData/{username}/profile")
-    check_and_save_dir(f"./static/#UserData/{username}/csv_files")
-    check_and_save_dir(f"./static/#UserData/{username}/photos")
+    check_and_save_dir(f"../static/#UserData/{username}/profile")
+    check_and_save_dir(f"../static/#UserData/{username}/csv_files")
+    check_and_save_dir(f"../static/#UserData/{username}/photos")
 
     my_path = f"../static/#UserData/{username}/profile"
-    my_path_with_file = f"./static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+    my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
-    jpgfile = Image.open("D:/!/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
+    jpgfile = Image.open("D:/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)
     jpgfile.save(my_path_with_file)
 
@@ -383,10 +383,17 @@ def DELETE_USER_FILES(user):
             shutil.rmtree(i)
         except OSError as e:
             print("Error: %s - %s." % (e.filename, e.strerror))
-def CHANGE_PASSWORD(email, password):
-    return None
+def CHANGE_PASSWORD(conn, email, password):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+          EXECUTE  dbo.CHANGE_PASSWORD_FOR_EMAIL {email}, {password} ;
+          """)
+    conn.commit()
+    cursor.close()
+    print_green('CHANGE_PASSWORD COMPLETED')
 # USERS
-# USER_FULL_RESET(connection)
+USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)
