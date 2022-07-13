@@ -1,7 +1,7 @@
 DONE. Show user they cannot change their username
 DONE. Implement password recovery process
 DONE. Create fake accounts
-3. Make it impossible to friend yourself.
+DONE. Make it impossible to friend yourself.
 4. Make it impossible to friend someone more than once
 5. Make it possible to unfriend somebody.
 6. Make sure all usernames are exclusive
@@ -14,3 +14,12 @@ DONE. Create fake accounts
 13. Check user profiles without session? Maybe not
 14. Tell when user has registered successfully or not and why
 14. Add other properties to dataset [UPVOTES, COMMENTS,]
+
+
+vote on price as well, market can decide, between suppliers and payers
+test server -> pbd ->main or an order like that [ build with large db to test functions people want to use with db]
+option to update with no changes
+option to get rid of features as well
+same softmax voting scheme to distribute capital
+allocate equity out of my %
+build pie chart with % for all distribution

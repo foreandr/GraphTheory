@@ -200,8 +200,12 @@ def add_user(username):
     user_id_second = database.GET_USER_ID(connection, username=username)
     # print("USERNAME 1: ", session['user'], " | ID 1: ", user_id_first)
     # print("USERNAME 2: ", username, " | ID 2: ", user_id_second)
-    database.CONNECTION_INSERT(connection, user_id_first, user_id_second)
-    return redirect(url_for('user_profile_name', username=session['user']))
+    if user_id_first == user_id_second:
+        print("NOT ADDING YOURSELF")
+        return redirect(url_for('user_profile_name', username=session['user']))
+    else:
+        database.CONNECTION_INSERT(connection, user_id_first, user_id_second)
+        return redirect(url_for('user_profile_name', username=session['user']))
 
 
 @app.route("/password_recovery", methods=['GET', 'POST'])
