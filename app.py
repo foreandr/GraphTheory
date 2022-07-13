@@ -206,7 +206,16 @@ def add_user(username):
     else:
         database.CONNECTION_INSERT(connection, user_id_first, user_id_second)
         return redirect(url_for('user_profile_name', username=session['user']))
-
+@app.route("/remove_user/<username>", methods=['POST'])
+def remove_user(username):
+    user_id_first = database.GET_USER_ID(connection, username=session['user'])
+    user_id_second = database.GET_USER_ID(connection, username=username)
+    if user_id_first == user_id_second:
+        print("NOT REMOVING YOURSELF")
+        return redirect(url_for('user_profile_name', username=session['user']))
+    else:
+        database.CONNECTION_REMOVE(connection, user_id_first, user_id_second)
+        return redirect(url_for('user_profile_name', username=session['user']))
 
 @app.route("/password_recovery", methods=['GET', 'POST'])
 def password_recovery():

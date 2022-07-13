@@ -28,6 +28,10 @@
     <button class="btn btn-primary" name="add_user_button" type="submit">Add {{account_name}}</button>
 </form>
 
+<form action="/remove_user/{{account_name}}" method="POST">
+    <button class="btn btn-primary" name="remove_user_button" type="submit">Remove {{account_name}}</button>
+</form>
+
 <div class="dropdown">
     <br>
     <button onclick="dropdown_function()" class="dropbtn">Friends</button>

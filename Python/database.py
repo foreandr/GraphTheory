@@ -143,6 +143,17 @@ def CONNECTION_INSERT(conn, user_id1, user_id2):
     print_green('CONNECTION INSERT COMPLETED')
 
 
+def CONNECTION_REMOVE(connection, user_id_first, user_id_second):
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""
+        EXECUTE dbo.CUSTOM_DELETION {user_id_first}, {user_id_second} ;
+        """)
+    connection.commit()
+    cursor.close()
+    print_green('CONNECTION DELETION COMPLETED')
+
+
 def CONNECTION_INSERT_MULTIPLE(conn):
     CONNECTION_INSERT(conn, 1, 2)
     CONNECTION_INSERT(conn, 1, 3)
@@ -290,7 +301,7 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
         descriptions += i[2] + "//"
 
         dates += str(i[3]) + "//"
-     #print("Worked", names, files, descriptions, dates)
+    # print("Worked", names, files, descriptions, dates)
     return names, files, descriptions, dates
 
 
@@ -309,7 +320,7 @@ def register_user_files(username):
     # SETTING UP DEFAULT FILES
     default_csv = ""
     target = ""
-     #print('PRINTING WORKING DIRECTORY', os.getcwd())
+    # print('PRINTING WORKING DIRECTORY', os.getcwd())
     if username == 'foreandr':
         default_csv = r'../#DemoData/CSV1.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV1.csv'
@@ -333,9 +344,9 @@ def register_user_files(username):
 def full_register(connection, username, password, email):
     # print_green(F"INSERT VALUES: \nUSERNAME: {username}\nPASSWORD: {password}\nEMAIL: {email}")
     # DELETING A PARTCIULAR USER
-    #try:
+    # try:
     #    DELETE_USER_FILES(username)
-    #except:
+    # except:
     #    print_warning("User doesn't exist")
     USER_INSERT(connection, username, password, email)
     register_user_files(username)
@@ -383,6 +394,8 @@ def DELETE_USER_FILES(user):
             shutil.rmtree(i)
         except OSError as e:
             print("Error: %s - %s." % (e.filename, e.strerror))
+
+
 def CHANGE_PASSWORD(conn, email, password):
     cursor = conn.cursor()
     cursor.execute(

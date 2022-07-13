@@ -2,7 +2,7 @@ DONE. Show user they cannot change their username
 DONE. Implement password recovery process
 DONE. Create fake accounts
 DONE. Make it impossible to friend yourself.
-4. Make it impossible to friend someone more than once
+DONE. Make it impossible to friend someone more than once
 5. Make it possible to unfriend somebody.
 6. Make sure all usernames are exclusive
 7. Create maximum file upload size of N MB (for now)
