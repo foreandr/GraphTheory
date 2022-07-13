@@ -3,9 +3,9 @@ DONE. Implement password recovery process
 DONE. Create fake accounts
 DONE. Make it impossible to friend yourself.
 DONE. Make it impossible to friend someone more than once
-5. Make it possible to unfriend somebody.
-6. Make sure all usernames are exclusive
-7. Create maximum file upload size of N MB (for now)
+DONE. Make it possible to unfriend somebody.
+DONE. Make sure all usernames are exclusive
+DONE. Create maximum file upload size of N MB (for now)
 8. Remove certain things when not on YOUR OWN page (take away abilities to upload when not on your own page)
 9. Filesize in FILE database addition
 10.personal block list

@@ -126,7 +126,7 @@ def user_profile():
         # print("-------")
         if request.files:
             file = request.files['file']  # because name in HTML FORM is file
-            my_description = "" # only here because needs to be global
+            my_description = ""  # only here because needs to be global
             # print(request.headers)
 
             # print(file)
@@ -206,6 +206,8 @@ def add_user(username):
     else:
         database.CONNECTION_INSERT(connection, user_id_first, user_id_second)
         return redirect(url_for('user_profile_name', username=session['user']))
+
+
 @app.route("/remove_user/<username>", methods=['POST'])
 def remove_user(username):
     user_id_first = database.GET_USER_ID(connection, username=session['user'])
@@ -216,6 +218,7 @@ def remove_user(username):
     else:
         database.CONNECTION_REMOVE(connection, user_id_first, user_id_second)
         return redirect(url_for('user_profile_name', username=session['user']))
+
 
 @app.route("/password_recovery", methods=['GET', 'POST'])
 def password_recovery():

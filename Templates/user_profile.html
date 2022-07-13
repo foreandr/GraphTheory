@@ -41,9 +41,14 @@
 
 <br><br>
 
+
+<div>
+    <button onclick="get_size()">FILSIZE BUTTON</button>
+</div>
 <form action="user_profile" method="POST" enctype="multipart/form-data">
+
     <div class="custom-file">
-        <input type="file" class="custom-file-input" name="file" accept=".csv" id="dataset__file">
+        <input type="file" class="custom-file-input" name="file" accept=".csv" id="dataset_file">
         <label class="custom-file-label" for="file">choose csv file</label>
     </div>
 
@@ -52,10 +57,15 @@
         <input type="text" id="description" name="description">
     </div>
 
-    <button type="submit" class="btn btn-primary">dataset upload</button>
-</form>
+    <button type="submit" class="btn btn-primary" onclick="get_size()">dataset upload</button>
 
-<br>
+
+</form>
+<div id="dataset_return_message">
+
+</div>
+
+<!--
 <form action="user_profile" method="POST" enctype="multipart/form-data">
     <div class="custom-file">
         <input type="file" class="custom-file-input" name="file" id="model_file">
@@ -63,7 +73,7 @@
     </div>
     <button type="submit" class="btn btn-primary">model_pic_video_upload</button>
 </form>
-
+--->
 <br>
 <div>
     Location for putting files
@@ -134,7 +144,6 @@
              </div>`
         }
     }
-
 
 </script>
 <script src="{{ url_for('static', filename='js/user_profile.js') }}"></script>

@@ -46,8 +46,20 @@ function show_session_items(){
 /*
 */
 function show_datasets(){
-    console.log("asljd");
+    //console.log("asljd");
     show_datasets()
+}
+function get_size(){
+    // console.log("hello world");
+    var file = document.getElementById("dataset_file").files[0];
+    //console.log(file);
+    //console.log(file.size)
+    if (file.size >= 10000000){ // BYTES 10MB
+        // console.log("FILE SIZE TOO BIG")
+        document.getElementById("dataset_return_message").innerHTML = "FILE TOO BIG FOR NOW"
+        document.getElementById("dataset_file").value = null;
+
+    }
 }
 show_session_items()
 
