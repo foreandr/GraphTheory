@@ -387,13 +387,13 @@ def CHANGE_PASSWORD(conn, email, password):
     cursor = conn.cursor()
     cursor.execute(
         f"""
-          EXECUTE  dbo.CHANGE_PASSWORD_FOR_EMAIL {email}, {password} ;
-          """)
+            EXECUTE dbo.CHANGE_PASSWORD_FOR_EMAIL '{email}', '{password}' ;
+        """)
     conn.commit()
     cursor.close()
     print_green('CHANGE_PASSWORD COMPLETED')
 # USERS
-USER_FULL_RESET(connection)
+# USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)

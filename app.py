@@ -221,8 +221,8 @@ def password_reset():
         # print(password)
         # print(recov_test_password)
         if password == recov_test_password:
-            #TODO: change password function complete
-            database.CHANGE_PASSWORD(email, password)
+
+            database.CHANGE_PASSWORD(connection,email, password)
             print(email, " Password changed")
             return redirect(url_for("login"))
         else:
