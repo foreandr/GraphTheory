@@ -13,21 +13,25 @@
     var paths = '{{paths}}'
     var descriptions = '{{descriptions}}'
     var dates = '{{ dates }}'
+    var sizes = '{{ file_sizes }}'
 
     //console.log(usernames);
     //console.log(paths);
     //console.log(descriptions);
     //console.log(dates);
+    //console.log(file_sizes);
 
     username_list = usernames.split("//");
     paths_list = paths.split("//");
     descriptions_list = descriptions.split("//");
     dates_list = dates.split("//");
+    file_sizes_list = sizes.split("//");
 
     //console.log(username_list);
     //console.log(paths_list);
     //console.log(descriptions_list);
     //console.log(dates_list);
+    console.log(file_sizes_list);
 
 
     for (let i = 0; i < username_list.length; i++){
@@ -43,6 +47,7 @@
             </a>
             | ${descriptions_list[i]}
             | ${dates_list[i]}
+            | ${file_sizes_list[i]}
             </div>`
         }
 

@@ -24,13 +24,14 @@ app.config["FILE UPLOADS"] = "static/#UserData"
 @app.route('/', methods=['GET'])  # homepage
 def home():
     print('EXECUTING INDEX FUNCTION')
-    usernames, paths, descriptions, dates = database.GET_ALL_DATASETS_BY_DATE(connection)
+    usernames, paths, descriptions, dates, file_sizes = database.GET_ALL_DATASETS_BY_DATE(connection)
     return render_template('index.html',
                            message="index.html page",
                            usernames=usernames,
                            paths=paths,
                            descriptions=descriptions,
-                           dates=dates
+                           dates=dates,
+                           file_sizes=file_sizes
                            )
 
 
@@ -127,6 +128,7 @@ def user_profile():
         if request.files:
             file = request.files['file']  # because name in HTML FORM is file
             my_description = ""  # only here because needs to be global
+            my_file_size = 0
             # print(request.headers)
 
             # print(file)
@@ -137,7 +139,9 @@ def user_profile():
             if file.content_type == "text/csv":  # if it's a csv file, store it at the user location
                 my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/csv_files/{file.filename}"
                 file.save(my_path_with_file)
+
                 my_description = request.form["description"]
+                my_file_size = request.form["hidden_file_size"]
 
             elif file.content_type == "image/jpeg" or file.content_type == "image/png":
                 my_path_with_file = f"{app.config['FILE UPLOADS']}/{user}/profile/profile_pic.jpg"  # overriding file type
@@ -149,7 +153,8 @@ def user_profile():
                 connection,
                 image_path=my_path_with_file,
                 description=my_description,
-                user_id=id
+                user_id=id,
+                file_size = my_file_size
 
             )
             print("OUT OF CHECKING FILETYPE-------")
@@ -166,14 +171,15 @@ def user_profile_name(username):
     else:
         if username != "favicon.ico":  # DEFAULT CHECK FOR NULL PROFILE I THINK?
             my_friends = database.GET_FRIENDS(connection, username)
-            filenames, descriptions, dates = database.GET_FILES(connection, username)
+            filenames, descriptions, dates, sizes = database.GET_FILES(connection, username)
             # print("FILENAMES: ", filenames)
             return render_template(f"user_profile.html",
                                    friends=my_friends,
                                    account_name=username,
                                    filenames=filenames,
                                    descriptions=descriptions,
-                                   dates=dates
+                                   dates=dates,
+                                   file_sizes=sizes
                                    )
     return redirect(url_for('home'))
 

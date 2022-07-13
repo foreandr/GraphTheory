@@ -42,9 +42,6 @@
 <br><br>
 
 
-<div>
-    <button onclick="get_size()">FILSIZE BUTTON</button>
-</div>
 <form action="user_profile" method="POST" enctype="multipart/form-data">
 
     <div class="custom-file">
@@ -55,7 +52,11 @@
     <div id="my_description">
         <label><b>CSV Description</b></label>
         <input type="text" id="description" name="description">
+
+        <input type="text" id="hidden_file_size" name="hidden_file_size"  size="1">
     </div>
+
+
 
     <button type="submit" class="btn btn-primary" onclick="get_size()">dataset upload</button>
 
@@ -120,18 +121,22 @@
     var filenames = '{{filenames}}'
     var descriptions = '{{descriptions}}'
     var dates = '{{ dates }}'
+    var file_sizes = '{{ file_sizes }}'
 
     // console.log(filenames)
     //console.log(descriptions)
     //console.log(dates)
+    //console.log(file_sizes)
 
     filenames_list = filenames.split('//');
     descriptions_list = descriptions.split('//');
     dates_list = dates.split('//');
+    file_size_list = file_sizes.split('//');
 
     //console.log(filenames_list);
     //console.log(descriptions_list);
     //console.log(dates_list);
+    //console.log(file_size_list);
 
     for (let i = 0; i < filenames_list.length; i++){
         if (filenames_list[i] != ""){
@@ -141,6 +146,7 @@
              </a>
              | ${descriptions_list[i]}
              | ${dates_list[i]}
+             | ${file_size_list[i]}
              </div>`
         }
     }

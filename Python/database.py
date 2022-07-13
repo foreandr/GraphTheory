@@ -239,6 +239,7 @@ def FILES_CREATE_TABLE(conn):
         (
         File_id INT IDENTITY(1, 1),   
         File_PATH varchar(200),
+        File_size BIGINT,
         Description varchar(400),
         UserId INT NOT NULL,        
         Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,      
@@ -251,15 +252,15 @@ def FILES_CREATE_TABLE(conn):
     print_green("FILES CREATE COMPLETED")
 
 
-def FILE_INSERT(conn, image_path="NO PATH", description="default description", user_id=1):
-    print("MY_PATHl :", image_path)
+def FILE_INSERT(conn, image_path="NO PATH", description="default description", user_id=1, file_size=0):
+    print("MY_PATH :", image_path)
     cursor = conn.cursor()
     cursor.execute(
         f"""
         INSERT INTO dbo.FILES
-        (File_PATH, Description, UserId)
+        (File_PATH, Description, UserId, File_size)
         VALUES
-        ('{image_path}','{description}','{user_id}');
+        ('{image_path}', '{description}','{user_id}',{file_size});
         """)
     conn.commit()
     cursor.close()
@@ -285,12 +286,17 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
     user_info = []
     files = cursor.fetchall()
     for details in files:
-        user_info.append([details[0], details[1], details[2], details[3]])
+        user_info.append([details[0], details[1], details[2], details[3], details[4]])
+
+    #for i in user_info:
+    #    print(i)
+
 
     names = ""
     files = ""
     descriptions = ""
     dates = ""
+    sizes = ""
     for i in user_info:
         # print(i)
         names += i[0] + "//"
@@ -301,8 +307,11 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
         descriptions += i[2] + "//"
 
         dates += str(i[3]) + "//"
+
+        sizes += str(i[4]) + "//"
+
     # print("Worked", names, files, descriptions, dates)
-    return names, files, descriptions, dates
+    return names, files, descriptions, dates, sizes
 
 
 def register_user_files(username):
@@ -361,25 +370,33 @@ def GET_FILES(conn, username):
     files = cursor.fetchall()
     for file in files:
         # print(friend)
-        user_files.append([file[1], file[2], file[4]])  # friend index is 8
+        user_files.append([file[1], file[3], file[5], file[2]])  # friend index is 8
     # print(user_files)
-
+    print_title("PRINTING USER FILES")
+    for i in user_files:
+        print(i)
     file_names = ""
     descriptions = ""
     dates = ""
+    sizes = ""
     for i in user_files:
         filename = i[0].split('/')[-1]  # split the string by / and get the last for filename\
         file_names += filename + "//"
 
         description = i[1]
-        descriptions += description + "//"
+        descriptions += str(description) + "//"
+        # print("DESCRIPTION: ", description)
+         #print("DESCRIPTIONS: ", descriptions)
 
         t = str(i[2])
         dates += t + "//"
+
+        size = str(i[3])
+        sizes += size + "//"
     # print(file_names)
     # print(descriptions)
     # print(dates)
-    return file_names, descriptions, dates
+    return file_names, descriptions, dates, sizes
 
 
 def DELETE_USER_FILES(user):
@@ -405,6 +422,7 @@ def CHANGE_PASSWORD(conn, email, password):
     conn.commit()
     cursor.close()
     print_green('CHANGE_PASSWORD COMPLETED')
+
 # USERS
 # USER_FULL_RESET(connection)
 # USER_CREATE_TABLE(connection)

@@ -54,11 +54,12 @@ function get_size(){
     var file = document.getElementById("dataset_file").files[0];
     //console.log(file);
     //console.log(file.size)
-    if (file.size >= 10000000){ // BYTES 10MB
+    if (file.size >= 100000000){ // BYTES 10MB
         // console.log("FILE SIZE TOO BIG")
         document.getElementById("dataset_return_message").innerHTML = "FILE TOO BIG FOR NOW"
         document.getElementById("dataset_file").value = null;
-
+    }else{
+        document.getElementById("hidden_file_size").value = file.size;
     }
 }
 show_session_items()
