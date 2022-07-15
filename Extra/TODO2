@@ -7,14 +7,15 @@ DONE. Make it possible to unfriend somebody.
 DONE. Make sure all usernames are exclusive
 DONE. Create maximum file upload size of N MB (for now)
 load when not on your own page)
-9. Filesize in FILE database addition
-10.personal block list
+DONE. Filesize in FILE database addition
+NOTE DONE. 10.personal block list
 11. Add in voting mechanism for the pictures
 12. Orgganize first page by votes
 13. Check user profiles without session? Maybe not
 14. Tell when user has registered successfully or not and why
 14. Add other properties to dataset [UPVOTES, COMMENTS,]
 15. Change default description to no description
+16. MAKE SURE FILE UPLAODED IS CSV
 
 vote on price as well, market can decide, between suppliers and payers
 test server -> pbd ->main or an order like that [ build with large db to test functions people want to use with db]

@@ -53,7 +53,7 @@
         <label><b>CSV Description</b></label>
         <input type="text" id="description" name="description">
 
-        <input type="text" id="hidden_file_size" name="hidden_file_size"  size="1">
+        <input type="text" id="hidden_file_size" name="hidden_file_size" placeholder="AUTO" size="1">
     </div>
 
 
@@ -141,12 +141,13 @@
     for (let i = 0; i < filenames_list.length; i++){
         if (filenames_list[i] != ""){
              document.getElementById("files").innerHTML += `<div>
-             <a href="/get_csv/{{account_name}}/csv_files/${filenames_list[i]}">
-                 ${filenames_list[i]}
-             </a>
+             ${filenames_list[i]}
              | ${descriptions_list[i]}
              | ${dates_list[i]}
              | ${file_size_list[i]}
+             | <a href="/get_csv/{{account_name}}/csv_files/${filenames_list[i]}">
+                DOWNLOAD: ${filenames_list[i]}
+             </a>
              </div>`
         }
     }

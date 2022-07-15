@@ -31,7 +31,7 @@
     //console.log(paths_list);
     //console.log(descriptions_list);
     //console.log(dates_list);
-    console.log(file_sizes_list);
+    // console.log(file_sizes_list);
 
 
     for (let i = 0; i < username_list.length; i++){
@@ -48,6 +48,9 @@
             | ${descriptions_list[i]}
             | ${dates_list[i]}
             | ${file_sizes_list[i]}
+            <a href="/get_csv/${account_name}/csv_files/${file_name}">
+                DOWNLOAD: ${file_name}
+            </a>
             </div>`
         }
 

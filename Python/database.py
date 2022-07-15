@@ -372,7 +372,7 @@ def GET_FILES(conn, username):
         # print(friend)
         user_files.append([file[1], file[3], file[5], file[2]])  # friend index is 8
     # print(user_files)
-    print_title("PRINTING USER FILES")
+    # print_title("PRINTING USER FILES")
     for i in user_files:
         print(i)
     file_names = ""

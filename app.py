@@ -257,6 +257,8 @@ def password_reset():
         return render_template(f"password_reset.html")
 
 
+
+
 if __name__ == '__main__':
     my_port = 5006
     app.run(host='localhost', port=my_port, debug=True)  # host is to get off localhost
