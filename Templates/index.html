@@ -80,15 +80,16 @@
                 single_path = paths_list[i].split("/");
                 account_name = single_path[2]
                 file_name = single_path[4]
-                console.log(file_name);
+                console.log(file_name + typeof file_name);
+                var my_file =
+
                 document.getElementById("files").innerHTML += `<div>
                 | ${username_list[i]}
+
                 |
-                <a href="{{ url_for('dataset_details_filename', csv_file_name='file_name.csv') }}">
-                    DETAIL1-URLFOR: ${file_name}
+                <a href="/${file_name}">
+                    DETAILS2: ${file_name}
                 </a>
-
-
                 | ${descriptions_list[i]}
                 | ${dates_list[i]}
                 | SIZE: ${file_sizes_list[i]}
@@ -141,7 +142,9 @@
     <a href="./<csv_file_name>">
         DETAILS: ${file_name}
     </a>
-
+    <a href="{{ url_for('.dataset_details_filename', csv_file_name=file_name )}}">
+        DETAILS: ${file_name}
+    </a>
     */
 
 
