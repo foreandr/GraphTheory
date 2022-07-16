@@ -166,19 +166,19 @@ def user_profile():
 
 @app.route('/<username>', methods=['GET', 'POST'])
 def user_profile_name(username):
-    # return f"welcome to profile page {username}"
+
+    # IF WE ARE GOING TO A CSV PROFILE
+    if 'csv' in username.lower():  # IF IT IS A CSV FILE, DIFFERENT PROFILE LOGIC
+        print('redirecting to thingy')
+        return render_template('dataset_details.html',
+                               message="dataset_details.html page",
+                               file=username
+                               )
+    # IF WE ARE NOT SIGNED IN & TRYING TO GO ELSEWHEREW
     if "email" not in session:
         return redirect(url_for('login'))
     else:
-        if 'csv' in username.lower():# IF IT IS A CSV FILE, DIFFERENT PROFILE LOGIC
-            print('redirecting to thingy')
-            return render_template('dataset_details.html',
-                                   message="dataset_details.html page",
-                                   file=username
-                                   )
-            # return redirect(url_for('dataset_details_filename', csv_file_name=username))
-            # return render_template(f"data.html")
-        # 'IS A CSV FILE
+        # IF WE ARE GOING TOA  USER PROFILE
         if username != "favicon.ico":  # DEFAULT CHECK FOR NULL PROFILE I THINK?
             my_friends = database.GET_FRIENDS(connection, username)
             filenames, descriptions, dates, sizes = database.GET_FILES(connection, username)
