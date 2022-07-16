@@ -24,14 +24,16 @@ app.config["FILE UPLOADS"] = "static/#UserData"
 @app.route('/', methods=['GET'])  # homepage
 def home():
     print('EXECUTING INDEX FUNCTION')
-    usernames, paths, descriptions, dates, file_sizes = database.GET_ALL_DATASETS_BY_DATE(connection)
+    usernames, paths, descriptions, dates, file_sizes, num_votes = database.GET_ALL_DATASETS_BY_DATE(connection)
+
     return render_template('index.html',
                            message="index.html page",
                            usernames=usernames,
                            paths=paths,
                            descriptions=descriptions,
                            dates=dates,
-                           file_sizes=file_sizes
+                           file_sizes=file_sizes,
+                           votes=num_votes
                            )
 
 

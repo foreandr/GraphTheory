@@ -194,9 +194,77 @@ def USER_INSERT_MULTPLE_FILES(conn):
     print_green("USER INSERT MULTPLE FILES COMPLETED")
 
 
+def VOTE_CREATE_TABLE(conn):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+            CREATE TABLE dbo.CSV_VOTES(
+            CSV_Vote_Id INT IDENTITY(1, 1),
+            File_id INT,
+            Voter_Username varchar(50) UNIQUE,
+            FOREIGN KEY (File_id) REFERENCES FILES(File_id),
+            PRIMARY KEY (CSV_Vote_Id)
+        )
+        """)
+    conn.commit()
+    cursor.close()
+    print_green("VOTE CREATE TABLE COMPLETED")
+
+
+def VOTE_INSERT_DEMO(conn):
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""
+        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
+        VALUES(2, 'foreandr')
+        """)
+    cursor.execute(
+        f"""
+        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
+        VALUES(5, 'andrfore')
+        """)
+    cursor.execute(
+        f"""
+        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
+        VALUES(5, 'cheatsie')
+        """)
+    cursor.execute(
+        f"""
+        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
+        VALUES(5, 'dnutty')
+        """)
+    cursor.execute(
+        f"""
+        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
+        VALUES(2, 'bigfrog')
+        """)
+    conn.commit()
+    cursor.close()
+    print_green("VOTE_INSERT_DEMO")
+
+def FILE_GET_VOTES_COUNT_BY_ID(conn, file_id):
+    cursor = conn.cursor()
+    cursor.execute(f"""EXECUTE dbo.GET_FILE_VOTE_COUNT {file_id};""")
+    votes = cursor.fetchall()
+    num_votes = 0
+    for i in votes:
+        num_votes = i[0]
+    cursor.close()
+    # print_green("GOT VOTES BY ID")
+    return num_votes
+
+
 def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
+
+    try:
+        cursor.execute(f"DROP TABLE dbo.CSV_VOTES;")
+        conn.commit()
+    except:
+        print_warning("NO dbo.CSV_VOTES")
+
+
     try:
         cursor.execute(f"DROP TABLE dbo.FILES;")
         conn.commit()
@@ -223,12 +291,16 @@ def USER_FULL_RESET(conn):
     FILES_CREATE_TABLE(conn)
     USER_INSERT_MULTPLE_FILES(conn)
 
+    # VOTE RELATED
+    VOTE_CREATE_TABLE(conn)
+    VOTE_INSERT_DEMO(conn)
+
     # CONNECTION TABLE
     CONNECTION_CREATE_TABLE(conn)
     CONNECTION_INSERT_MULTIPLE(conn)
 
     cursor.close()
-    print_green("USER FULL_RESET COMPLETED")
+    print_title("USER FULL RESET COMPLETED")
 
 
 def FILES_CREATE_TABLE(conn):
@@ -286,7 +358,7 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
     user_info = []
     files = cursor.fetchall()
     for details in files:
-        user_info.append([details[0], details[1], details[2], details[3], details[4]])
+        user_info.append([details[0], details[1], details[2], details[3], details[4], details[5]])
 
     #for i in user_info:
     #    print(i)
@@ -297,6 +369,7 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
     descriptions = ""
     dates = ""
     sizes = ""
+    num_votes = ""
     for i in user_info:
         # print(i)
         names += i[0] + "//"
@@ -310,8 +383,10 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
 
         sizes += str(i[4]) + "//"
 
+        num_votes += str(FILE_GET_VOTES_COUNT_BY_ID(conn, i[5])) + "//"
+
     # print("Worked", names, files, descriptions, dates)
-    return names, files, descriptions, dates, sizes
+    return names, files, descriptions, dates, sizes, num_votes
 
 
 def register_user_files(username):
@@ -424,7 +499,7 @@ def CHANGE_PASSWORD(conn, email, password):
     print_green('CHANGE_PASSWORD COMPLETED')
 
 # USERS
-# USER_FULL_RESET(connection)
+
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)
@@ -434,3 +509,4 @@ def CHANGE_PASSWORD(conn, email, password):
 # FILES_CREATE_TABLE(connection)
 # GET_FILES(connection, 'foreandr')
 # GET_ALL_DATASETS_BY_DATE(connection)
+# print(FILE_GET_VOTES_COUNT_BY_ID(connection, 1))

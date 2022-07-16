@@ -4,6 +4,13 @@
 <div>
     {{ message }} <!-- message is a variable-->
 </div>
+<div class="dropdown">
+    <br>
+    <button onclick="dropdown_function()" class="dropbtn">Sort By</button>
+    <div id="myDropdown" class="dropdown-content"></div>
+    <div id="myDropdown2" class="dropdown-content"></div>
+</div>
+
 </br>
 <div id="files">
 
@@ -14,24 +21,28 @@
     var descriptions = '{{descriptions}}'
     var dates = '{{ dates }}'
     var sizes = '{{ file_sizes }}'
+    var num_votes = '{{ votes }}'
 
     //console.log(usernames);
     //console.log(paths);
     //console.log(descriptions);
     //console.log(dates);
     //console.log(file_sizes);
+    //console.log(num_votes);
 
     username_list = usernames.split("//");
     paths_list = paths.split("//");
     descriptions_list = descriptions.split("//");
     dates_list = dates.split("//");
     file_sizes_list = sizes.split("//");
+    num_votes_list = num_votes.split("//");
 
     //console.log(username_list);
     //console.log(paths_list);
     //console.log(descriptions_list);
     //console.log(dates_list);
-    // console.log(file_sizes_list);
+    //console.log(file_sizes_list);
+    //console.log(num_votes_list);
 
 
     for (let i = 0; i < username_list.length; i++){
@@ -51,10 +62,26 @@
             <a href="/get_csv/${account_name}/csv_files/${file_name}">
                 DOWNLOAD: ${file_name}
             </a>
+            | VOTEs: ${num_votes_list[i]}
             </div>`
         }
+    }
+    function dropdown_function(){
+        if (document.getElementById("myDropdown").innerHTML == 'SORT BY DATE'){
+            document.getElementById("myDropdown").innerHTML = "";
+            document.getElementById("myDropdown2").innerHTML = "";
+        }
+        else{
+            document.getElementById("myDropdown").innerHTML = 'SORT BY DATE';
+            document.getElementById("myDropdown2").innerHTML = `SORT BY VOTES`;
+            document.getElementById("myDropdown").classList.toggle("show");
+            document.getElementById("myDropdown2").classList.toggle("show");
+        }
+
+
 
     }
+
 
 
 </script>
