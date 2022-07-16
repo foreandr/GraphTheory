@@ -110,7 +110,6 @@ def user_profile():
         print('USING USER PROFILE - GET')
         print(session)
         # return redirect(url_for("user_profile"))
-
         return redirect(url_for('user_profile_name', username=session['user']))
 
         # return render_template(f"user_profiles/{session['user']}.html", friends=my_friends,account_name=session['user'])
@@ -156,7 +155,7 @@ def user_profile():
                 image_path=my_path_with_file,
                 description=my_description,
                 user_id=id,
-                file_size = my_file_size
+                file_size=my_file_size
 
             )
             print("OUT OF CHECKING FILETYPE-------")
@@ -171,6 +170,15 @@ def user_profile_name(username):
     if "email" not in session:
         return redirect(url_for('login'))
     else:
+        if 'csv' in username.lower():# IF IT IS A CSV FILE, DIFFERENT PROFILE LOGIC
+            print('redirecting to thingy')
+            return render_template('dataset_details.html',
+                                   message="dataset_details.html page",
+                                   file=username
+                                   )
+            # return redirect(url_for('dataset_details_filename', csv_file_name=username))
+            # return render_template(f"data.html")
+        # 'IS A CSV FILE
         if username != "favicon.ico":  # DEFAULT CHECK FOR NULL PROFILE I THINK?
             my_friends = database.GET_FRIENDS(connection, username)
             filenames, descriptions, dates, sizes = database.GET_FILES(connection, username)
@@ -258,6 +266,7 @@ def password_reset():
     else:
         return render_template(f"password_reset.html")
 
+
 @app.route("/order_by_votes", methods=['GET', 'POST'])
 def order_by_votes():
     print('EXECUTING INDEX FUNCTION')
@@ -273,8 +282,10 @@ def order_by_votes():
                            file_sizes=file_sizes,
                            votes=num_votes,
                            by_votes=by_votes,
-                           by_date = by_date
+                           by_date=by_date
                            )
+
+
 @app.route("/order_by_date", methods=['GET', 'POST'])
 def order_by_date():
     print('EXECUTING INDEX FUNCTION')
@@ -290,9 +301,17 @@ def order_by_date():
                            file_sizes=file_sizes,
                            votes=num_votes,
                            by_votes=by_votes,
-                           by_date =by_date
+                           by_date=by_date
                            )
 
+
+@app.route("/<csv_file_name>", methods=['GET', 'POST'])
+def dataset_details_filename(csv_file_name):
+    print('got here')
+    return render_template('dataset_details.html',
+                           message="dataset_details.html page",
+                           file=csv_file_name
+                           )
 if __name__ == '__main__':
     my_port = 5006
     app.run(host='localhost', port=my_port, debug=True)  # host is to get off localhost

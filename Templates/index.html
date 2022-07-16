@@ -63,7 +63,6 @@
                 | ${file_name}
                 | ${value[1][0][2]}
                 | ${value[1][0][3]}
-
                 | SIZE : ${value[1][0][4]}
                 <a href="/get_csv/${account_name}/csv_files/${file_name}">
                     DOWNLOAD: ${file_name}
@@ -81,10 +80,15 @@
                 single_path = paths_list[i].split("/");
                 account_name = single_path[2]
                 file_name = single_path[4]
-
+                console.log(file_name);
                 document.getElementById("files").innerHTML += `<div>
                 | ${username_list[i]}
-                | ${file_name}
+                |
+                <a href="{{ url_for('dataset_details_filename', csv_file_name='file_name.csv') }}">
+                    DETAIL1-URLFOR: ${file_name}
+                </a>
+
+
                 | ${descriptions_list[i]}
                 | ${dates_list[i]}
                 | SIZE: ${file_sizes_list[i]}
@@ -133,6 +137,12 @@
             document.getElementById("myDropdown2").classList.toggle("show");
         }
     }
+    /* useful for moving if needed
+    <a href="./<csv_file_name>">
+        DETAILS: ${file_name}
+    </a>
+
+    */
 
 
 

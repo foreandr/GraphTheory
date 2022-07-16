@@ -42,6 +42,7 @@ LOAD_FILE('/some/path/image.png')
 'img' LONGBLOB NOT NULL,
 
 SITES:
+https://www.youtube.com/watch?v=CQv7wfZIcs0
 https://www.youtube.com/watch?v=6WruncSoCdI&ab_channel=JulianNash
 https://www.youtube.com/watch?v=iIhAfX4iek0&ab_channel=TechWithTim
 https://www.kaggle.com/datasets

@@ -8,7 +8,6 @@ DONE. Make sure all usernames are exclusive
 DONE. Create maximum file upload size of N MB (for now)
 load when not on your own page)
 DONE. Filesize in FILE database addition
-NOTE DONE. 10.personal block list
 11. Add in voting mechanism for the pictures
 12. Orgganize first page by votes
 13. Check user profiles without session? Maybe not
@@ -30,3 +29,9 @@ array is auto sorting? index.html sort by vote
 probably easier to sort jsut by creating a new query
 QUALITY OF LIFE
 8. Remove certain things when not on YOUR OWN page (take away abilities to up
+eventually sort by size
+random raffle for anyone who entered stuff for a %
+make password recovery only available from the email link
+
+ABANDONED
+NOT DONE. 10.personal block list
