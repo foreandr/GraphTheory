@@ -275,7 +275,23 @@ def order_by_votes():
                            by_votes=by_votes,
                            by_date = by_date
                            )
-
+@app.route("/order_by_date", methods=['GET', 'POST'])
+def order_by_date():
+    print('EXECUTING INDEX FUNCTION')
+    usernames, paths, descriptions, dates, file_sizes, num_votes = database.GET_ALL_DATASETS_BY_DATE(connection)
+    by_date = True
+    by_votes = False
+    return render_template('index.html',
+                           message="index.html page",
+                           usernames=usernames,
+                           paths=paths,
+                           descriptions=descriptions,
+                           dates=dates,
+                           file_sizes=file_sizes,
+                           votes=num_votes,
+                           by_votes=by_votes,
+                           by_date =by_date
+                           )
 
 if __name__ == '__main__':
     my_port = 5006

@@ -30,7 +30,7 @@
     //console.log(dates);
     //console.log(file_sizes);
     //console.log(num_votes);
-    console.log(by_votes);
+    //console.log(by_votes);
 
     username_list = usernames.split("//");
     paths_list = paths.split("//");
@@ -46,16 +46,17 @@
     //console.log(file_sizes_list);
     //console.log(num_votes_list);
 
-
-    if (by_votes){
+    console.log("CHECKING SORT: "  + by_votes);
+    if (by_votes == "True"){
+        //console.log("EXECUTING BY VOTES");
         var array_sorted_by_votes = get_reordered_list(num_votes_list);
         array_sorted_by_votes.forEach( value => {
-
+            if (value[1][0][0] != ""){
             single_path = value[1][0][1].split("/");
             account_name = single_path[2]
             file_name = single_path[4]
-            console.log(account_name);
-            console.log(file_name);
+            //console.log(account_name);
+            //console.log(file_name);
 
             document.getElementById("files").innerHTML += `<div>
                 | ${value[1][0][0]}
@@ -69,9 +70,12 @@
                 </a>
                 | VOTES:${value[0]}
             </div>`
+            }
+
         });
     }
     else{
+        //console.log("EXECUTING BY DATE");
         for (let i = 0; i < username_list.length; i++){
             if (username_list[i] != ""){
                 single_path = paths_list[i].split("/");
@@ -92,8 +96,6 @@
             }
         }
     }
-
-    get_reordered_list(num_votes_list);
 
     function get_reordered_list(array){
         //console.log(array)
@@ -124,7 +126,9 @@
             document.getElementById("myDropdown").innerHTML = `<a href="/order_by_votes">
                 BY VOTES
             </a>`;
-            document.getElementById("myDropdown2").innerHTML = `SORT BY VOTES`;
+            document.getElementById("myDropdown2").innerHTML = `<a href="/order_by_date">
+                BY DATE
+            </a>`;
             document.getElementById("myDropdown").classList.toggle("show");
             document.getElementById("myDropdown2").classList.toggle("show");
         }
