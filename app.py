@@ -258,7 +258,23 @@ def password_reset():
     else:
         return render_template(f"password_reset.html")
 
-
+@app.route("/order_by_votes", methods=['GET', 'POST'])
+def order_by_votes():
+    print('EXECUTING INDEX FUNCTION')
+    usernames, paths, descriptions, dates, file_sizes, num_votes = database.GET_ALL_DATASETS_BY_DATE(connection)
+    by_date = False
+    by_votes = True
+    return render_template('index.html',
+                           message="index.html page",
+                           usernames=usernames,
+                           paths=paths,
+                           descriptions=descriptions,
+                           dates=dates,
+                           file_sizes=file_sizes,
+                           votes=num_votes,
+                           by_votes=by_votes,
+                           by_date = by_date
+                           )
 
 
 if __name__ == '__main__':

@@ -22,6 +22,7 @@
     var dates = '{{ dates }}'
     var sizes = '{{ file_sizes }}'
     var num_votes = '{{ votes }}'
+    var by_votes = '{{ by_votes }}'
 
     //console.log(usernames);
     //console.log(paths);
@@ -29,6 +30,7 @@
     //console.log(dates);
     //console.log(file_sizes);
     //console.log(num_votes);
+    console.log(by_votes);
 
     username_list = usernames.split("//");
     paths_list = paths.split("//");
@@ -45,26 +47,73 @@
     //console.log(num_votes_list);
 
 
-    for (let i = 0; i < username_list.length; i++){
-        if (username_list[i] != ""){
-            single_path = paths_list[i].split("/");
+    if (by_votes){
+        var array_sorted_by_votes = get_reordered_list(num_votes_list);
+        array_sorted_by_votes.forEach( value => {
+
+            single_path = value[1][0][1].split("/");
             account_name = single_path[2]
             file_name = single_path[4]
+            console.log(account_name);
+            console.log(file_name);
 
             document.getElementById("files").innerHTML += `<div>
-            ${username_list[i]} |
-            <a href="/get_csv/${account_name}/csv_files/${file_name}">
-                ${file_name}
-            </a>
-            | ${descriptions_list[i]}
-            | ${dates_list[i]}
-            | ${file_sizes_list[i]}
-            <a href="/get_csv/${account_name}/csv_files/${file_name}">
-                DOWNLOAD: ${file_name}
-            </a>
-            | VOTEs: ${num_votes_list[i]}
+                | ${value[1][0][0]}
+                | ${file_name}
+                | ${value[1][0][2]}
+                | ${value[1][0][3]}
+
+                | SIZE : ${value[1][0][4]}
+                <a href="/get_csv/${account_name}/csv_files/${file_name}">
+                    DOWNLOAD: ${file_name}
+                </a>
+                | VOTES:${value[0]}
             </div>`
+        });
+    }
+    else{
+        for (let i = 0; i < username_list.length; i++){
+            if (username_list[i] != ""){
+                single_path = paths_list[i].split("/");
+                account_name = single_path[2]
+                file_name = single_path[4]
+
+                document.getElementById("files").innerHTML += `<div>
+                | ${username_list[i]}
+                | ${file_name}
+                | ${descriptions_list[i]}
+                | ${dates_list[i]}
+                | SIZE: ${file_sizes_list[i]}
+                <a href="/get_csv/${account_name}/csv_files/${file_name}">
+                    DOWNLOAD: ${file_name}
+                </a>
+                | VOTEs: ${num_votes_list[i]}
+                </div>`
+            }
         }
+    }
+
+    get_reordered_list(num_votes_list);
+
+    function get_reordered_list(array){
+        //console.log(array)
+        new_array = []
+        for (let i = 0; i < array.length; i++){
+            new_array.push([array[i],[[
+            username_list[i],
+            paths_list[i],
+            descriptions_list[i],
+            dates_list[i],
+            file_sizes_list[i]
+                ]]])
+        }
+        // console.log(new_array);
+        sorted_array = new_array.sort();
+        sorted_ordered_array = sorted_array.reverse();
+        //console.log("seems to not be sorted: \n" +  new_array)
+        // console.log("\n\nseems to be sorted: \n" +  sorted_ordered_array)
+        return sorted_ordered_array;
+
     }
     function dropdown_function(){
         if (document.getElementById("myDropdown").innerHTML == 'SORT BY DATE'){
@@ -72,14 +121,13 @@
             document.getElementById("myDropdown2").innerHTML = "";
         }
         else{
-            document.getElementById("myDropdown").innerHTML = 'SORT BY DATE';
+            document.getElementById("myDropdown").innerHTML = `<a href="/order_by_votes">
+                BY VOTES
+            </a>`;
             document.getElementById("myDropdown2").innerHTML = `SORT BY VOTES`;
             document.getElementById("myDropdown").classList.toggle("show");
             document.getElementById("myDropdown2").classList.toggle("show");
         }
-
-
-
     }
 
 
