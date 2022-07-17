@@ -166,9 +166,9 @@ def user_profile():
 
 @app.route('/<username>', methods=['GET', 'POST'])
 def user_profile_name(username):
-
     # IF WE ARE GOING TO A CSV PROFILE
-    if 'csv' in username.lower():  # IF IT IS A CSV FILE, DIFFERENT PROFILE LOGIC
+    # TODO: IF IT IS A CSV FILE, DIFFERENT PROFILE LOGIC/ #NEEDS TO BE BETTER HERE, ALL KINDS OF FAILURE CASES
+    if 'csv' in username.lower():
         print('redirecting to thingy')
         return render_template('dataset_details.html',
                                message="dataset_details.html page",
@@ -312,6 +312,8 @@ def dataset_details_filename(csv_file_name):
                            message="dataset_details.html page",
                            file=csv_file_name
                            )
+
+
 if __name__ == '__main__':
     my_port = 5006
     app.run(host='localhost', port=my_port, debug=True)  # host is to get off localhost

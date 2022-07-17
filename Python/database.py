@@ -215,28 +215,23 @@ def VOTE_INSERT_DEMO(conn):
     cursor = conn.cursor()
     cursor.execute(
         f"""
-        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
-        VALUES(2, 'foreandr')
+        EXECUTE dbo.ENTER_CSV_VOTE 2, 'foreandr';
         """)
     cursor.execute(
         f"""
-        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
-        VALUES(5, 'andrfore')
+        EXECUTE dbo.ENTER_CSV_VOTE5 5, 'andrfore'
         """)
     cursor.execute(
         f"""
-        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
-        VALUES(5, 'cheatsie')
+        EXECUTE dbo.ENTER_CSV_VOTE5 5, 'cheatsie'
         """)
     cursor.execute(
         f"""
-        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
-        VALUES(5, 'dnutty')
+        EXECUTE dbo.ENTER_CSV_VOTE 5, 'dnutty'
         """)
     cursor.execute(
         f"""
-        INSERT INTO dbo.CSV_VOTES(File_id, Voter_Username)
-        VALUES(2, 'bigfrog')
+        EXECUTE dbo.ENTER_CSV_VOTE 2, 'bigfrog'
         """)
     conn.commit()
     cursor.close()
@@ -510,3 +505,6 @@ def CHANGE_PASSWORD(conn, email, password):
 # GET_FILES(connection, 'foreandr')
 # GET_ALL_DATASETS_BY_DATE(connection)
 # print(FILE_GET_VOTES_COUNT_BY_ID(connection, 1))
+
+# VOTE RELATED
+# VOTE_INSERT_DEMO(connection)
