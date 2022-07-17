@@ -5,6 +5,8 @@ from pathlib import Path
 from PIL import Image
 import datetime
 
+from pyodbc import Error
+
 from Python.db_connection import connection
 from Python.helpers import print_green, print_title, print_error, turn_pic_to_hex, check_and_save_dir, print_warning
 
@@ -219,11 +221,11 @@ def VOTE_INSERT_DEMO(conn):
         """)
     cursor.execute(
         f"""
-        EXECUTE dbo.ENTER_CSV_VOTE5 5, 'andrfore'
+        EXECUTE dbo.ENTER_CSV_VOTE 5, 'andrfore'
         """)
     cursor.execute(
         f"""
-        EXECUTE dbo.ENTER_CSV_VOTE5 5, 'cheatsie'
+        EXECUTE dbo.ENTER_CSV_VOTE 5, 'cheatsie'
         """)
     cursor.execute(
         f"""
@@ -237,6 +239,7 @@ def VOTE_INSERT_DEMO(conn):
     cursor.close()
     print_green("VOTE_INSERT_DEMO")
 
+
 def FILE_GET_VOTES_COUNT_BY_ID(conn, file_id):
     cursor = conn.cursor()
     cursor.execute(f"""EXECUTE dbo.GET_FILE_VOTE_COUNT {file_id};""")
@@ -249,16 +252,40 @@ def FILE_GET_VOTES_COUNT_BY_ID(conn, file_id):
     return num_votes
 
 
+def MODEL_CREATE_TABLE(conn):
+    cursor = conn.cursor()
+    cursor.execute(f"""
+        CREATE TABLE dbo.MODEL(
+        Modal_id INT IDENTITY(1,1) NOT NULL,
+        Local_File_PATH varchar(200) NULL,
+        Date_Time datetime NULL,
+        Foreign_File_id int NULL,
+        Uploader varchar(200) NULL,
+        FOREIGN KEY (Foreign_File_id) REFERENCES FILES(File_id),
+        FOREIGN KEY (Uploader) REFERENCES USERS(Username),
+        PRIMARY KEY (Modal_id)
+        )"""
+                   )
+    conn.commit()
+    cursor.close()
+    print_green("CREATED MODEL TABLE")
+
+
 def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
 
     try:
+        cursor.execute(f"DROP TABLE dbo.MODEL;")
+        conn.commit()
+    except Error:
+        print_warning("NO dbo.MODEL")
+
+    try:
         cursor.execute(f"DROP TABLE dbo.CSV_VOTES;")
         conn.commit()
     except:
-        print_warning("NO dbo.CSV_VOTES")
-
+        print_warning("NO dbo.CSV_VOTES", )
 
     try:
         cursor.execute(f"DROP TABLE dbo.FILES;")
@@ -289,6 +316,9 @@ def USER_FULL_RESET(conn):
     # VOTE RELATED
     VOTE_CREATE_TABLE(conn)
     VOTE_INSERT_DEMO(conn)
+
+    # MODEL RELATED
+    MODEL_CREATE_TABLE(conn)
 
     # CONNECTION TABLE
     CONNECTION_CREATE_TABLE(conn)
@@ -355,9 +385,8 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
     for details in files:
         user_info.append([details[0], details[1], details[2], details[3], details[4], details[5]])
 
-    #for i in user_info:
+    # for i in user_info:
     #    print(i)
-
 
     names = ""
     files = ""
@@ -387,7 +416,7 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
 def register_user_files(username):
     check_and_save_dir(f"../static/#UserData/{username}/profile")
     check_and_save_dir(f"../static/#UserData/{username}/csv_files")
-    check_and_save_dir(f"../static/#UserData/{username}/photos")
+    check_and_save_dir(f"../static/#UserData/{username}/models")
 
     my_path = f"../static/#UserData/{username}/profile"
     my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
@@ -456,7 +485,7 @@ def GET_FILES(conn, username):
         description = i[1]
         descriptions += str(description) + "//"
         # print("DESCRIPTION: ", description)
-         #print("DESCRIPTIONS: ", descriptions)
+        # print("DESCRIPTIONS: ", descriptions)
 
         t = str(i[2])
         dates += t + "//"

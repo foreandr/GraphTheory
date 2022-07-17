@@ -15,7 +15,10 @@ DONE. Orgganize first page by votes
 14. Add other properties to dataset [UPVOTES, COMMENTS,]
 15. Change default description to no description
 16. MAKE SURE FILE UPLAODED IS CSV
-
+14. set the rules clearly, permanent email and user ban if you're found breaking the rules
+    - porn, illegality
+    - month timeouts for hard slurs,
+    - n comments a month to get rid of bots, or pay extra to comment? premium for unlimited?
 vote on price as well, market can decide, between suppliers and payers
 test server -> pbd ->main or an order like that [ build with large db to test functions people want to use with db]
 option to update with no changes
@@ -32,6 +35,8 @@ QUALITY OF LIFE
 eventually sort by size
 random raffle for anyone who entered stuff for a %
 make password recovery only available from the email link
+
+
 
 ABANDONED
 10.personal block list
