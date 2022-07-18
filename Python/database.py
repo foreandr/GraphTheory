@@ -257,10 +257,10 @@ def MODEL_CREATE_TABLE(conn):
     cursor.execute(f"""
         CREATE TABLE dbo.MODEL(
         Modal_id INT IDENTITY(1,1) NOT NULL,
-        Local_File_PATH varchar(200) NULL,
-        Date_Time datetime NULL,
-        Foreign_File_id int NULL,
-        Uploader varchar(200) NULL,
+        Local_File_PATH varchar(200),
+        Date_Time datetime,
+        Foreign_File_id int,
+        Uploader varchar(200) UNIQUE,
         FOREIGN KEY (Foreign_File_id) REFERENCES FILES(File_id),
         FOREIGN KEY (Uploader) REFERENCES USERS(Username),
         PRIMARY KEY (Modal_id)
@@ -375,6 +375,13 @@ def GET_FRIENDS(conn, username):
         user_friends.append(friend[8])  # friend index is 8
     return user_friends
 
+def CUSTOM_MODEL_INSERT(conn, new_path="/PATH.JPG", csv_id=2, uploader_username='foreandr'):
+    print_green(f'INSERT INTO MODELS {new_path}.{csv_id},{uploader_username}')
+    cursor = conn.cursor()
+    cursor.execute(f"EXECUTE dbo.CUSTOM_MODEL_INSERT '/PATH.JPG',2 , 'foreandr'")
+
+    conn.commit()
+    cursor.close()
 
 def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
     print(f'GET ALL DATASETS | MIN:{minimum} MAX:{maximum}')
@@ -522,6 +529,8 @@ def CHANGE_PASSWORD(conn, email, password):
     cursor.close()
     print_green('CHANGE_PASSWORD COMPLETED')
 
+
+
 # USERS
 
 # USER_CREATE_TABLE(connection)
@@ -537,3 +546,6 @@ def CHANGE_PASSWORD(conn, email, password):
 
 # VOTE RELATED
 # VOTE_INSERT_DEMO(connection)
+
+#MODEL RELATED
+CUSTOM_MODEL_INSERT(connection, new_path="/PATH.JPG", csv_id=2, uploader_username='foreandr')

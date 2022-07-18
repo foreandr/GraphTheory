@@ -13,6 +13,15 @@ CREATE TABLE dbo.MODEL(
 )
 
 -- demo insert
-INSERT INTO dbo.MODEL(Local_File_PATH, Foreign_File_id, Uploader) -- can be png or jpg, or mp4
-VALUES ('/PATH.JPG', 2, 'foreandr') 
+INSERT INTO dbo.MODEL(Local_File_PATH, Date_Time, Foreign_File_id, Uploader) -- can be png or jpg, or mp4
+VALUES ('/PATH.JPG', GETDATE(), 2, 'foreandr') 
 
+GO
+CREATE PROCEDURE dbo.CUSTOM_MODEL_INSERT
+	@model_path varchar(200),
+	@foreign_file_id INT,
+	@personal_username varchar(200)
+AS
+INSERT INTO dbo.MODEL(Local_File_PATH, Date_Time, Foreign_File_id, Uploader) -- can be png or jpg, or mp4
+VALUES (@model_path, GETDATE(), @foreign_file_id, @personal_username) 
+GO
