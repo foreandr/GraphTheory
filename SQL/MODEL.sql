@@ -25,3 +25,5 @@ AS
 INSERT INTO dbo.MODEL(Local_File_PATH, Date_Time, Foreign_File_id, Uploader) -- can be png or jpg, or mp4
 VALUES (@model_path, GETDATE(), @foreign_file_id, @personal_username) 
 GO
+
+EXECUTE dbo.CUSTOM_MODEL_INSERT '/PATH.JPG',2 , 'foreandr'

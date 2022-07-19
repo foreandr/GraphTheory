@@ -87,7 +87,7 @@ def USER_CREATE_TABLE(conn):
         """)
     conn.commit()
     cursor.close()
-    print_green("USER CREATE COMPLETED")
+    print_green("USER CREATE COMPLETED\n")
 
 
 def USER_INSERT(conn, username="Andre", password="password", email="foreandr@gmail.com"):
@@ -111,7 +111,7 @@ def USER_INSERT_MULTIPLE(conn):
     full_register(conn, 'cheatsie', 'cooldood', 'cheatsieog@gmail.com')
     full_register(conn, 'dnutty', 'cooldood', 'dnutty@gmail.com')
     full_register(conn, 'bigfrog', 'cooldood', 'bigfrog@gmail.com')
-    print_green("USER MULTI INSERT COMPLETED")
+    print_green("USER MULTI INSERT COMPLETED\n")
 
 
 def CONNECTION_CREATE_TABLE(conn):
@@ -131,7 +131,7 @@ def CONNECTION_CREATE_TABLE(conn):
         """)
     conn.commit()
     cursor.close()
-    print_green("CONNECTION CREATE COMPLETED")
+    print_green("CONNECTION CREATE COMPLETED\n")
 
 
 def CONNECTION_INSERT(conn, user_id1, user_id2):
@@ -169,7 +169,7 @@ def CONNECTION_INSERT_MULTIPLE(conn):
     CONNECTION_INSERT(conn, 3, 4)
     CONNECTION_INSERT(conn, 3, 5)
 
-    print_green("USER MULTI INSERT COMPLETED")
+    print_green("USER MULTI INSERT COMPLETED\n")
 
 
 def USER_INSERT_MULTPLE_FILES(conn):
@@ -193,7 +193,7 @@ def USER_INSERT_MULTPLE_FILES(conn):
                 image_path=f'static/#UserData/dnutty/csv_files/CSV4.csv',
                 description=f"description 4",
                 user_id=4)
-    print_green("USER INSERT MULTPLE FILES COMPLETED")
+    print_green("USER INSERT MULTPLE FILES COMPLETED\n")
 
 
 def VOTE_CREATE_TABLE(conn):
@@ -237,7 +237,7 @@ def VOTE_INSERT_DEMO(conn):
         """)
     conn.commit()
     cursor.close()
-    print_green("VOTE_INSERT_DEMO")
+    print_green("VOTE_INSERT_DEMO\n")
 
 
 def FILE_GET_VOTES_COUNT_BY_ID(conn, file_id):
@@ -268,7 +268,7 @@ def MODEL_CREATE_TABLE(conn):
                    )
     conn.commit()
     cursor.close()
-    print_green("CREATED MODEL TABLE")
+    print_green("CREATED MODEL TABLE\n")
 
 
 def USER_FULL_RESET(conn):
@@ -319,6 +319,7 @@ def USER_FULL_RESET(conn):
 
     # MODEL RELATED
     MODEL_CREATE_TABLE(conn)
+    MODEL_MULTIPLE_INSERT(conn)
 
     # CONNECTION TABLE
     CONNECTION_CREATE_TABLE(conn)
@@ -346,7 +347,7 @@ def FILES_CREATE_TABLE(conn):
         """)
     conn.commit()
     cursor.close()
-    print_green("FILES CREATE COMPLETED")
+    print_green("FILES CREATE COMPLETED\n")
 
 
 def FILE_INSERT(conn, image_path="NO PATH", description="default description", user_id=1, file_size=0):
@@ -375,13 +376,18 @@ def GET_FRIENDS(conn, username):
         user_friends.append(friend[8])  # friend index is 8
     return user_friends
 
+
 def CUSTOM_MODEL_INSERT(conn, new_path="/PATH.JPG", csv_id=2, uploader_username='foreandr'):
     print_green(f'INSERT INTO MODELS {new_path}.{csv_id},{uploader_username}')
     cursor = conn.cursor()
-    cursor.execute(f"EXECUTE dbo.CUSTOM_MODEL_INSERT '/PATH.JPG',2 , 'foreandr'")
+    try:
+        cursor.execute(f"EXECUTE dbo.CUSTOM_MODEL_INSERT '{new_path}', {csv_id} , '{uploader_username}'")
+    except Error:
+        print_error(F"CANNOT INSERT {new_path} INTO {uploader_username} - NOT SURE WHY")
 
     conn.commit()
     cursor.close()
+
 
 def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
     print(f'GET ALL DATASETS | MIN:{minimum} MAX:{maximum}')
@@ -420,7 +426,7 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
     return names, files, descriptions, dates, sizes, num_votes
 
 
-def register_user_files(username):
+def register_user_files(conn, username):
     check_and_save_dir(f"../static/#UserData/{username}/profile")
     check_and_save_dir(f"../static/#UserData/{username}/csv_files")
     check_and_save_dir(f"../static/#UserData/{username}/models")
@@ -435,25 +441,64 @@ def register_user_files(username):
     # SETTING UP DEFAULT FILES
     default_csv = ""
     target = ""
+    fake_chart = ""
+    model_target = ""
     # print('PRINTING WORKING DIRECTORY', os.getcwd())
     if username == 'foreandr':
         default_csv = r'../#DemoData/CSV1.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV1.csv'
+
     elif username == 'bigfrog':
         default_csv = r'../#DemoData/CSV2.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV2.csv'
+
     elif username == 'cheatsie':
         default_csv = r'../#DemoData/CSV3.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV3.csv'
+
     elif username == 'dnutty':
         default_csv = r'../#DemoData/CSV4.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV4.csv'
+
     elif username == 'andrfore':
         default_csv = r'../#DemoData/CSV5.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV5.csv'
 
-    # check_and_save_dir(target)
     shutil.copyfile(default_csv, target)
+
+
+def MODEL_MULTIPLE_INSERT(conn):
+    # SETTING UP DEFAULT FILES
+
+    fake_chart = ""
+    model_target = ""
+
+    fake_chart = r'../#DemoData/fakechart1.jpg'
+    model_target = rf'../static/#UserData/foreandr/models/fakechart1.jpg'
+    CUSTOM_MODEL_INSERT(conn, model_target, 2, 'foreandr')
+    shutil.copyfile(fake_chart, model_target)
+
+    fake_chart = r'../#DemoData/fakechart2.jpg'
+    model_target = rf'../static/#UserData/bigfrog/models/fakechart2.jpg'
+    CUSTOM_MODEL_INSERT(conn, model_target, 2, 'andrfore')
+    shutil.copyfile(fake_chart, model_target)
+
+    fake_chart = r'../#DemoData/fakechart4.jpg'
+    model_target = rf'../static/#UserData/dnutty/models/fakechart4.jpg'
+    CUSTOM_MODEL_INSERT(conn, model_target, 2, 'dnutty')
+    shutil.copyfile(fake_chart, model_target)
+
+    fake_chart = r'../#DemoData/fakechart5.jpg'
+    model_target = rf'../static/#UserData/andrfore/models/fakechart5.jpg'
+    CUSTOM_MODEL_INSERT(conn, model_target, 2, 'bigfrog')
+    shutil.copyfile(fake_chart, model_target)
+
+    fake_chart = r'../#DemoData/fakechart3.jpg'
+    model_target = rf'../static/#UserData/cheatsie/models/fakechart3.jpg'
+    CUSTOM_MODEL_INSERT(conn=conn, new_path=model_target, csv_id=2, uploader_username='cheatsie')
+    shutil.copyfile(fake_chart, model_target)
+
+    print_green('MODEL MULTIPLE INSERTS COMPELTED\n')
 
 
 def full_register(connection, username, password, email):
@@ -464,7 +509,7 @@ def full_register(connection, username, password, email):
     # except:
     #    print_warning("User doesn't exist")
     USER_INSERT(connection, username, password, email)
-    register_user_files(username)
+    register_user_files(connection, username)
     # FILE_INSERT(connection
 
 
@@ -530,7 +575,13 @@ def CHANGE_PASSWORD(conn, email, password):
     print_green('CHANGE_PASSWORD COMPLETED')
 
 
-
+def MODEL_DROP_TABLE(conn):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(f"DROP TABLE dbo.MODEL;")
+        conn.commit()
+    except Error:
+        print_warning("NO dbo.MODEL")
 # USERS
 
 # USER_CREATE_TABLE(connection)
@@ -547,5 +598,8 @@ def CHANGE_PASSWORD(conn, email, password):
 # VOTE RELATED
 # VOTE_INSERT_DEMO(connection)
 
-#MODEL RELATED
-CUSTOM_MODEL_INSERT(connection, new_path="/PATH.JPG", csv_id=2, uploader_username='foreandr')
+# MODEL RELATED
+# CUSTOM_MODEL_INSERT(connection, new_path="/PATH.JPG", csv_id=2, uploader_username='foreandr')
+# MODEL_DROP_TABLE(connection)
+# MODEL_CREATE_TABLE(connection)
+# MODEL_MULTIPLE_INSERT(connection)
