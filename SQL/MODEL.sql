@@ -55,6 +55,7 @@ ALTER PROCEDURE dbo.GET_MODELS_BY_FILE_ID
 		ON model.Uploader = users.username
 		INNER JOIN dbo.FILES files
 		ON model.Foreign_File_id = files.File_id
+
 		WHERE files.File_id = @file_id
 	END
 GO

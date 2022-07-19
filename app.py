@@ -173,19 +173,31 @@ def user_profile_name(username):
         print('REDIRECTING TO DATASET PAGE...MANY POTENTIAL ERRORS HERE')
         ds_hosts_username = username.split("-")[0]
         ds_hosts_file_name = username.split("-")[1]
-        file_id = database.GET_FILE_ID_W_USERNAME(connection,
-                                                  username=ds_hosts_username,
-                                                  file_name=ds_hosts_file_name)
-        print('FILE ID IS:', file_id)
 
-        model_paths, model_descriptions, model_upload_times, model_uploaders = database.GET_MODELS_BY_FILE_ID(connection, file_id)
+        file_id = database.GET_FILE_ID_W_USERNAME(connection,
+                                                      username=ds_hosts_username,
+                                                      file_name=ds_hosts_file_name)
+
+        model_ids, \
+        local_paths, \
+        model_descriptions, \
+        dates, \
+        foreign_file_id, \
+        model_uploaders, \
+        model_user_ids, \
+        csv_file_paths, \
+        file_sizes, \
+        csv_description, \
+        csv_user_id, \
+        csv_upload_date = database.GET_MODELS_BY_FILE_ID(connection, file_id)
+        #TODO: MODEL VOTES STUFF
         return render_template('dataset_details.html',
-                               message="dataset_details.html page",
-                               full_string=username,
-                               host_name=ds_hosts_username,
-                               file_name=ds_hosts_file_name,
-                               file_id=file_id
-                               )
+                                   message="dataset_details.html page",
+                                   full_string=username,
+                                   host_name=ds_hosts_username,
+                                   file_name=ds_hosts_file_name,
+                                   file_id=file_id
+                                   )
     # IF WE ARE NOT SIGNED IN & TRYING TO GO ELSEWHEREW
     if "email" not in session:
         return redirect(url_for('login'))
