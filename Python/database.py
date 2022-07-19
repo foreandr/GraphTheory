@@ -612,9 +612,36 @@ def GET_MODELS_BY_FILE_ID(conn, file_id):
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE dbo.GET_MODELS_BY_FILE_ID {file_id};")
     file_results = cursor.fetchall()
+
+    model_ids = ""
+    local_paths = ""
+    model_descriptions = ""
+    dates = ""
+    foreign_file_id = ""
+    model_uploaders = ""
+    model_user_ids = ""
+    csv_file_paths = ""
+    file_sizes = ""
+    csv_description = ""
+    csv_user_id = ""
+    csv_upload_date = ""
     for i in file_results:
         print(i)
+        model_ids += str(i[0]) + "//"
+        local_paths += str(i[1]) + "//"
+        model_descriptions += str(i[2]) + "//"
+        dates += str(i[3]) + "//"
+        foreign_file_id += str(i[4]) + "//"
+        model_uploaders += str(i[5]) + "//"
+        model_user_ids += str(i[6]) + "//"
+        csv_file_paths += str(i[7]) + "//"
+        file_sizes += str(i[8]) + "//"
+        csv_description += str(i[9]) + "//"
+        csv_user_id  += str(i[10]) + "//"
+        csv_upload_date += str(i[11]) + "//"
 
+    print_green('COMPLETED GET_MODELS_BY_FILE_ID')
+    return model_ids, local_paths, model_descriptions, dates, foreign_file_id, model_uploaders, model_user_ids, csv_file_paths, file_sizes, csv_description,  csv_user_id,  csv_upload_date
 # USERS
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
@@ -635,3 +662,4 @@ def GET_MODELS_BY_FILE_ID(conn, file_id):
 # MODEL_DROP_TABLE(connection)
 # MODEL_CREATE_TABLE(connection)
 # MODEL_MULTIPLE_INSERT(connection)
+# GET_MODELS_BY_FILE_ID(connection, 2)

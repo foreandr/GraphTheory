@@ -38,7 +38,18 @@ ALTER PROCEDURE dbo.GET_MODELS_BY_FILE_ID
 		@file_id INT
 	AS
 	BEGIN
-		SELECT model.*, users.*, files.*
+		SELECT 
+			model.Model_id,
+			model.Local_File_PATH,
+			model.Model_Description,
+			model.Date_Time,
+			model.Foreign_File_id,
+			model.Uploader as 'MODEL UPLOADER',
+			users.User_Id AS 'MODEL USER ID', 
+			files.File_PATH AS 'CSV FILE PATH', 
+			files.File_size, files.Description, 
+			files.UserId AS 'CSV USER ID', 
+			files.Date_Time AS 'CSV UPLOAD DATE'
 		FROM dbo.MODEL model
 		INNER JOIN dbo.USERS users
 		ON model.Uploader = users.username
