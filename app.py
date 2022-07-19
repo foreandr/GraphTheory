@@ -306,7 +306,7 @@ def order_by_date():
 
 
 @app.route("/<csv_file_name>", methods=['GET', 'POST'])
-def dataset_details_filename(csv_file_name):
+def dataset_details_filename(username, csv_file_name):
     print('got here')
     return render_template('dataset_details.html',
                            message="dataset_details.html page",
