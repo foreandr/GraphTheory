@@ -166,14 +166,24 @@ def user_profile():
 
 @app.route('/<username>', methods=['GET', 'POST'])
 def user_profile_name(username):
+    print('EXECUTING WITH ARGUMENT: ', username)
     # IF WE ARE GOING TO A CSV PROFILE
     # TODO: IF IT IS A CSV FILE, DIFFERENT PROFILE LOGIC/ #NEEDS TO BE BETTER HERE, ALL KINDS OF FAILURE CASES
     if 'csv' in username.lower():
-        print('redirecting to thingy')
+        print('REDIRECTING TO DATASET PAGE...MANY POTENTIAL ERRORS HERE')
+        ds_hosts_username = username.split("-")[0]
+        ds_hosts_file_name = username.split("-")[1]
+        file_id = database.GET_FILE_ID_W_USERNAME(connection,
+                                        username=ds_hosts_username,
+                                        file_name=ds_hosts_file_name)
+        print('FILE ID IS:', file_id)
+
         return render_template('dataset_details.html',
                                message="dataset_details.html page",
-                               file=username
-                               )
+                               full_string =username,
+                               host_name= ds_hosts_username,
+                               file_name =  ds_hosts_file_name
+                              )
     # IF WE ARE NOT SIGNED IN & TRYING TO GO ELSEWHEREW
     if "email" not in session:
         return redirect(url_for('login'))
@@ -306,8 +316,8 @@ def order_by_date():
 
 
 @app.route("/<csv_file_name>", methods=['GET', 'POST'])
-def dataset_details_filename(username, csv_file_name):
-    print('got here')
+def dataset_details_filename(csv_file_name):
+
     return render_template('dataset_details.html',
                            message="dataset_details.html page",
                            file=csv_file_name

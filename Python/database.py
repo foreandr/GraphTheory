@@ -178,6 +178,10 @@ def USER_INSERT_MULTPLE_FILES(conn):
                 description=f"description 1",
                 user_id=1)
     FILE_INSERT(conn,
+                image_path=f'static/#UserData/foreandr/csv_files/CSV10.csv',
+                description=f"description 10",
+                user_id=1)
+    FILE_INSERT(conn,
                 image_path=f'static/#UserData/andrfore/csv_files/CSV5.csv',
                 description=f"description 5",
                 user_id=2)
@@ -256,14 +260,14 @@ def MODEL_CREATE_TABLE(conn):
     cursor = conn.cursor()
     cursor.execute(f"""
         CREATE TABLE dbo.MODEL(
-        Modal_id INT IDENTITY(1,1) NOT NULL,
+        Model_id INT IDENTITY(1,1) NOT NULL,
         Local_File_PATH varchar(200),
         Date_Time datetime,
         Foreign_File_id int,
         Uploader varchar(200) UNIQUE,
         FOREIGN KEY (Foreign_File_id) REFERENCES FILES(File_id),
         FOREIGN KEY (Uploader) REFERENCES USERS(Username),
-        PRIMARY KEY (Modal_id)
+        PRIMARY KEY (Model_id)
         )"""
                    )
     conn.commit()
@@ -448,6 +452,12 @@ def register_user_files(conn, username):
         default_csv = r'../#DemoData/CSV1.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV1.csv'
 
+        # DO TWICE FOR TEST WITH MULTIPLE FILES
+        default_csv2 = r'../#DemoData/CSV1.csv'
+        target2 = rf'../static/#UserData/{username}/csv_files/CSV10.csv'
+        shutil.copyfile(default_csv2, target2)
+
+
     elif username == 'bigfrog':
         default_csv = r'../#DemoData/CSV2.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV2.csv'
@@ -480,7 +490,7 @@ def MODEL_MULTIPLE_INSERT(conn):
 
     fake_chart = r'../#DemoData/fakechart2.jpg'
     model_target = rf'../static/#UserData/bigfrog/models/fakechart2.jpg'
-    CUSTOM_MODEL_INSERT(conn, model_target, 2, 'andrfore')
+    CUSTOM_MODEL_INSERT(conn, model_target, 1, 'andrfore')
     shutil.copyfile(fake_chart, model_target)
 
     fake_chart = r'../#DemoData/fakechart4.jpg'
@@ -490,7 +500,7 @@ def MODEL_MULTIPLE_INSERT(conn):
 
     fake_chart = r'../#DemoData/fakechart5.jpg'
     model_target = rf'../static/#UserData/andrfore/models/fakechart5.jpg'
-    CUSTOM_MODEL_INSERT(conn, model_target, 2, 'bigfrog')
+    CUSTOM_MODEL_INSERT(conn, model_target, 3, 'bigfrog')
     shutil.copyfile(fake_chart, model_target)
 
     fake_chart = r'../#DemoData/fakechart3.jpg'
@@ -514,6 +524,7 @@ def full_register(connection, username, password, email):
 
 
 def GET_FILES(conn, username):
+
     print('GET FILES: ', username)
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE GET_FILES {username} ;")
@@ -582,8 +593,19 @@ def MODEL_DROP_TABLE(conn):
         conn.commit()
     except Error:
         print_warning("NO dbo.MODEL")
-# USERS
 
+
+def GET_FILE_ID_W_USERNAME(conn, username, file_name):
+    cursor = conn.cursor()
+    cursor.execute(f"EXECUTE dbo.GET_FILE_ID '{username}', '{file_name}';")
+    id = None
+    user_results = cursor.fetchall()
+    for result in user_results:
+        id = result[0]  # friend index is 8
+    return id
+
+
+# USERS
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)
 # USER_INSERT_MULTIPLE(connection)

@@ -13,3 +13,22 @@ CREATE TABLE FILES
 )
 GO
 
+
+GO
+ALTER PROCEDURE dbo.GET_FILE_ID
+		@uploader_username varchar(200),
+		@file_name varchar(200)
+	AS
+	BEGIN
+		SELECT * 
+		FROM dbo.FILES files
+		INNER JOIN USERS users
+		ON users.User_Id = files.UserId
+		WHERE users.username = @uploader_username
+		AND files.File_PATH LIKE '%' +  @file_name+ '%'
+	END
+GO
+
+EXECUTE dbo.GET_FILE_ID 'foreandr', 'CSV1.csv';
+
+
