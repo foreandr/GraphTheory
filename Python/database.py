@@ -382,11 +382,13 @@ def GET_FRIENDS(conn, username):
     return user_friends
 
 
-def CUSTOM_MODEL_INSERT(conn, new_path="/PATH.JPG", description='DEAFULT MODEL DESCRIPTION', csv_id=2, uploader_username='foreandr'):
+def CUSTOM_MODEL_INSERT(conn, new_path="/PATH.JPG", description='DEAFULT MODEL DESCRIPTION', csv_id=2,
+                        uploader_username='foreandr'):
     print_green(f'INSERT INTO MODELS {new_path}.{csv_id},{uploader_username}')
     cursor = conn.cursor()
     try:
-        cursor.execute(f"EXECUTE dbo.CUSTOM_MODEL_INSERT '{new_path}', '{description}', {csv_id} , '{uploader_username}';")
+        cursor.execute(
+            f"EXECUTE dbo.CUSTOM_MODEL_INSERT '{new_path}', '{description}', {csv_id} , '{uploader_username}';")
     except Error:
         print_error(F"CANNOT INSERT {new_path} INTO {uploader_username} - NOT SURE WHY\n" + str(Error))
 
@@ -491,22 +493,23 @@ def MODEL_MULTIPLE_INSERT(conn):
 
     fake_chart = r'../#DemoData/fakechart2.jpg'
     model_target = rf'../static/#UserData/bigfrog/models/fakechart2.jpg'
-    CUSTOM_MODEL_INSERT(conn, model_target,'description', 1, 'andrfore')
+    CUSTOM_MODEL_INSERT(conn, model_target, 'description', 1, 'andrfore')
     shutil.copyfile(fake_chart, model_target)
 
     fake_chart = r'../#DemoData/fakechart4.jpg'
     model_target = rf'../static/#UserData/dnutty/models/fakechart4.jpg'
-    CUSTOM_MODEL_INSERT(conn, model_target, 'description',2, 'dnutty')
+    CUSTOM_MODEL_INSERT(conn, model_target, 'description', 2, 'dnutty')
     shutil.copyfile(fake_chart, model_target)
 
     fake_chart = r'../#DemoData/fakechart5.jpg'
     model_target = rf'../static/#UserData/andrfore/models/fakechart5.jpg'
-    CUSTOM_MODEL_INSERT(conn, model_target,'description', 3, 'bigfrog')
+    CUSTOM_MODEL_INSERT(conn, model_target, 'description', 3, 'bigfrog')
     shutil.copyfile(fake_chart, model_target)
 
     fake_chart = r'../#DemoData/fakechart3.jpg'
     model_target = rf'../static/#UserData/cheatsie/models/fakechart3.jpg'
-    CUSTOM_MODEL_INSERT(conn=conn, new_path=model_target,description='description', csv_id=2, uploader_username='cheatsie')
+    CUSTOM_MODEL_INSERT(conn=conn, new_path=model_target, description='description', csv_id=2,
+                        uploader_username='cheatsie')
     shutil.copyfile(fake_chart, model_target)
 
     print_green('MODEL MULTIPLE INSERTS COMPELTED\n')
@@ -525,7 +528,6 @@ def full_register(connection, username, password, email):
 
 
 def GET_FILES(conn, username):
-
     print('GET FILES: ', username)
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE GET_FILES {username} ;")
@@ -604,6 +606,8 @@ def GET_FILE_ID_W_USERNAME(conn, username, file_name):
     for result in user_results:
         id = result[0]  # friend index is 8
     return id
+
+
 def GET_MODELS_BY_FILE_ID(conn, file_id):
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE dbo.GET_MODELS_BY_FILE_ID {file_id};")
