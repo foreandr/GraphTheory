@@ -175,8 +175,8 @@ def user_profile_name(username):
         ds_hosts_file_name = username.split("-")[1]
 
         file_id = database.GET_FILE_ID_W_USERNAME(connection,
-                                                      username=ds_hosts_username,
-                                                      file_name=ds_hosts_file_name)
+                                                  username=ds_hosts_username,
+                                                  file_name=ds_hosts_file_name)
 
         model_ids, \
         local_paths, \
@@ -192,16 +192,28 @@ def user_profile_name(username):
         csv_upload_date, \
         num_model_votes = database.GET_MODELS_BY_FILE_ID(connection, file_id)
 
-
-        helpers.print_model_details(model_ids, local_paths, model_descriptions, dates, foreign_file_id, model_uploaders, model_user_ids,csv_file_paths, file_sizes, csv_description, csv_user_id, csv_upload_date, num_model_votes)
+        helpers.print_model_details(model_ids, local_paths, model_descriptions, dates, foreign_file_id, model_uploaders,
+                                    model_user_ids, csv_file_paths, file_sizes, csv_description, csv_user_id,
+                                    csv_upload_date, num_model_votes)
 
         return render_template('dataset_details.html',
-                                   message="dataset_details.html page",
-                                   full_string=username,
-                                   host_name=ds_hosts_username,
-                                   file_name=ds_hosts_file_name,
-                                   file_id=file_id
-                                   )
+                               message="dataset_details.html page",
+                               full_string=username,
+                               host_name=ds_hosts_username,
+                               file_name=ds_hosts_file_name,
+                               model_ids=model_ids,
+                               local_paths=local_paths,
+                               model_descriptions=model_descriptions,
+                               dates=dates,
+                               foreign_file_id= foreign_file_id,
+                               model_user_ids=model_user_ids,
+                               csv_file_paths=csv_file_paths,
+                               file_sizes=file_sizes,
+                               csv_description=csv_description,
+                               csv_user_id=csv_user_id,
+                               csv_upload_date=csv_upload_date,
+                               num_model_votes=num_model_votes,
+                               )
     # IF WE ARE NOT SIGNED IN & TRYING TO GO ELSEWHEREW
     if "email" not in session:
         return redirect(url_for('login'))
