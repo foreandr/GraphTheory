@@ -608,6 +608,16 @@ def GET_FILE_ID_W_USERNAME(conn, username, file_name):
     return id
 
 
+def MODEL_GET_NUM_VOTES_BY_MODEL_ID(conn, model_id):
+    cursor = conn.cursor()
+    cursor.execute(f"EXECUTE dbo.MODEL_GET_NUM_VOTES_BY_MODEL_ID {model_id};")
+    count = cursor.fetchall()
+    num = ""
+    for i in count:
+        # print('zzzzz', i)
+        num = i[0]
+    return num
+
 def GET_MODELS_BY_FILE_ID(conn, file_id):
     cursor = conn.cursor()
     cursor.execute(f"EXECUTE dbo.GET_MODELS_BY_FILE_ID {file_id};")
@@ -625,8 +635,9 @@ def GET_MODELS_BY_FILE_ID(conn, file_id):
     csv_description = ""
     csv_user_id = ""
     csv_upload_date = ""
+    num_model_votes = ""
     for i in file_results:
-        print(i)
+        # print(i)
         model_ids += str(i[0]) + "//"
         local_paths += str(i[1]) + "//"
         model_descriptions += str(i[2]) + "//"
@@ -637,11 +648,12 @@ def GET_MODELS_BY_FILE_ID(conn, file_id):
         csv_file_paths += str(i[7]) + "//"
         file_sizes += str(i[8]) + "//"
         csv_description += str(i[9]) + "//"
-        csv_user_id  += str(i[10]) + "//"
+        csv_user_id += str(i[10]) + "//"
         csv_upload_date += str(i[11]) + "//"
-
+        num_model_votes += str(MODEL_GET_NUM_VOTES_BY_MODEL_ID(conn, i[0]))  + "//"
+        # print('MODEL ID: ', i[0])
     print_green('COMPLETED GET_MODELS_BY_FILE_ID')
-    return model_ids, local_paths, model_descriptions, dates, foreign_file_id, model_uploaders, model_user_ids, csv_file_paths, file_sizes, csv_description,  csv_user_id,  csv_upload_date
+    return model_ids, local_paths, model_descriptions, dates, foreign_file_id, model_uploaders, model_user_ids, csv_file_paths, file_sizes, csv_description, csv_user_id, csv_upload_date, num_model_votes
 # USERS
 # USER_CREATE_TABLE(connection)
 # USER_INSERT(connection)

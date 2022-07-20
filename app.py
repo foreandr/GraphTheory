@@ -170,7 +170,7 @@ def user_profile_name(username):
     # IF WE ARE GOING TO A CSV PROFILE
     # TODO: IF IT IS A CSV FILE, DIFFERENT PROFILE LOGIC/ #NEEDS TO BE BETTER HERE, ALL KINDS OF FAILURE CASES
     if 'csv' in username.lower():
-        print('REDIRECTING TO DATASET PAGE...MANY POTENTIAL ERRORS HERE')
+        print('REDIRECTING TO DATASET PAGE...MANY POTENTIAL ERRORS HERE IF NOT CAREFL')
         ds_hosts_username = username.split("-")[0]
         ds_hosts_file_name = username.split("-")[1]
 
@@ -189,8 +189,12 @@ def user_profile_name(username):
         file_sizes, \
         csv_description, \
         csv_user_id, \
-        csv_upload_date = database.GET_MODELS_BY_FILE_ID(connection, file_id)
-        #TODO: MODEL VOTES STUFF
+        csv_upload_date, \
+        num_model_votes = database.GET_MODELS_BY_FILE_ID(connection, file_id)
+
+
+        helpers.print_model_details(model_ids, local_paths, model_descriptions, dates, foreign_file_id, model_uploaders, model_user_ids,csv_file_paths, file_sizes, csv_description, csv_user_id, csv_upload_date, num_model_votes)
+
         return render_template('dataset_details.html',
                                    message="dataset_details.html page",
                                    full_string=username,

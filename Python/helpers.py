@@ -1,5 +1,6 @@
 import os.path
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -10,6 +11,26 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+def print_model_details(ids, paths, descriptions, dates, id1, uploaders, ids1, paths1, sizes, description, id2, date,
+                        votes):
+    print('======================ALL MODEL DETAILS FOR FILE====================')
+    print(ids)
+    print(paths)
+    print(descriptions)
+    print(dates)
+    print(id1)
+    print(uploaders)
+    print(ids1)
+    print(paths1)
+    print(sizes)
+    print(description)
+    print(id2)
+    print(date)
+    print(votes)
+
+    print('=====================================================================')
 
 
 def print_green(string):
@@ -23,6 +44,7 @@ def print_title(string):
 def print_error(string):
     print(bcolors.FAIL + str(string) + bcolors.ENDC)
 
+
 def print_warning(string):
     print(bcolors.WARNING + str(string) + bcolors.ENDC)
 
@@ -32,12 +54,10 @@ def save_to_file(filename="demofile"):
     completeName = os.path.join(save_path, filename + ".csv")
 
 
-
 def turn_pic_to_hex(filepath="../#UserData/userpic.jpg"):
     with open(filepath, 'rb') as f:
         content = f.read()
     return content
-
 
 
 def check_and_save_dir(path):
