@@ -49,16 +49,12 @@ ALTER PROCEDURE dbo.GET_MODELS_BY_FILE_ID
 			files.File_PATH AS 'CSV FILE PATH', 
 			files.File_size, files.Description, 
 			files.UserId AS 'CSV USER ID', 
-			files.Date_Time AS 'CSV UPLOAD DATE',
-			COUNT(mod_votes.Voter_Username) AS 'NUM VOTES'
+			files.Date_Time AS 'CSV UPLOAD DATE'
 		FROM dbo.MODEL model
 		INNER JOIN dbo.USERS users
 		ON model.Uploader = users.username
 		INNER JOIN dbo.FILES files
 		ON model.Foreign_File_id = files.File_id
-		INNER JOIN dbo.MODEL_VOTES mod_votes
-		ON model.Model_id = mod_votes.Model_id
-
 		WHERE files.File_id = @file_id
 	END
 GO
