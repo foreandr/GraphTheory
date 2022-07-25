@@ -45,6 +45,9 @@
     num_votes_list = num_votes.split("//");
     by_votes_list = by_votes.split("//");
 
+    console.log(num_votes_list);
+    console.log(by_votes_list);
+
     //console.log(username_list);
     //console.log(paths_list);
     //console.log(descriptions_list);
@@ -75,17 +78,17 @@
                         <img src="{{url_for('static', filename='#UserData/' + '${account_name}' + '/profile/profile_pic.jpg')}}\"  width='40' height='40' />
                         <div class="card-body">
                             <div>
-                                <h1 class="card-title">${account_name}</h1>
+                                <h3 class="card-title">${account_name}</h1>
                             </div>
                             <div>
-                                <h1 class="card-title">Votes: ${votes} </h1>
+                                <h3 class="card-title">Votes: ${votes} </h1>
                             </div>
                             <div>
-                               <h2>
+                               <h3>
                                     <a href="${value[1][0][0]}-${file_name}">
                                         ${file_name}
                                     </a>
-                                </h2>
+                                </h3>
                             </div>
                             <div>
                                 ${value[1][0][3]}
@@ -133,11 +136,14 @@
                                 <h1 class="card-title">${account_name}</h1>
                             </div>
                             <div>
-                               <h2>
+                                <h3 class="card-title">VOTES: ${num_votes_list[i]}</h3>
+                            </div>
+                            <div>
+                               <h3>
                                     <a href="${username_list[i]}-${file_name}">
                                         ${file_name}
                                     </a>
-                                </h2>
+                                </h3>
                             </div>
                             <div>
                                 ${dates_list[i]}
