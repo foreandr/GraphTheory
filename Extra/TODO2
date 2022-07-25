@@ -42,7 +42,7 @@ make password recovery only available from the email link
 every interaction requires 2FA
 be able to delete csvs
 subs - > grey[unbsub] -> green[sub] -> blue, purple gold
-
+max chars on descriptions, cut off description in card instead?
 
 ABANDONED
 10.personal block list

@@ -57,25 +57,57 @@
     if (by_votes == "True"){
         //console.log("EXECUTING BY VOTES");
         var array_sorted_by_votes = get_reordered_list(num_votes_list);
+        console.log(array_sorted_by_votes);
         array_sorted_by_votes.forEach( value => {
             if (value[1][0][0] != ""){
             single_path = value[1][0][1].split("/");
             account_name = single_path[2]
             file_name = single_path[4]
+            //date = value[1][0][1]
             //console.log(account_name);
             //console.log(file_name);
+            //console.log(value);
+            votes = value[0];
+                document.getElementById("list_of_datasets").innerHTML += `
+                <div class="col-lg-3 d-flex align-items-stretch">
+                    <!--CARD BEGIN-->
+                    <div class="card" >
+                        <img src="{{url_for('static', filename='#UserData/' + '${account_name}' + '/profile/profile_pic.jpg')}}\"  width='40' height='40' />
+                        <div class="card-body">
+                            <div>
+                                <h1 class="card-title">${account_name}</h1>
+                            </div>
+                            <div>
+                                <h1 class="card-title">Votes: ${votes} </h1>
+                            </div>
+                            <div>
+                               <h2>
+                                    <a href="${value[1][0][0]}-${file_name}">
+                                        ${file_name}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div>
+                                ${value[1][0][3]}
+                            </div>
+                            <div>
+                                SIZE: ${value[1][0][4]}
+                            </div>
+                            <div>
+                               <p class="card-text"> ${value[1][0][2]}</p>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-success">
+                                    <a href="/get_csv/${account_name}/csv_files/${file_name}">
+                                        DOWNLOAD
+                                    </a>
+                                </button>
+                            </div>
 
-            document.getElementById("files").innerHTML += `<div>
-                | ${value[1][0][0]}
-                | ${file_name}
-                | ${value[1][0][2]}
-                | ${value[1][0][3]}
-                | SIZE : ${value[1][0][4]}
-                <a href="/get_csv/${account_name}/csv_files/${file_name}">
-                    DOWNLOAD: ${file_name}
-                </a>
-                | VOTES:${value[0]}
-            </div>`
+                        </div>
+                    </div>
+                    <!--CARD END-->
+                </div>`
             }
         });
     }
@@ -89,23 +121,8 @@
                 console.log(file_name + typeof file_name);
 
 
-                document.getElementById("files").innerHTML += `<div>
-                | ${username_list[i]}
-                |
-                <a href="${username_list[i]}-${file_name}">
-                    DETAILS2: ${file_name}
-                </a>
-                | ${descriptions_list[i]}
-                | ${dates_list[i]}
-                | SIZE: ${file_sizes_list[i]}
-                <a href="/get_csv/${account_name}/csv_files/${file_name}">
-                    DOWNLOAD: ${file_name}
-                </a>
-                | VOTEs: ${num_votes_list[i]}
-                </div>`;
+                // console.log(account_name);
 
-
-                console.log(account_name);
                 document.getElementById("list_of_datasets").innerHTML += `
                 <div class="col-lg-3 d-flex align-items-stretch">
                     <!--CARD BEGIN-->
@@ -126,14 +143,19 @@
                                 ${dates_list[i]}
                             </div>
                             <div>
-                                ${file_sizes_list[i]}
+                                SIZE: ${file_sizes_list[i]}
                             </div>
                             <div>
                                <p class="card-text">${descriptions_list[i]}</p>
                             </div>
                             <div>
-                                <button class="btn btn-outline-danger btn-lg">download</button>
+                                <button class="btn btn-outline-success">
+                                    <a href="/get_csv/${account_name}/csv_files/${file_name}">
+                                        DOWNLOAD
+                                    </a>
+                                </button>
                             </div>
+
                         </div>
                     </div>
                     <!--CARD END-->
@@ -178,17 +200,35 @@
             document.getElementById("myDropdown2").classList.toggle("show");
         }
     }
-    /* useful for moving if needed
-    <a href="./<csv_file_name>">
-        DETAILS: ${file_name}
-    </a>
-    <a href="{{ url_for('.dataset_details_filename', csv_file_name=file_name )}}">
-        DETAILS: ${file_name}
-    </a>
-    */
+
 
     /* THIS IS FOR CREATING AND DISPLAYING CARDS */
-    console.log(document.getElementById("list_of_datasets").value);
+    //console.log(document.getElementById("list_of_datasets").value);
+
+        /* useful for moving if needed
+        <a href="./<csv_file_name>">
+            DETAILS: ${file_name}
+        </a>
+        <a href="{{ url_for('.dataset_details_filename', csv_file_name=file_name )}}">
+            DETAILS: ${file_name}
+        </a>
+    */
+    /*
+    document.getElementById("files").innerHTML += `<div>
+                | ${username_list[i]}
+                |
+                <a href="${username_list[i]}-${file_name}">
+                    DETAILS2: ${file_name}
+                </a>
+                | ${descriptions_list[i]}
+                | ${dates_list[i]}
+                | SIZE: ${file_sizes_list[i]}
+                <a href="/get_csv/${account_name}/csv_files/${file_name}">
+                    DOWNLOAD: ${file_name}
+                </a>
+                | VOTEs: ${num_votes_list[i]}
+                </div>`;
+                */
     /*
     document.getElementById("list_of_datasets").innerHTML = `
             <div class="col-lg-4 d-flex align-items-stretch">
