@@ -15,6 +15,43 @@
 <div id="files">
 
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 d-flex align-items-stretch">
+            <!--CARD HERE-->
+            <div class="card w-100" style="width 18rem" >
+                <img src="{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}\"  width='200' height='200' />
+                <div class="card-body">
+                    <h1 class="card-title">owner</h1>
+                    <h2 class="card-title">title</h2>
+                    <h3 class="card-title">go to page</h3>
+                    <p class="card-text">probably coing to be a description</p>
+                    <button class="btn btn-outline-danger btn-lg">download</button>
+                </div>
+            </div>
+            <!--CARD END-->
+        </div>
+        <div class="col-lg-4 d-flex align-items-stretch">
+
+            <!--CARD HERE-->
+            <div class="card w-100" style="width 18rem" >
+                <img src="{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}\"  width='200' height='200' />
+                <div class="card-body">
+                    <h1 class="card-title">owner</h1>
+                    <h2 class="card-title">title</h2>
+                    <h3 class="card-title">go to page</h3>
+                    <h3 class="card-title">Votes</h3>
+                    <p class="card-text">probably coing to be a description</p>
+
+                    <button class="btn btn-outline-danger btn-lg">download</button>
+                </div>
+            </div>
+            <!--CARD END-->
+        </div>
+
+    </div>
+</div>
 <script>
     var usernames = '{{ usernames}}'
     var paths = '{{paths}}'
@@ -146,6 +183,7 @@
         DETAILS: ${file_name}
     </a>
     */
+    /* THIS IS FOR CREATING AND DISPLAYING CARDS
 
 
 

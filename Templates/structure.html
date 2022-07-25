@@ -1,67 +1,73 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-    <link rel="stylesheet" href="static/css/bootstrap.min.css"/>
-    <link rel="stylesheet" media="screen" href="static/css/style.css">
-    <link rel="stylesheet" media="screen" href="static/css/main.css">
-  <title>TITLE TAB HEHE X D</title>
-</head>
 
-<body>
+    <head>
+      <meta charset="utf-8">
+        <link rel="stylesheet" href="static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" media="screen" href="static/css/style.css">
+        <link rel="stylesheet" media="screen" href="static/css/main.css">
+      <title>TITLE TAB HEHE X D</title>
+    </head>
 
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand mx-3" href="#">Foreandr</a>
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="./">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./logout">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./user_profile">Profile</a>
-                </li>
+    <body>
 
-            </ul>
-        </div>
-    </nav>
-
-    <div id="title_block">
-      {% block main %}
-
-      <div>
-        structure.html particular
-      </div>
-
-      {% endblock main %}
-    </div>
-
-    <!-- footer
-    <div id="footerDiv">
-        <footer id="footer">
-            <div id="footerTitle">
-                &copy;Forandr
-            </div>
-
-
-            <div>
-                <ul id="footerList2">
-                    <li>
-                        <a href="mailto:foreandr@gmail.com">Email</a>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <a class="navbar-brand mx-3" href="#">Foreandr</a>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./user_profile">Profile</a>
+                    </li>
+
                 </ul>
             </div>
-        </footer>
-    </div>
-    -->
-</body>
+        </nav>
+
+        <div id="title_block">
+          {% block main %}
+
+          <div>
+            structure.html particular
+          </div>
+
+          {% endblock main %}
+        </div>
+
+        <!-- footer
+        <div id="footerDiv">
+            <footer id="footer">
+                <div id="footerTitle">
+                    &copy;Forandr
+                </div>
+
+
+                <div>
+                    <ul id="footerList2">
+                        <li>
+                            <a href="mailto:foreandr@gmail.com">Email</a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+        -->
+
+        <!-- Production version POPPER -->
+        <!-- HAVE TO MAKE CHANGES TO THE BROWSER -->
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script> src="static/js/bootstrap-js/bootstrap.js" </script>
+    </body>
 </html>
