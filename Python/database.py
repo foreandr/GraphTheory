@@ -105,6 +105,8 @@ def USER_INSERT(conn, username="Andre", password="password", email="foreandr@gma
 
 
 def USER_INSERT_MULTIPLE(conn):
+    # Change the current working directory
+
     shutil.rmtree('../static/#UserData/')
     full_register(conn, 'foreandr', 'cooldood', 'foreandr@gmail.com')
     full_register(conn, 'andrfore', 'cooldood', 'andrfore@gmail.com')
@@ -276,39 +278,61 @@ def MODEL_CREATE_TABLE(conn):
     print_green("CREATED MODEL TABLE\n")
 
 
+def MODEL_VOTES_CREATE_TABLE(conn):
+    cursor = conn.cursor()
+    cursor.execute(f"""
+        CREATE TABLE dbo.MODEL_VOTES(
+        MODEL_Vote_Id INT IDENTITY(1, 1),
+        Model_id INT,
+        Voter_Username varchar(50) UNIQUE, -- so there can only be one vote per person
+        FOREIGN KEY (Model_id) REFERENCES dbo.MODEL(Model_id),
+        PRIMARY KEY (MODEL_Vote_Id)
+        )"""
+                   )
+    conn.commit()
+    cursor.close()
+    print_green("CREATED MODEL VOTES TABLE\n")
+
+
 def USER_FULL_RESET(conn):
     print_title("\nEXECUTING FULL RESET")
     cursor = conn.cursor()
 
     try:
+        cursor.execute(f"DROP TABLE dbo.MODEL_VOTES;")
+        conn.commit()
+    except Exception as e:
+        print_warning("NO dbo.MODEL VOTES" + str(e))
+
+    try:
         cursor.execute(f"DROP TABLE dbo.MODEL;")
         conn.commit()
-    except Error:
-        print_warning("NO dbo.MODEL")
+    except Exception as e:
+        print_warning("NO dbo.MODEL" + str(e))
 
     try:
         cursor.execute(f"DROP TABLE dbo.CSV_VOTES;")
         conn.commit()
-    except:
-        print_warning("NO dbo.CSV_VOTES", )
+    except Exception as e:
+        print_warning("NO dbo.CSV_VOTES" + str(e) )
 
     try:
         cursor.execute(f"DROP TABLE dbo.FILES;")
         conn.commit()
-    except:
-        print_warning("NO dbo.FILES")
+    except Exception as e:
+        print_warning("NO dbo.FILES" + str(e))
 
     try:
         cursor.execute(f"DROP TABLE dbo.CONNECTIONS;")
         conn.commit()
-    except:
-        print_warning("NO dbo.dbo.CONNECTIONS")
+    except Exception as e:
+        print_warning("NO dbo.dbo.CONNECTIONS" + str(e))
 
     try:
         cursor.execute(f"DROP TABLE dbo.USERS;")
         conn.commit()
-    except:
-        print_warning("NO dbo.dbo.USERS")
+    except Exception as e:
+        print_warning("NO dbo.dbo.USERS: " + str(e))
 
     # CREATE NEW USERS
     USER_CREATE_TABLE(conn)
@@ -325,6 +349,7 @@ def USER_FULL_RESET(conn):
     # MODEL RELATED
     MODEL_CREATE_TABLE(conn)
     MODEL_MULTIPLE_INSERT(conn)
+    MODEL_VOTES_CREATE_TABLE(conn)
 
     # CONNECTION TABLE
     CONNECTION_CREATE_TABLE(conn)
@@ -389,8 +414,8 @@ def CUSTOM_MODEL_INSERT(conn, new_path="/PATH.JPG", description='DEAFULT MODEL D
     try:
         cursor.execute(
             f"EXECUTE dbo.CUSTOM_MODEL_INSERT '{new_path}', '{description}', {csv_id} , '{uploader_username}';")
-    except Error:
-        print_error(F"CANNOT INSERT {new_path} INTO {uploader_username} - NOT SURE WHY\n" + str(Error))
+    except Exception as e:
+        print_error(F"CANNOT INSERT {new_path} INTO {uploader_username} - NOT SURE WHY\n" + str(e))
 
     conn.commit()
     cursor.close()
@@ -434,14 +459,17 @@ def GET_ALL_DATASETS_BY_DATE(conn, minimum=1, maximum=100):
 
 
 def register_user_files(conn, username):
-    check_and_save_dir(f"../static/#UserData/{username}/profile")
-    check_and_save_dir(f"../static/#UserData/{username}/csv_files")
-    check_and_save_dir(f"../static/#UserData/{username}/models")
+    # Change the current working directory
+    os.chdir('/GraphTheory')
 
-    my_path = f"../static/#UserData/{username}/profile"
-    my_path_with_file = f"../static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+    check_and_save_dir(f"static/#UserData/{username}/profile")
+    check_and_save_dir(f"static/#UserData/{username}/csv_files")
+    check_and_save_dir(f"static/#UserData/{username}/models")
 
-    jpgfile = Image.open("D:/GraphTheory/#DemoData/DEFAULT_PROFILE.png")
+    my_path = f"static/#UserData/{username}/profile"
+    my_path_with_file = f"static/#UserData/{username}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+
+    jpgfile = Image.open("#DemoData/DEFAULT_PROFILE.png")
     check_and_save_dir(my_path)
     jpgfile.save(my_path_with_file)
 
@@ -452,36 +480,34 @@ def register_user_files(conn, username):
     model_target = ""
     # print('PRINTING WORKING DIRECTORY', os.getcwd())
     if username == 'foreandr':
-        default_csv = r'../#DemoData/CSV1.csv'
-        target = rf'../static/#UserData/{username}/csv_files/CSV1.csv'
+        default_csv = r'#DemoData/CSV1.csv'
+        target = rf'static/#UserData/{username}/csv_files/CSV1.csv'
         shutil.copyfile(default_csv, target)
 
         # DO TWICE FOR TEST WITH MULTIPLE FILES
-        default_csv2 = r'../#DemoData/CSV1.csv'
-        target2 = rf'../static/#UserData/{username}/csv_files/CSV10.csv'
+        default_csv2 = r'#DemoData/CSV1.csv'
+        target2 = rf'static/#UserData/{username}/csv_files/CSV10.csv'
         shutil.copyfile(default_csv2, target2)
 
     elif username == 'bigfrog':
-        default_csv = r'../#DemoData/CSV2.csv'
-        target = rf'../static/#UserData/{username}/csv_files/CSV2.csv'
+        default_csv = r'#DemoData/CSV2.csv'
+        target = rf'static/#UserData/{username}/csv_files/CSV2.csv'
         shutil.copyfile(default_csv, target)
 
     elif username == 'cheatsie':
-        default_csv = r'../#DemoData/CSV3.csv'
-        target = rf'../static/#UserData/{username}/csv_files/CSV3.csv'
+        default_csv = r'#DemoData/CSV3.csv'
+        target = rf'static/#UserData/{username}/csv_files/CSV3.csv'
         shutil.copyfile(default_csv, target)
 
     elif username == 'dnutty':
-        default_csv = r'../#DemoData/CSV4.csv'
-        target = rf'../static/#UserData/{username}/csv_files/CSV4.csv'
+        default_csv = r'#DemoData/CSV4.csv'
+        target = rf'static/#UserData/{username}/csv_files/CSV4.csv'
         shutil.copyfile(default_csv, target)
 
     elif username == 'andrfore':
-        default_csv = r'../#DemoData/CSV5.csv'
-        target = rf'../static/#UserData/{username}/csv_files/CSV5.csv'
+        default_csv = r'#DemoData/CSV5.csv'
+        target = rf'static/#UserData/{username}/csv_files/CSV5.csv'
         shutil.copyfile(default_csv, target)
-
-
 
 
 def MODEL_MULTIPLE_INSERT(conn):
@@ -490,28 +516,28 @@ def MODEL_MULTIPLE_INSERT(conn):
     fake_chart = ""
     model_target = ""
 
-    fake_chart = r'../#DemoData/fakechart1.jpg'
-    model_target = rf'../static/#UserData/foreandr/models/fakechart1.jpg'
+    fake_chart = r'#DemoData/fakechart1.jpg'
+    model_target = rf'static/#UserData/foreandr/models/fakechart1.jpg'
     CUSTOM_MODEL_INSERT(conn, model_target, 'description', 2, 'foreandr')
     shutil.copyfile(fake_chart, model_target)
 
-    fake_chart = r'../#DemoData/fakechart2.jpg'
-    model_target = rf'../static/#UserData/bigfrog/models/fakechart2.jpg'
+    fake_chart = r'#DemoData/fakechart2.jpg'
+    model_target = rf'static/#UserData/bigfrog/models/fakechart2.jpg'
     CUSTOM_MODEL_INSERT(conn, model_target, 'description', 1, 'andrfore')
     shutil.copyfile(fake_chart, model_target)
 
-    fake_chart = r'../#DemoData/fakechart4.jpg'
-    model_target = rf'../static/#UserData/dnutty/models/fakechart4.jpg'
+    fake_chart = r'#DemoData/fakechart4.jpg'
+    model_target = rf'static/#UserData/dnutty/models/fakechart4.jpg'
     CUSTOM_MODEL_INSERT(conn, model_target, 'description', 2, 'dnutty')
     shutil.copyfile(fake_chart, model_target)
 
-    fake_chart = r'../#DemoData/fakechart5.jpg'
-    model_target = rf'../static/#UserData/andrfore/models/fakechart5.jpg'
+    fake_chart = r'#DemoData/fakechart5.jpg'
+    model_target = rf'static/#UserData/andrfore/models/fakechart5.jpg'
     CUSTOM_MODEL_INSERT(conn, model_target, 'description', 3, 'bigfrog')
     shutil.copyfile(fake_chart, model_target)
 
-    fake_chart = r'../#DemoData/fakechart3.jpg'
-    model_target = rf'../static/#UserData/cheatsie/models/fakechart3.jpg'
+    fake_chart = r'#DemoData/fakechart3.jpg'
+    model_target = rf'static/#UserData/cheatsie/models/fakechart3.jpg'
     CUSTOM_MODEL_INSERT(conn=conn, new_path=model_target, description='description', csv_id=2,
                         uploader_username='cheatsie')
     shutil.copyfile(fake_chart, model_target)
@@ -598,8 +624,8 @@ def MODEL_DROP_TABLE(conn):
     try:
         cursor.execute(f"DROP TABLE dbo.MODEL;")
         conn.commit()
-    except Error:
-        print_warning("NO dbo.MODEL")
+    except Exception as e:
+        print_warning("NO dbo.MODEL" + str(e))
 
 
 def GET_FILE_ID_W_USERNAME(conn, username, file_name):
@@ -621,6 +647,7 @@ def MODEL_GET_NUM_VOTES_BY_MODEL_ID(conn, model_id):
         # print('zzzzz', i)
         num = i[0]
     return num
+
 
 def GET_MODELS_BY_FILE_ID(conn, file_id):
     cursor = conn.cursor()
@@ -654,7 +681,7 @@ def GET_MODELS_BY_FILE_ID(conn, file_id):
         csv_description += str(i[9]) + "//"
         csv_user_id += str(i[10]) + "//"
         csv_upload_date += str(i[11]) + "//"
-        num_model_votes += str(MODEL_GET_NUM_VOTES_BY_MODEL_ID(conn, i[0]))  + "//"
+        num_model_votes += str(MODEL_GET_NUM_VOTES_BY_MODEL_ID(conn, i[0])) + "//"
         # print('MODEL ID: ', i[0])
     print_green('COMPLETED GET_MODELS_BY_FILE_ID')
     return model_ids, local_paths, model_descriptions, dates, foreign_file_id, model_uploaders, model_user_ids, csv_file_paths, file_sizes, csv_description, csv_user_id, csv_upload_date, num_model_votes
