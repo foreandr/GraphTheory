@@ -51,7 +51,7 @@
     //console.log(dates_list);
     //console.log(file_sizes_list);
     //console.log(num_votes_list);
-    console.log(by_votes_list);
+    //console.log(by_votes_list);
 
     console.log("CHECKING SORT: "  + by_votes);
     if (by_votes == "True"){
@@ -77,9 +77,6 @@
                 | VOTES:${value[0]}
             </div>`
             }
-
-
-
         });
     }
     else{
@@ -107,16 +104,24 @@
                 | VOTEs: ${num_votes_list[i]}
                 </div>`;
 
+
+                console.log(account_name);
                 document.getElementById("list_of_datasets").innerHTML += `
                 <div class="col-lg-4 d-flex align-items-stretch">
                     <!--CARD BEGIN-->
                     <div class="card w-100" style="width 18rem" >
-                        <img src="{{url_for('static', filename='#UserData/foreandr/profile/profile_pic.jpg')}}\"  width='200' height='200' />
+                        <img src="{{url_for('static', filename='#UserData/' + '${account_name}' + '/profile/profile_pic.jpg')}}\"  width='40' height='40' />
+
                         <div class="card-body">
                             <h1 class="card-title">${account_name}</h1>
-                            <h2 class="card-title">data_set title</h2>
-                            <h3 class="card-title">go to page</h3>
-                            <p class="card-text">probably going to be a description</p>
+                            <h2>
+                                <a href="${username_list[i]}-${file_name}">
+                                    ${file_name}
+                                </a>
+                            </h2>
+                            ${dates_list[i]}
+
+                            <p class="card-text">${descriptions_list[i]}</p>
                             <button class="btn btn-outline-danger btn-lg">download</button>
                         </div>
                     </div>

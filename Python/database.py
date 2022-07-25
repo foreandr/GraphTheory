@@ -454,30 +454,34 @@ def register_user_files(conn, username):
     if username == 'foreandr':
         default_csv = r'../#DemoData/CSV1.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV1.csv'
+        shutil.copyfile(default_csv, target)
 
         # DO TWICE FOR TEST WITH MULTIPLE FILES
         default_csv2 = r'../#DemoData/CSV1.csv'
         target2 = rf'../static/#UserData/{username}/csv_files/CSV10.csv'
         shutil.copyfile(default_csv2, target2)
 
-
     elif username == 'bigfrog':
         default_csv = r'../#DemoData/CSV2.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV2.csv'
+        shutil.copyfile(default_csv, target)
 
     elif username == 'cheatsie':
         default_csv = r'../#DemoData/CSV3.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV3.csv'
+        shutil.copyfile(default_csv, target)
 
     elif username == 'dnutty':
         default_csv = r'../#DemoData/CSV4.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV4.csv'
+        shutil.copyfile(default_csv, target)
 
     elif username == 'andrfore':
         default_csv = r'../#DemoData/CSV5.csv'
         target = rf'../static/#UserData/{username}/csv_files/CSV5.csv'
+        shutil.copyfile(default_csv, target)
 
-    shutil.copyfile(default_csv, target)
+
 
 
 def MODEL_MULTIPLE_INSERT(conn):

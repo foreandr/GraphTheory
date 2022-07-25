@@ -54,15 +54,15 @@ def register():
             # database.create_user(conn=connection, username="hello", password="password", email="bce@hotmail.com")
             database.full_register(connection=connection, username=username[0], password=password[0], email=email[0])
 
-            my_path = f"{app.config['FILE UPLOADS']}/{username[0]}/profile"
-            my_path_with_file = f"{app.config['FILE UPLOADS']}/{username[0]}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
+            #my_path = f"{app.config['FILE UPLOADS']}/{username[0]}/profile"
+            #my_path_with_file = f"{app.config['FILE UPLOADS']}/{username[0]}/profile/profile_pic.jpg"  # PREVIOUSLY USED file.filename, should use with other types
 
-            jpgfile = Image.open("#DemoData/DEFAULT_PROFILE.png")
-            helpers.check_and_save_dir(my_path)
-            jpgfile.save(my_path_with_file)
+            #jpgfile = Image.open("#DemoData/DEFAULT_PROFILE.png")
+            #helpers.check_and_save_dir(my_path)
+            #jpgfile.save(my_path_with_file)
 
-        except:
-            print("Error on HTML POST Register")
+        except Exception as e:
+            print("Error on HTML POST Register", e)
         return render_template('register.html', message="register.html page")
 
 
