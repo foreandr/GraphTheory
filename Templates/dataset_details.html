@@ -1,20 +1,22 @@
 {% extends "structure.html" %} <!-- INHEREITING FROM STRUCTURE.HTML-->
 
 {%block main %}
-<div>
-    {{ message }} <!-- message is a variable-->
-</div>
-<div>
-    {{ full_string }} <!-- message is a variable-->
-</div>
-<div>
-    FILE UPLOADER:---{{ host_name }} <!-- message is a variable-->
-</div>
-<div>
-     FILE NAME:------{{ file_name }} <!-- message is a variable-->
-</div>
-<div>
-    model_ids:---------{{model_ids }} <!-- message is a variable-->
+<section class="jumbotron text-center" style="background:WHITE">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ host_name }}</h1>
+            <h1 class="jumbotron-heading">{{ file_name }}</h1>
+            <p class="lead text-muted">{{ csv_upload_date }}</p>
+            <p class="lead text-muted">{{ csv_description }}</p>
+            <p class="lead text-muted">{{ file_sizes }} </p>
+            <p>
+                <a href="#" class="btn btn-primary my-2">Main call to action</a>
+                <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            </p>
+        </div>
+</section>
+<div class="container">
+    <div class="row" id="list_of_models">
+    </div>
 </div>
 <div>
     local_paths---------{{ local_paths }} <!-- message is a variable-->
@@ -26,29 +28,43 @@
     dates:---------{{ dates }} <!-- message is a variable-->
 </div>
 <div>
-    foreign_file_id:---------{{ foreign_file_id }} <!-- message is a variable-->
-</div>
-<div>
-    model_user_ids:---------{{ model_user_ids }} <!-- message is a variable-->
-</div>
-<div>
-    csv_file_paths:---------{{ csv_file_paths }} <!-- message is a variable-->
-</div>
-<div>
-    file_sizes:---------{{ file_sizes }} <!-- message is a variable-->
-</div>
-<div>
-    csv_description:---------{{ csv_description }} <!-- message is a variable-->
-</div>
-<div>
-    csv_user_id:---------{{ csv_user_id }} <!-- message is a variable-->
-</div>
-<div>
     csv_upload_date:---------{{ csv_upload_date }} <!-- message is a variable-->
 </div>
 <div>
    num_model_votes:---------{{ num_model_votes }} <!-- message is a variable-->
 </div>
+<script>
+
+    /*************************************************************/
+    path_list = `{{ local_paths }}`.split("//");
+    list_of_paths_pics = [];
+    path_list.forEach( value => {
+       temp_split = value.split("static/");
+       list_of_paths_pics.push(temp_split[1]);
+    });
+    console.log(list_of_paths_pics);
+    for (i = 0; i < list_of_paths_pics.length -1; i++){
+    temp_path = list_of_paths_pics[i]
+    console.log(temp_path);
+    document.getElementById("list_of_models").innerHTML += `
+        <div class="col-lg-3 d-flex align-items-stretch">
+        <div class="card">
+        <img src="{{url_for('static', filename="#UserData/" + "foreandr"  + "/models/" +  "fakechart1.jpg" )}}\"  width='200' height='200' />
+        </div>
+        </div>
+    `
+}
+    /*************************************************************/
+
+    var globalVariable= {
+        list_of_paths_pics: list_of_paths_pics,
+
+    };
+
+
+
+</script>
+<script src="{{ url_for('static', filename='js/dataset_details.js') }}"></script>
 {% endblock main %}
 
 

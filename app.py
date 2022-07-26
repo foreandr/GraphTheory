@@ -177,7 +177,7 @@ def user_profile_name(username):
         file_id = database.GET_FILE_ID_W_USERNAME(connection,
                                                   username=ds_hosts_username,
                                                   file_name=ds_hosts_file_name)
-
+        print('CURRENT FILE ID', file_id)
         model_ids, \
         local_paths, \
         model_descriptions, \

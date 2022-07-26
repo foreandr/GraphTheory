@@ -43,6 +43,14 @@ every interaction requires 2FA
 be able to delete csvs
 subs - > grey[unbsub] -> green[sub] -> blue, purple gold
 max chars on descriptions, cut off description in card instead?
+change index dropdown to bootstrap
+
+Rating/reputation average system
+    - 2 different scores,
+        - one by verified accounts
+        - one by unverified accounts
+
+
 
 ABANDONED
 10.personal block list
