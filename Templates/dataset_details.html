@@ -18,25 +18,51 @@
     <div class="row" id="list_of_models">
     </div>
 </div>
-<div>
-    local_paths---------{{ local_paths }} <!-- message is a variable-->
+
+
+
+<section class="bg-light">
+    <div class="container">
+        <div class="text-center">
+            <h2>Stay in</h2>
+            <p class="lead">dildo</p>
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+    </div>
+</section>
+
+<div class="modal fade" id="exampleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    TITLE MODAL
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    close
+                </button>
+            </div>
+            <div class="modal-body">
+                sdl;kf;alkshdf;lakshdf;jashdfl;khjasldkfjhasld
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    model_descriptions:---------{{ model_descriptions }} <!-- message is a variable-->
-</div>
-<div>
-    dates:---------{{ dates }} <!-- message is a variable-->
-</div>
-<div>
-    csv_upload_date:---------{{ csv_upload_date }} <!-- message is a variable-->
-</div>
-<div>
-   num_model_votes:---------{{ num_model_votes }} <!-- message is a variable-->
-</div>
+
+
+
 <script>
 
     /*************************************************************/
     path_list = `{{ local_paths }}`.split("//");
+    model_descriptions_list = `{{ model_descriptions }}`.split("//");
+    dates_list = `{{ dates }}`.split("//");
+    csv_upload_date_list = `{{ csv_upload_date }}`.split("//");
+    num_model_votes_list = `{{ num_model_votes }}`.split("//");
+
+
     list_of_paths_pics = [];
     path_list.forEach( value => {
        temp_split = value.split("static/");
@@ -48,9 +74,21 @@
     console.log(temp_path);
     document.getElementById("list_of_models").innerHTML += `
         <div class="col-lg-3 d-flex align-items-stretch">
-        <div class="card">
-        <img src="{{url_for('static', filename="#UserData/" + "foreandr"  + "/models/" +  "fakechart1.jpg" )}}\"  width='200' height='200' />
-        </div>
+            <div class="card">
+                <img src="{{url_for('static', filename='#Userdata/foreandr/models/fakechart1.jpg' )}}\"  width='200' height='200' />
+
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title">DESC:${model_descriptions_list[i]}</h5>
+                    </div>
+                    <div>
+                        <h5 class="card-title">DATE:${dates_list[i]}</h5>
+                    </div>
+                    <div>
+                        <h5 class="card-title">VOTES:${num_model_votes_list[i]}</h5>
+                    </div>
+                 <div>
+            </div>
         </div>
     `
 }
@@ -58,10 +96,9 @@
 
     var globalVariable= {
         list_of_paths_pics: list_of_paths_pics,
-
     };
-
-
+    // THIS IS WHAT THE ACTUAL CODE SHOULD LOOK LIKE
+    //<img src="{{url_for('static', filename='${list_of_paths_pics[i]}' )}}\"  width='200' height='200' />
 
 </script>
 <script src="{{ url_for('static', filename='js/dataset_details.js') }}"></script>
